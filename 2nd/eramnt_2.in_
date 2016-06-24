@@ -1,0 +1,117 @@
+;
+; ERAMNT_2.INF - ERAM for Windows NT/2000/XP インストールファイル 2nd
+;	ver 2.21 暫定版
+;
+;　　NT4.00/2000/XP用です
+;　　　Explorerの右クリックからインストールを選んでください
+;　　NT3.51には使えません
+;
+
+[Version]
+Signature="$Windows NT$"
+LayoutFile=layout.inf
+
+[DestinationDirs]
+DefaultDestDir = %DIRID_DRIVERS%
+CplFiles = %DIRID_SYSTEM%
+
+[SourceDisksFiles]
+%DriverFileName% = 1
+%CplFileName% = 1
+
+;
+; diskid = description,tagfile,unused,subdir
+;
+[SourceDisksNames.x86]
+1 = %DisketteLabel%,%TagFile%,,%SubDirectory%
+
+
+[DefaultInstall.ntx86]
+; NT section
+CopyFiles = DriverFiles,CplFiles
+AddReg = AddRegistry
+Reboot
+
+[DefaultInstall.ntx86.Services]
+AddService = Eram2, 0x00000002, Eram_Service
+
+;
+; target,source,notused,copyflg
+;
+[DriverFiles]
+eram2.sys,%DriverFileName%,,%COPYFLG_NOVERSIONCHECK%
+
+[CplFiles]
+eramnt.cpl,%CplFileName%,,%COPYFLG_NOVERSIONCHECK%
+
+[Eram_Service]
+DisplayName   = "ERAM RAMﾃﾞｨｽｸﾄﾞﾗｲﾊﾞ 2nd"
+ServiceType   = %Type%
+StartType     = %Start%
+ErrorControl  = %ErrorControl%
+ServiceBinary = %12%\eram2.sys
+LoadOrderGroup= %Group%
+
+[AddRegistry]
+;--- Parameters
+HKLM,%PARAMPATH%,AllocUnit,%FLG_ADDREG_TYPE_DWORD%,%AllocUnit%
+HKLM,%PARAMPATH%,DriveLetter,%FLG_ADDREG_TYPE_SZ%,%DriveLetter%
+HKLM,%PARAMPATH%,MediaId,%FLG_ADDREG_TYPE_DWORD%,%MediaId%
+HKLM,%PARAMPATH%,Option,%FLG_ADDREG_TYPE_DWORD%,%Option%
+HKLM,%PARAMPATH%,RootDirEntries,%FLG_ADDREG_TYPE_DWORD%,%RootDirEntries%
+HKLM,%PARAMPATH%,Page,%FLG_ADDREG_TYPE_DWORD%,%Page%
+HKLM,%PARAMPATH%,ExtStart,%FLG_ADDREG_TYPE_DWORD%,%ExtStart%
+HKLM,%PARAMPATH%,MaxAddress,%FLG_ADDREG_TYPE_DWORD%,%MaxAddress%
+HKLM,%PARAMPATH%,VolumeLabel,%FLG_ADDREG_TYPE_SZ%,%VolumeLabel%
+HKLM,%PARAMPATH%,ExtFileName,%FLG_ADDREG_TYPE_SZ%,%ExtFileName%
+HKLM,%PARAMPATH%,DeviceName,%FLG_ADDREG_TYPE_SZ%,%DeviceName%
+;--- Uninstall
+;HKLM,%UNINSTALLPATH%,DisplayName,%FLG_ADDREG_TYPE_SZ_UPDATE%,%UNINSTALLDISP%
+;HKLM,%UNINSTALLPATH%,UninstallString,%FLG_ADDREG_TYPE_SZ_UPDATE%,%UNINSTALLCMD%
+;--- EventLog
+HKLM,%EVENTPATH%,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%SystemRoot%\System32\EramNt.cpl"
+HKLM,%EVENTPATH%,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+;
+; String section for customization
+;
+
+[Strings]
+DisketteLabel = "ERAM for Windows NT/2000/XP 2nd"
+TagFile = 
+;SubDirectory = \obj\i386
+SubDirectory = "..\"
+DriverFileName = eramnt.sys
+CplFileName = eramnt.cpl
+;--- Driver configuration
+Type = 1				;Kernel mode driver
+Start = 1				;System
+;Start = 3				;Load on demand
+ErrorControl = 1		;Normal
+Group = "Primary disk"
+;--- Parameters
+DIRID_SYSTEM = 11
+DIRID_DRIVERS = 12
+FLG_ADDREG_TYPE_SZ_UPDATE = 0		;上書きのFLG_ADDREG_TYPE_SZ
+FLG_ADDREG_TYPE_SZ = 0x2			;上書き禁止のFLG_ADDREG_TYPE_SZ
+FLG_ADDREG_TYPE_DWORD = 0x10003		;上書き禁止のFLG_ADDREG_TYPE_DWORD
+FLG_ADDREG_TYPE_MULTI_SZ = 0x10000
+FLG_ADDREG_TYPE_EXPAND_SZ = 0x20000
+COPYFLG_NOVERSIONCHECK = 4
+AllocUnit = 2
+DriveLetter = "Y:"
+MediaId = 0xf8
+Option = 0
+RootDirEntries = 128
+Page = 16
+ExtStart = 0
+MaxAddress = 0xffffffff
+VolumeLabel = ""
+ExtFileName = "C:\ERAMSWAQ.$$$"
+DeviceName = "\Device\Eram2"
+PARAMPATH="SYSTEM\CurrentControlSet\Services\Eram2\Parameters"
+;UNINSTALLPATH ="SoftWare\Microsoft\Windows\CurrentVersion\Uninstall\Eram2"
+;UNINSTALLDISP = "ERAM for Windows NT/2000/XP 2nd"
+;UNINSTALLCMD = "Rundll32 eramnt.cpl,EramUninstall"
+EVENTPATH ="System\CurrentControlSet\Services\EventLog\System\Eram2"
