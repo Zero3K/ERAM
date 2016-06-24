@@ -1,4 +1,4 @@
-ERAM for Windows NT / 2000 / XP v2.23 Preliminary
+ERAM for Windows NT / 2000 / XP / 7 (64-bit only) v2.23 Preliminary
 2004.7.11 error 15
 
 Part from v2.20,21 is modified version. v2.22 is a modified version of.
