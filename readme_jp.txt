@@ -1,5 +1,5 @@
 
-　ERAM for Windows NT/2000/XP v2.23 暫定版
+　ERAM for Windows XP / NT/ 2000 / 7 / 10 (32-bit and 64-bit) v2.23 暫定版
 　　　　　　　　　　　　　　　　　　　　　　　　2004.7.11 えらー１５
 
 　v2.20,21からの一部変更版です。v2.22の修正版です。
