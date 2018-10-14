@@ -1,6 +1,6 @@
 Windows Registry Editor Version 5.00
 
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\Eram]
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\Eram]
 "EventMessageFile"=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,\
   00,6f,00,74,00,25,00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,\
   5c,00,65,00,72,00,61,00,6d,00,6e,00,74,00,2e,00,63,00,70,00,6c,00,00,00
