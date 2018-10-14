@@ -1,5 +1,6 @@
-/*　ERAMNT.H　　RAMディスクERAM for WindowsNT/2000/XP
-　　　Copyright (c) 1999-2004 by *Error15
+/* ERAMNT.H    RAM disk ERAM for WindowsNT/2000/XP
+      Copyright (c) 1999-2004 by *Error15
+   Translated into English by Katayama Hirofumi MZ.
 */
 
 #pragma pack(1)
@@ -41,9 +42,9 @@ typedef VOID (*ERAM_UNMAP)(PVOID);
 #define NT_DEVNAME		L"\\Device\\Eram"
 #define WIN32_PATH		L"\\DosDevices\\"
 #define DEFAULT_DRV		L"Z:"
-#define	DISKMAXCLUSTER_12 (4086)			/*　FAT12の最大クラスタ　*/
-#define	DISKMAXCLUSTER_16 (65525)			/*　FAT16の最大クラスタ　*/
-#define	DISKMAXCLUSTER_32 (268435455)		/*　FAT32の最大クラスタ　*/
+#define	DISKMAXCLUSTER_12 (4086)			/* FAT12 Max Cluster */
+#define	DISKMAXCLUSTER_16 (65525)			/* FAT16 Max Cluster */
+#define	DISKMAXCLUSTER_32 (268435455)		/* FAT32 Max Cluster */
 #define RAMDISK_MEDIA_TYPE		0xf8
 #define VOLUME_LABEL_RAMDISK	"MS-RAMDRIVE"
 #define VOLUME_LABEL_LOCALDISK	"ERAM-DRIVE "
@@ -53,114 +54,114 @@ typedef VOID (*ERAM_UNMAP)(PVOID);
 #define	ERAMEXTFILEPATH		L"C:\\ERAMSWAP.$$$"
 
 #define	DISKMINPAGE	(16)
-/*　↑データ領域が確保できない;アロケーション2では2が最小　*/
+/* Unable to allocate data area; 2 is minimum at allocation 2 */
 #define	SECTOR	(512)
 #define	SECTOR_LOG2	(9)
 #define	RESV_SECTOR_FAT32	(2)
 
-#define SIZE_KILOBYTE	(1024)			/*　1KB　*/
-#define SIZE_MEGABYTE	(SIZE_KILOBYTE * 1024)	/*　1MB　*/
-#define PAGE_SIZE_4K	(SIZE_KILOBYTE * 4)	/*　1ページの大きさ　*/
+#define SIZE_KILOBYTE	(1024)			/* 1KB */
+#define SIZE_MEGABYTE	(SIZE_KILOBYTE * 1024)	/* 1MB */
+#define PAGE_SIZE_4K	(SIZE_KILOBYTE * 4)	/* The size of one page */
 #define	PAGE_SIZE_LOG2	(12)
-#define	PAGE_SECTOR		(PAGE_SIZE_4K / SECTOR)	/*　1ページ中のセクタ数　*/
+#define	PAGE_SECTOR		(PAGE_SIZE_4K / SECTOR)	/* Sectors per page */
 #define	PAGE_SEC_LOG2	(PAGE_SIZE_LOG2 - SECTOR_LOG2)
-#define EXT_PAGE_SIZE	(SIZE_KILOBYTE * 64)		/*　64KB単位切り替え　*/
+#define EXT_PAGE_SIZE	(SIZE_KILOBYTE * 64)		/* 64KB unit switch */
 #define	EXT_PAGE_SIZE_LOG2	(16)
-#define	EXT_PAGE_SECTOR	(EXT_PAGE_SIZE / SECTOR)	/*　1バンク中のセクタ数　*/
+#define	EXT_PAGE_SECTOR	(EXT_PAGE_SIZE / SECTOR)	/* sectors per bank */
 #define	EXT_PAGE_SEC_LOG2	(EXT_PAGE_SIZE_LOG2 - SECTOR_LOG2)
-#define	LIMIT_2GBPAGES	(0x7ffff)		/*　2GBページ　*/
-#define	LIMIT_4GBPAGES	(0xfffff)		/*　4GBページ　*/
-#define	BIOS_ADDRESS_START	((DWORD)(0xe0000))	/*　E0000～FFFFF　*/
-#define	BIOS_ADDRESS_END	((DWORD)(0xfffff))	/*　E0000～FFFFF　*/
+#define	LIMIT_2GBPAGES	(0x7ffff)		/* 2GB pages */
+#define	LIMIT_4GBPAGES	(0xfffff)		/* 4GB pages */
+#define	BIOS_ADDRESS_START	((DWORD)(0xe0000))	/* E0000..FFFFF */
+#define	BIOS_ADDRESS_END	((DWORD)(0xfffff))	/* E0000..FFFFF */
 #define	BIOS_SIZE			((DWORD)(BIOS_ADDRESS_END - BIOS_ADDRESS_START + 1))
 
-/*　BPB配列(FAT12,16)　*/
+/* BPB array (FAT12,16) */
 typedef	struct {
-	WORD	wNumSectorByte;		// セクタバイト数(BPB, =SECTOR)
-	BYTE	byAllocUnit;		// アロケーションユニット(alloc)
-	WORD	wNumResvSector;		// 予約セクタ数 FAT12/16=1, FAT32=32
-	BYTE	byNumFat;			// FAT数(=1)
-	WORD	wNumDirectory;		// ルートディレクトリエントリ数(dir, =128)
-	WORD	wNumAllSector;		// 全セクタ数(sectors) under32MB
-	BYTE	byMediaId;			// メディアID(media, =f8)
-	WORD	wNumFatSector;		// FATセクタ数(FAT)
+	WORD	wNumSectorByte;		// The number of sector bytes (BPB, =SECTOR)
+	BYTE	byAllocUnit;		// Allocation unit (alloc)
+	WORD	wNumResvSector;		// The number of reserved sectors, FAT12/16=1, FAT32=32
+	BYTE	byNumFat;			// The number of FATs (=1)
+	WORD	wNumDirectory;		// The number of root directory entries (dir, =128)
+	WORD	wNumAllSector;		// The number of all sectors (under 32MB)
+	BYTE	byMediaId;			// Media ID(media, =f8)
+	WORD	wNumFatSector;		// The number of FAT sectors (FAT)
  } bpb_struc1;
 
 typedef	struct {
-	WORD	bsSecPerTrack;		// 1バンクあたりのセクタ数(=PAGE_SECTOR)
-	WORD	bsHeads;			// ヘッド数(=1)
-	ULONG	bsHiddenSecs;		// 隠れたセクタ数(=0)
-	ULONG	bsHugeSectors;		// over32MBセクタ
+	WORD	bsSecPerTrack;		// Sectors per bank (=PAGE_SECTOR)
+	WORD	bsHeads;			// The number of heads (=1)
+	ULONG	bsHiddenSecs;		// The number of hidden sectors (=0)
+	ULONG	bsHugeSectors;		// The sectors over 32MB
  } bpb_struc2;
 
 typedef	struct {
-	BYTE		bsDriveNumber;		// ドライブ番号
-	BYTE		bsReserved1;		// 予約
-	BYTE		bsBootSignature;	// 識別子
-	ULONG		bsVolumeID; 		// ボリュームID
-	CHAR		bsLabel[11];		// ラベル
-	CHAR		bsFileSystemType[8];// ファイルシステムタイプ
+	BYTE		bsDriveNumber;		// Drive number
+	BYTE		bsReserved1;		// Reserved
+	BYTE		bsBootSignature;	// Signature
+	ULONG		bsVolumeID; 		// Volume ID
+	CHAR		bsLabel[11];		// Label
+	CHAR		bsFileSystemType[8];// File system type
  } bpb_struc3;
 
-/*　BPB配列(FAT32)　*/
+/* BPB array (FAT32) */
 typedef	struct {
-	DWORD	dwNumFatSector32;	// FATセクタ数(FAT32)
-	WORD	wExtFlags;			// 拡張フラグ
-	WORD	wFileSystemVersion;	// ファイルシステムバージョン
-	DWORD	dwRootCluster;		// ルートクラスタ番号(=2)
-	WORD	wFsInfoSector;		// FSINFOセクタ番号(=1)
-	WORD	wBackupBootSector;	// バックアップブートセクタ番号(=6)
-	BYTE	byResv[12];			// 予約
+	DWORD	dwNumFatSector32;	// The number of FAT sectors (FAT32)
+	WORD	wExtFlags;			// Extended flags
+	WORD	wFileSystemVersion;	// Filesystem version
+	DWORD	dwRootCluster;		// Root cluster number (=2)
+	WORD	wFsInfoSector;		// FSINFO sector number (=1)
+	WORD	wBackupBootSector;	// Backup boot sector number (=6)
+	BYTE	byResv[12];			// Reserved
  } bpb_struc4;
 
 typedef union {
-	DWORD	dwOptflag;					// ERAM制御
+	DWORD	dwOptflag;					// ERAM control
 	struct {
-		BYTE	NonPaged:1;				// bit 0:NonPagedPool使用
-		BYTE	External:1;				// bit 1:外部メモリ使用
-		BYTE	SkipExternalCheck:1;	// bit 2:外部メモリ使用時メモリ検査しない
-		BYTE	Swapable:1;				// bit 3:ローカルディスクとして扱う
-		BYTE	EnableFat32:1;			// bit 4:FAT32の使用を許可
-		BYTE	SkipReportUsage:1;		// bit 5:外部メモリ使用時Reportしない=2000:スタンバイ可
-		BYTE	MakeTempDir:1;			// bit 6:TEMPディレクトリ作成
+		BYTE	NonPaged:1;				// bit 0:NonPagedPool usage
+		BYTE	External:1;				// bit 1:External memory usage
+		BYTE	SkipExternalCheck:1;	// bit 2:Don't test memory when using external memory
+		BYTE	Swapable:1;				// bit 3:Local disk flag
+		BYTE	EnableFat32:1;			// bit 4:Allow FAT32 usage
+		BYTE	SkipReportUsage:1;		// bit 5:Don't report when using external memory = 2000:Allow stand-by
+		BYTE	MakeTempDir:1;			// bit 6:TEMP directory creation
 		BYTE	byResv7:1;				// bit 7:
 		BYTE	byResv8:8;				// bit 8:
 		BYTE	byResv16:8;				// bit16:
 		BYTE	byResv24:7;				// bit24:
-		BYTE	UseExtFile:1;			// bit31:外部ファイル使用
+		BYTE	UseExtFile:1;			// bit31:External file usage
 	} Bits;
  } ERAM_OPTFLAG, *PERAM_OPTFLAG;
 
-/*　ERAMディスクデバイス固有情報　*/
+/* ERAM disk device specific info */
 typedef struct {
 	PDEVICE_OBJECT		pDevObj;
 	ERAM_READ			EramRead;
 	ERAM_WRITE			EramWrite;
 	ERAM_NEXT			EramNext;
 	ERAM_UNMAP			EramUnmap;
-	ULONG				uNowMapAdr;		// OS管理外/ファイル 現在マップ中のアドレス
-	LPBYTE				pExtPage;		// OS管理外/ファイル メモリマップアドレス
-	LPBYTE				pPageBase;		// OS管理メモリ
-	ULONG				uSizeTotal;		// トータルサイズ(4KB単位)
+	ULONG				uNowMapAdr;		// OS management outside/file, the currently mapping address
+	LPBYTE				pExtPage;		// OS management outside/file, the memory mapping address
+	LPBYTE				pPageBase;		// OS management memory
+	ULONG				uSizeTotal;		// Total size (4KB unit)
 	UNICODE_STRING		Win32Name;
-	ULONG				uAllSector;		// セクタ数
-	ULONG				uExternalStart;	// 外部メモリ開始位置
-	ULONG				uExternalEnd;	// 外部メモリ終了位置(検出された分)
-	FAST_MUTEX			FastMutex;		// 高速mutex
-	PHYSICAL_ADDRESS	MapAdr;			// OS管理外メモリマップ位置先頭
-	ULONG				bsHiddenSecs;	// 隠れたセクタ数(=0)
-	HANDLE				hFile;			// 外部ファイルハンドル (システムプロセス内)
-	HANDLE				hSection;		// 外部ファイルマップハンドル (システムプロセス内)
-	LIST_ENTRY			IrpList;		// Irpリスト先頭
-	KSPIN_LOCK			IrpSpin;		// Irpリスト用spinlock
-	KSEMAPHORE			IrpSem;			// Irpリスト用semaphore
-	PVOID				pThreadObject;	// Irpリスト用スレッドオブジェクト
-	ERAM_OPTFLAG		uOptflag;		// オプション
-	BYTE				FAT_size;		// PARTITION_～ FAT_12,FAT_16,HUGE,FAT32
-	BYTE				bThreadStop;	// スレッド停止要求
+	ULONG				uAllSector;		// The number of all sectors
+	ULONG				uExternalStart;	// External memory starting position
+	ULONG				uExternalEnd;	// External memory ending position (of detected)
+	FAST_MUTEX			FastMutex;		// Fast mutex
+	PHYSICAL_ADDRESS	MapAdr;			// OS management outside memory map position top
+	ULONG				bsHiddenSecs;	// The number of hidden sectors (=0)
+	HANDLE				hFile;			// External file handle (in system process)
+	HANDLE				hSection;		// External file mapping handle (in system process)
+	LIST_ENTRY			IrpList;		// Irp list top
+	KSPIN_LOCK			IrpSpin;		// Irp list spinlock
+	KSEMAPHORE			IrpSem;			// Irp list semaphore
+	PVOID				pThreadObject;	// Irp list thred object
+	ERAM_OPTFLAG		uOptflag;		// Option
+	BYTE				FAT_size;		// PARTITION_... FAT_12,FAT_16,HUGE,FAT32
+	BYTE				bThreadStop;	// Thread Stop Request
  } ERAM_EXTENSION, *PERAM_EXTENSION;
 
-/*　MBR内パーテーションテーブル(PC/AT)　*/
+/* MBR-inside partitoin table (PC/AT) */
 typedef struct {
 	BYTE	byBootInd;
 	BYTE	byFirstHead;
@@ -174,65 +175,65 @@ typedef struct {
 	DWORD	dwNumSectors;
  } MBR_PARTITION, *PMBR_PARTITION;
 
-/*　ブートセクタ用情報　*/
+/* Info for boot sector */
 typedef struct {
-	bpb_struc1	BPB;						/*　BPB配列　*/
-	bpb_struc2	BPB_ext;					/*　DOS5拡張領域　*/
-	bpb_struc3	BPB_ext2;					/*　拡張領域　*/
-	bpb_struc4	BPB_fat32;					/*　FAT32専用　*/
-	TIME_FIELDS TimeInfo;					/*　日時　*/
-	CHAR		bsLabel[11];				/*　ラベル　*/
-	WCHAR		wszExtFile[4];				/*　\\??\\　*/
-	WCHAR		wszExtFileMain[260];		/*　C:\\ERAMSWAP.$$$　*/
+	bpb_struc1	BPB;						/* BPB array */
+	bpb_struc2	BPB_ext;					/* DOS5 extended area */
+	bpb_struc3	BPB_ext2;					/* Extended area */
+	bpb_struc4	BPB_fat32;					/* FAT32 only */
+	TIME_FIELDS TimeInfo;					/* date and time */
+	CHAR		bsLabel[11];				/* label */
+	WCHAR		wszExtFile[4];				/* \\??\\ */
+	WCHAR		wszExtFileMain[260];		/* C:\\ERAMSWAP.$$$ */
  } FAT_ID, *PFAT_ID;
 
 typedef struct {
 	BYTE		bsJump[3];			// jmp $(=eb, fe, 90)
-	BYTE		bsOemName[8];		// デバイス名(='ERAM    ')
-	bpb_struc1	BPB;				// BPB配列
-	bpb_struc2	BPB_ext;			// DOS5拡張領域
-	bpb_struc3	BPB_ext2;			// 拡張領域
+	BYTE		bsOemName[8];		// Device name (='ERAM    ')
+	bpb_struc1	BPB;				// BPB array
+	bpb_struc2	BPB_ext;			// DOS5 extended area
+	bpb_struc3	BPB_ext2;			// Extended area
 	BYTE		byResv1[194];
 	BYTE		szMsg[128];			// 0x100
 	BYTE		byResv2[126];		// 0x180
-	BYTE		bsSig2[2];			/*　55,AA　*/
+	BYTE		bsSig2[2];			/* 55,AA */
  } BOOTSECTOR_FAT16, *PBOOTSECTOR_FAT16;
 
 typedef struct {
 	BYTE			bsJump[3];		// jmp $(=eb, fe, 90)
-	BYTE			bsOemName[8];	// デバイス名(='ERAM    ')
-	bpb_struc1		BPB;			// BPB配列
-	bpb_struc2		BPB_ext;		// DOS5拡張領域
-	bpb_struc4		BPB_fat32;		// FAT32専用
-	bpb_struc3		BPB_ext2;		// 拡張領域
+	BYTE			bsOemName[8];	// Device name (='ERAM    ')
+	bpb_struc1		BPB;			// BPB array
+	bpb_struc2		BPB_ext;		// DOS5 extended area
+	bpb_struc4		BPB_fat32;		// FAT32 only
+	bpb_struc3		BPB_ext2;		// Extended area
 	BYTE			byResv1[166];
 	BYTE			szMsg[128];		// 0x100
 	BYTE			byResv[62];		// 0x180
 	MBR_PARTITION	Parts[4];		// 0x1BE, 1CE, 1DE, 1EE
-	BYTE			bsSig2[2];		/*　55,AA　*/
+	BYTE			bsSig2[2];		/* 55,AA */
  } BOOTSECTOR_FAT32, *PBOOTSECTOR_FAT32;
 
-/*　FSINFO (FAT32)　*/
+/* FSINFO (FAT32) */
 typedef struct {
-	DWORD	bfFSInf_Sig;				/*	"rrAa"　*/
-	DWORD	bfFSInf_free_clus_cnt;		/*	空きクラスタ -1:不明　*/
-	DWORD	bfFSInf_next_free_clus;		/*	前回確保したクラスタ　*/
+	DWORD	bfFSInf_Sig;				/*	"rrAa" */
+	DWORD	bfFSInf_free_clus_cnt;		/*	Free clusters -1:Unknown */
+	DWORD	bfFSInf_next_free_clus;		/*	Cluster reserved last time */
 	DWORD	bfFSInf_resvd[3];
  } BIGFATBOOTFSINFO, *PBIGFATBOOTFSINFO;
 
 typedef struct {
-	DWORD				FSInfo_Sig;		/*	"RRaA"　*/
+	DWORD				FSInfo_Sig;		/*	"RRaA" */
 	BYTE				byResv[480];
-	BIGFATBOOTFSINFO	FsInfo;			/*　1E4～　*/
+	BIGFATBOOTFSINFO	FsInfo;			/* 1E4.. */
 	BYTE				byResv2[2];
-	BYTE				bsSig2[2];		/*　55,AA　*/
+	BYTE				bsSig2[2];		/* 55,AA */
  } FSINFO_SECTOR, *PFSINFO_SECTOR;
 
-/*　ディレクトリエントリ　*/
+/* Directory entry */
 typedef struct {
-	CHAR	sName[11];		/*　ファイル名　*/
+	CHAR	sName[11];		/* Filename */
 	union {
-		BYTE	byAttr;		/*　ファイル属性　*/
+		BYTE	byAttr;		/* File attributes */
 		struct {
 			BYTE	byR:1;
 			BYTE	byH:1;
@@ -243,28 +244,28 @@ typedef struct {
 		} Bits;
 	} uAttr;
 	BYTE	byResv1[10];
-	WORD	wUpdMinute;		/*　更新時刻　*/
-	WORD	wUpdDate;		/*　更新日付　*/
-	WORD	wCluster;		/*　先頭クラスタ　*/
-	DWORD	dwFileSize;		/*　ファイルサイズ　*/
+	WORD	wUpdMinute;		/* Update Time */
+	WORD	wUpdDate;		/* Update Date */
+	WORD	wCluster;		/* First cluster */
+	DWORD	dwFileSize;		/* The file size */
  } DIR_ENTRY, *PDIR_ENTRY;
 
-/*　ルートディレクトリエントリ　*/
+/* Root Directory Entry */
 typedef struct {
 	DIR_ENTRY	vol;
 	DIR_ENTRY	temp;
  } vol_label;
 
-/*　サブディレクトリエントリ　*/
+/* Subdirectory Entry */
 typedef struct {
 	DIR_ENTRY	own;
 	DIR_ENTRY	parent;
  } dir_init;
 
 
-/*　プロトタイプ　*/
+/* Prototypes */
 
-//------  昔の隠れAPI
+//------  Oldie hidden API
 
 extern __declspec(dllimport) ULONG NtBuildNumber;
 
@@ -287,7 +288,7 @@ ZwCreateSection(
 #define	SEC_COMMIT	(0x8000000)
 #endif
 
-//------  通常使用時に常時使用する関数群
+//------  Functions to be used at all times in normal use
 
 NTSTATUS EramCreateClose(
 	IN PDEVICE_OBJECT	pDevObj,
@@ -465,9 +466,9 @@ NTSTATUS EramShutdown(
 	IN PIRP				pIrp
  );
 
-/*　ページングするための定義　*/
+/* Definitions for paging */
 #ifdef ALLOC_PRAGMA
-//------  通常使用時に常時使用する関数群
+//------  Functions to be used at all times in normal use
 #pragma	alloc_text(PAGE, EramCreateClose)
 #pragma	alloc_text(PAGE, EramDeviceControl)
 #pragma	alloc_text(PAGE, EramDeviceControlGeometry)
@@ -502,8 +503,7 @@ NTSTATUS EramShutdown(
 #pragma	alloc_text(PAGE, EramShutdown)
 #endif	// ALLOC_PRAGMA
 
-
-//------  これ以降は初期化時に使用する関数群
+//------  Below are the functions used at initialization
 
 NTSTATUS DriverEntry(
 	IN OUT PDRIVER_OBJECT	pDrvObj,
@@ -692,7 +692,7 @@ DWORD CheckRsdtElements(
 	IN DWORD			dwRsdtElement
  );
 
-/*　初期化後解放するための定義　*/
+/* Definitions for releasing after initialization */
 #ifdef ALLOC_PRAGMA
 #pragma	alloc_text(INIT, DriverEntry)
 #pragma	alloc_text(INIT, InitFatId)

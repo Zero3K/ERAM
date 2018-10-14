@@ -1,5 +1,5 @@
-/*　ERAMNT.RC　　RAMディスクERAM for WindowsNT/2000/XP
-　　　Copyright (c) 1999-2004 by *Error15
+/* ERAMNT.RC    RAM Disk ERAM for WindowsNT/2000/XP
+      Copyright (c) 1999-2004 by *Error15
 */
 
 #include <windows.h>
@@ -7,7 +7,7 @@
 #ifdef RC_INVOKED
 
 /////////////////////////////////////////////////////////////////////////////
-// 日本語 resources
+// Japanese resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -26,7 +26,7 @@ VS_VERSION_INFO	VERSIONINFO
 BEGIN
 	BLOCK	"StringFileInfo"
 	BEGIN
-		BLOCK	"041104b0"		//日本語
+		BLOCK	"041104b0"		//Japanese
 		BEGIN
 			VALUE "Comments",			"ERAM for Windows NT/2000/XP"
 			VALUE "CompanyName",		"*Error15"
@@ -45,12 +45,12 @@ BEGIN
 	END
 END
 
-#endif	// 日本語 resources
+#endif	// Japanese resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// 英語 (ｱﾒﾘｶ) resources
+// English (America) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -88,6 +88,6 @@ BEGIN
 	END
 END
 
-#endif	// 英語 (ｱﾒﾘｶ) resources
+#endif	// English (America) resources
 
 #endif	//RC_INVOKED
