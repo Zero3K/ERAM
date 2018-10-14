@@ -1,0 +1,432 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "ERAMNTUI.H"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "windows.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// ﾆｭｰﾄﾗﾙ resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(932)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON                ICON    DISCARDABLE     "ERAMNTUI.ICO"
+#endif    // ﾆｭｰﾄﾗﾙ resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 日本語 resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+#ifdef _WIN32
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SETUP DIALOG DISCARDABLE  0, 0, 189, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ERAM for Windows NT/2000/XP"
+FONT 10, "ＭＳ ゴシック"
+BEGIN
+    LTEXT           "ﾄﾞﾗｲﾌﾞ文字(&D)",IDC_STATIC,5,10,58,8
+    COMBOBOX        IDC_COMBO_DRIVE,65,10,23,175,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "ﾙｰﾄのｴﾝﾄﾘ数(&L)",IDC_STATIC,95,10,58,8
+    EDITTEXT        IDC_EDIT_ROOTDIR,155,10,25,12,ES_AUTOHSCROLL
+    LTEXT           "ｱﾛｹｰｼｮﾝﾕﾆｯﾄ(&A)",IDC_STATIC,5,30,58,8
+    COMBOBOX        IDC_COMBO_ALLOCUNIT,65,30,23,75,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "ﾒﾃﾞｨｱID(&I)",IDC_STATIC,95,30,58,8
+    EDITTEXT        IDC_EDIT_MEDIAID,155,30,25,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "ﾃﾞｨｽｸｻｲｽﾞ(&S)",IDC_STATIC,5,50,55,10
+    EDITTEXT        IDC_EDIT_PAGE,65,50,40,12,ES_AUTOHSCROLL
+    LTEXT           "KB",IDC_STATIC,110,50,15,10
+    GROUPBOX        " ﾒﾓﾘ確保元 ",IDC_STATIC,5,70,175,65
+    CONTROL         "OS管理:固定ﾍﾟｰｼﾞ領域(&N)",IDC_RADIO_NONPAGED,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,85,160,15
+    CONTROL         "OS管理:移動可能ﾍﾟｰｼﾞ領域(&P)",IDC_RADIO_PAGED,"Button",
+                    BS_AUTORADIOBUTTON,15,100,160,15
+    CONTROL         "OS管理外領域(&E)  BOOT.INI編集必要",IDC_RADIO_EXTERNAL,
+                    "Button",BS_AUTORADIOBUTTON,15,115,160,15
+    GROUPBOX        " OS管理外領域 ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
+    CONTROL         "開始位置指定",IDC_CHECK_EXTSTART,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,155,70,10
+    EDITTEXT        IDC_EDIT_EXTSTART_MB,95,155,35,12,ES_RIGHT | 
+                    ES_UPPERCASE | ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "MBから",IDC_STATIC_EXTSTART_MB,135,157,35,10
+    CONTROL         "ﾒﾓﾘ上限を検出",IDC_CHECK_NOTSEARCHSKIP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,170,75,10
+    CONTROL         "OSに通知",IDC_CHECK_REPORTUSAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,95,170,75,10
+    CONTROL         "実ﾃﾞﾊﾞｲｽ扱い",IDC_CHECK_LOCAL_DISK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,190,70,10
+    CONTROL         "TEMPﾃﾞｨﾚｸﾄﾘ作成",IDC_CHECK_MAKE_TEMP,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,95,190,85,10
+    DEFPUSHBUTTON   "OK",IDOK,75,205,30,15,WS_GROUP
+    PUSHBUTTON      "ｷｬﾝｾﾙ",IDCANCEL,110,205,30,15
+    PUSHBUTTON      "適用",IDC_UPDATE,145,205,30,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SETUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 182
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 219
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "ERAMNTUI.H\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""windows.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""ERAMNTUM.RC""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,20,0,0
+ PRODUCTVERSION 2,20,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041104b0"
+        BEGIN
+            VALUE "Comments", "ERAM for Windows NT/2000/XP\0"
+            VALUE "CompanyName", "*Error15\0"
+            VALUE "FileDescription", "ERAM for Windows NT/2000/XP ｱﾌﾟﾚｯﾄ\0"
+            VALUE "FileVersion", "2.20\0"
+            VALUE "InternalName", "ERAMNT.CPL\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999-2004 *Error15\0"
+            VALUE "OriginalFilename", "ERAMNT.CPL\0"
+            VALUE "ProductName", "ERAM for Windows NT/2000/XP\0"
+            VALUE "ProductVersion", "2.20\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x411, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_OPEN_REG        "ﾚｼﾞｽﾄﾘｷｰのｵｰﾌﾟﾝに失敗"
+    IDS_PROMPT_REBOOT       "新しい設定を有効にするには、コンピュータを再起動する必要があります。\n\n今すぐ再起動しますか?"
+    IDS_ERR_REBOOT          "再起動できませんでした"
+    IDS_ERR_REG_MODIFY      "ﾚｼﾞｽﾄﾘの更新ｴﾗｰ"
+    IDS_WARN_DRV_USING      "%cﾄﾞﾗｲﾌﾞは使用中のため設定できない可能性があります."
+    IDS_WARN_LIMIT_SIZE     "ｻｲｽﾞを合計 %dKB 以内にする必要があります."
+    IDS_WARN_LIMIT_SIZE_THIS_UNIT 
+                            "このｱﾛｹｰｼｮﾝﾕﾆｯﾄでは ｻｲｽﾞを合計 %dKB 以内にする必要があります."
+    IDS_PROMPT_ERAM_REMOVE  "RAMﾃﾞｨｽｸ ERAMをｱﾝｲﾝｽﾄｰﾙします."
+    IDS_ERR_DETECT_OS       "OSを正しく認識できません."
+    IDS_PROMPT_BEFORE_DEVMGR 
+                            "ﾃﾞﾊﾞｲｽﾏﾈｰｼﾞｬを使ってERAMをあらかじめ削除ください."
+    IDS_ERR_NEED_REMOVE_PRIV 
+                            "ﾃﾞﾊﾞｲｽを削除する権利が無いので削除できません.\n管理者権限を持ったｱｶｳﾝﾄで削除してください."
+    IDS_ERR_OPEN_ERAM       "ERAMﾃﾞﾊﾞｲｽに接続できませんでした(%d)."
+    IDS_ERR_ERAM_REMOVE     "ERAMﾃﾞﾊﾞｲｽを削除予約できませんでした(%d)."
+    IDS_ERR_GET_SYSDIR      "ｼｽﾃﾑﾃﾞｨﾚｸﾄﾘを取得できませんでした(%d)."
+    IDS_ERR_REMOVE          "%s の削除予約に失敗しました(%d)."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_LOAD_SETUPAPI   "SETUPAPI.DLLのﾘﾝｸに失敗しました(%d)."
+    IDS_ERR_GETPROC_SETUPAPI "SETUPAPI.DLLのﾎﾟｲﾝﾀ取得に失敗しました(%d)."
+    IDS_ERR_DRIVER_ENUM     "ﾄﾞﾗｲﾊﾞ列挙に失敗しました(%d)."
+    IDS_ERR_DRIVER_REMOVE   "ﾄﾞﾗｲﾊﾞ削除に失敗しました(%d)."
+    IDS_INFO_FASTFAT_USAGE  "usage:\n RUNDLL32 ERAMNT.CPL,StartupFastfat 0-4\n   1:推奨 4:初期状態"
+    IDS_ERR_NEED_CTRL_PRIV  "ﾄﾞﾗｲﾊﾞを制御する権利がありません.\n管理者権限を持ったｱｶｳﾝﾄで実行してください."
+    IDS_ERR_OPEN_SCM        "SCMに接続できませんでした(%d)."
+    IDS_ERR_OPEN_FASTFAT    "FASTFATﾄﾞﾗｲﾊﾞに接続できませんでした(%d)."
+    IDS_INFO_FASTFAT_ALREADY 
+                            "FASTFATﾄﾞﾗｲﾊﾞのｽﾀｰﾄｱｯﾌﾟは既に %s に設定されています."
+    IDS_ERR_FASTFAT_MODIFY  "FASTFATﾄﾞﾗｲﾊﾞに設定できませんでした(%d)."
+    IDS_INFO_FASTFAT_MODIFY "FASTFATﾄﾞﾗｲﾊﾞのｽﾀｰﾄｱｯﾌﾟを %s に変更しました."
+    IDS_INFO_DESC           "RAMﾃﾞｨｽｸ ERAM の設定を変更します."
+    IDS_TAB_TITLE           "設定"
+    IDS_START_TYPE_0        "ﾌﾞｰﾄ"
+    IDS_START_TYPE_1        "ｼｽﾃﾑ"
+    IDS_START_TYPE_2        "自動"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_START_TYPE_3        "手動"
+    IDS_START_TYPE_4        "無効"
+    IDS_WARN_LIMIT_MAX_SIZE "ｱﾄﾞﾚｽ空間ｵｰﾊﾞｰﾌﾛｰ.\nｻｲｽﾞは %dKB 以内にする必要があります."
+    IDS_WARN_LIMIT_ROOTDIR  "ﾙｰﾄﾃﾞｨﾚｸﾄﾘｴﾝﾄﾘを格納できる大きさがありません.既定値に戻します."
+END
+
+#endif    // 日本語 resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英語 (ｱﾒﾘｶ) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SETUP DIALOG DISCARDABLE  0, 0, 189, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ERAM for Windows NT/2000/XP"
+FONT 9, "Lucida Console"
+BEGIN
+    LTEXT           "Drive(&D)",IDC_STATIC,5,10,58,8
+    COMBOBOX        IDC_COMBO_DRIVE,65,10,23,175,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Rootdir ent(&L)",IDC_STATIC,95,10,58,8
+    EDITTEXT        IDC_EDIT_ROOTDIR,155,10,25,12,ES_AUTOHSCROLL
+    LTEXT           "Alloc unit(&A)",IDC_STATIC,5,30,58,8
+    COMBOBOX        IDC_COMBO_ALLOCUNIT,65,30,23,75,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Media ID(&I)",IDC_STATIC,95,30,58,8
+    EDITTEXT        IDC_EDIT_MEDIAID,155,30,25,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Disk size(&S)",IDC_STATIC,5,50,55,10
+    EDITTEXT        IDC_EDIT_PAGE,65,50,40,12,ES_AUTOHSCROLL
+    LTEXT           "KB",IDC_STATIC,110,50,15,10
+    GROUPBOX        " Memory source ",IDC_STATIC,5,70,175,65
+    CONTROL         "OS:NonPaged pool(&N)",IDC_RADIO_NONPAGED,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,15,85,160,15
+    CONTROL         "OS:PagedPool(&P)",IDC_RADIO_PAGED,"Button",
+                    BS_AUTORADIOBUTTON,15,100,160,15
+    CONTROL         "External(&E)  need edit BOOT.INI",IDC_RADIO_EXTERNAL,
+                    "Button",BS_AUTORADIOBUTTON,15,115,160,15
+    GROUPBOX        " External ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
+    CONTROL         "Start address",IDC_CHECK_EXTSTART,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,155,70,10
+    EDITTEXT        IDC_EDIT_EXTSTART_MB,95,155,35,12,ES_RIGHT | 
+                    ES_UPPERCASE | ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "MB-",IDC_STATIC_EXTSTART_MB,135,157,35,10
+    CONTROL         "Detect limit",IDC_CHECK_NOTSEARCHSKIP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,170,75,10
+    CONTROL         "Report to OS",IDC_CHECK_REPORTUSAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,95,170,75,10
+    CONTROL         "Local device",IDC_CHECK_LOCAL_DISK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,190,70,10
+    CONTROL         "Make TEMP dir",IDC_CHECK_MAKE_TEMP,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,95,190,85,10
+    DEFPUSHBUTTON   "Ok",IDOK,75,205,30,15,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,110,205,30,15
+    PUSHBUTTON      "Modify",IDC_UPDATE,145,205,30,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SETUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 182
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 219
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,20,0,0
+ PRODUCTVERSION 2,20,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "ERAM for Windows NT/2000/XP\0"
+            VALUE "CompanyName", "*Error15\0"
+            VALUE "FileDescription", "ERAM for Windows NT/2000/XP Applet\0"
+            VALUE "FileVersion", "2.20\0"
+            VALUE "InternalName", "ERAMNT.CPL\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999-2004 *Error15\0"
+            VALUE "OriginalFilename", "ERAMNT.CPL\0"
+            VALUE "ProductName", "ERAM for Windows NT/2000/XP\0"
+            VALUE "ProductVersion", "2.20\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_OPEN_REG        "Open registory key failed."
+    IDS_PROMPT_REBOOT       "Reboot now?"
+    IDS_ERR_REBOOT          "Reboot failed."
+    IDS_ERR_REG_MODIFY      "Registory modify error."
+    IDS_WARN_DRV_USING      "%c drive is already used."
+    IDS_WARN_LIMIT_SIZE     "Limit size %dKB."
+    IDS_WARN_LIMIT_SIZE_THIS_UNIT "Limit size %dKB at this allocation unit."
+    IDS_PROMPT_ERAM_REMOVE  "Uninstall ERAM start."
+    IDS_ERR_DETECT_OS       "Detection OS failed."
+    IDS_PROMPT_BEFORE_DEVMGR "Please use device manager to remove ERAM."
+    IDS_ERR_NEED_REMOVE_PRIV "Remove failed. Need Administrators priv."
+    IDS_ERR_OPEN_ERAM       "Open ERAM failed(%d)."
+    IDS_ERR_ERAM_REMOVE     "Remove ERAM failed(%d)."
+    IDS_ERR_GET_SYSDIR      "Get system directory failed(%d)."
+    IDS_ERR_REMOVE          "Delete %s failed(%d)."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_LOAD_SETUPAPI   "Load SETUPAPI.DLL failed(%d)."
+    IDS_ERR_GETPROC_SETUPAPI "GetProcAddress to SETUPAPI.DLL failed(%d)."
+    IDS_ERR_DRIVER_ENUM     "Enum driver failed(%d)."
+    IDS_ERR_DRIVER_REMOVE   "Remove driver failed(%d)."
+    IDS_INFO_FASTFAT_USAGE  "usage:\n RUNDLL32 ERAMNT.CPL,StartupFastfat 0-4\n   1:System 4:Default"
+    IDS_ERR_NEED_CTRL_PRIV  "Control failed. Need Administrators priv."
+    IDS_ERR_OPEN_SCM        "Open SCM failed(%d)."
+    IDS_ERR_OPEN_FASTFAT    "Open FASTFAT failed(%d)."
+    IDS_INFO_FASTFAT_ALREADY "FASTFAT startup is already %s."
+    IDS_ERR_FASTFAT_MODIFY  "Modify FASTFAT failed(%d)."
+    IDS_INFO_FASTFAT_MODIFY "FASTFAT startup is set to %s."
+    IDS_INFO_DESC           "Setting ERAM."
+    IDS_TAB_TITLE           "Settings"
+    IDS_START_TYPE_0        "Boot"
+    IDS_START_TYPE_1        "System"
+    IDS_START_TYPE_2        "Auto"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_START_TYPE_3        "Demand"
+    IDS_START_TYPE_4        "Disabled"
+    IDS_WARN_LIMIT_MAX_SIZE "Address space overflow, Limit size %dKB."
+    IDS_WARN_LIMIT_ROOTDIR  "Disk size too small, RootDir entry reset to default."
+END
+
+#endif    // 英語 (ｱﾒﾘｶ) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "ERAMNTUM.RC"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

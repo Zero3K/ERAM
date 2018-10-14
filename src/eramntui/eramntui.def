@@ -1,0 +1,8 @@
+LIBRARY			ERAMNT
+DESCRIPTION		'ERAM for Windows NT/2000/XP'
+EXPORTS
+				CPlApplet
+				EramClassInstall
+				EnumPropPages32
+				EramUninstall
+				StartupFastfat
