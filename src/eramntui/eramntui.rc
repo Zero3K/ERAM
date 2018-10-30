@@ -57,23 +57,23 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Rootdir ent(&L)",IDC_STATIC,95,10,58,8
     EDITTEXT        IDC_EDIT_ROOTDIR,155,10,25,12,ES_AUTOHSCROLL
-    LTEXT           "Alloc unit(&A)",IDC_STATIC,5,30,58,8
+    LTEXT           "Allocation Units(&A)",IDC_STATIC,5,30,58,8
     COMBOBOX        IDC_COMBO_ALLOCUNIT,65,30,23,75,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "Media ID(&I)",IDC_STATIC,95,30,58,8
     EDITTEXT        IDC_EDIT_MEDIAID,155,30,25,12,ES_UPPERCASE | 
                     ES_AUTOHSCROLL
-    LTEXT           "Disk size(&S)",IDC_STATIC,5,50,55,10
+    LTEXT           "Disk Size(&S)",IDC_STATIC,5,50,55,10
     EDITTEXT        IDC_EDIT_PAGE,65,50,40,12,ES_AUTOHSCROLL
     LTEXT           "KB",IDC_STATIC,110,50,15,10
-    GROUPBOX        " Memory source ",IDC_STATIC,5,70,175,65
-    CONTROL         "OS:NonPaged pool(&N)",IDC_RADIO_NONPAGED,"Button",
+    GROUPBOX        "Memory Source ",IDC_STATIC,5,70,175,65
+    CONTROL         "OS:NonPaged Pool(&N)",IDC_RADIO_NONPAGED,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,15,85,160,15
-    CONTROL         "OS:PagedPool(&P)",IDC_RADIO_PAGED,"Button",
+    CONTROL         "OS:Paged Pool(&P)",IDC_RADIO_PAGED,"Button",
                     BS_AUTORADIOBUTTON,15,100,160,15
-    CONTROL         "External(&E)  need edit BOOT.INI",IDC_RADIO_EXTERNAL,
+    CONTROL         "External(&E) need to edit BOOT.INI",IDC_RADIO_EXTERNAL,
                     "Button",BS_AUTORADIOBUTTON,15,115,160,15
-    GROUPBOX        " External ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
+    GROUPBOX        "External ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
     CONTROL         "Start address",IDC_CHECK_EXTSTART,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,155,70,10
     EDITTEXT        IDC_EDIT_EXTSTART_MB,95,155,35,12,ES_RIGHT | 
@@ -83,9 +83,9 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,15,170,75,10
     CONTROL         "Report to OS",IDC_CHECK_REPORTUSAGE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,95,170,75,10
-    CONTROL         "Local device",IDC_CHECK_LOCAL_DISK,"Button",
+    CONTROL         "Local Device",IDC_CHECK_LOCAL_DISK,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,190,70,10
-    CONTROL         "Make TEMP dir",IDC_CHECK_MAKE_TEMP,"Button",
+    CONTROL         "Make TEMP Dir",IDC_CHECK_MAKE_TEMP,"Button",
                     BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,95,190,85,10
     DEFPUSHBUTTON   "Ok",IDOK,75,205,30,15,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,110,205,30,15
@@ -162,37 +162,37 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_ERR_OPEN_REG        "Open registory key failed."
+    IDS_ERR_OPEN_REG        "Cannot open registry key."
     IDS_PROMPT_REBOOT       "Reboot now?"
     IDS_ERR_REBOOT          "Reboot failed."
-    IDS_ERR_REG_MODIFY      "Registory modify error."
+    IDS_ERR_REG_MODIFY      "An error occurred when modifying the registry."
     IDS_WARN_DRV_USING      "%c drive is already used."
-    IDS_WARN_LIMIT_SIZE     "Limit size %dKB."
-    IDS_WARN_LIMIT_SIZE_THIS_UNIT "Limit size %dKB at this allocation unit."
-    IDS_PROMPT_ERAM_REMOVE  "Uninstall ERAM start."
-    IDS_ERR_DETECT_OS       "Detection OS failed."
-    IDS_PROMPT_BEFORE_DEVMGR "Please use device manager to remove ERAM."
-    IDS_ERR_NEED_REMOVE_PRIV "Remove failed. Need Administrators priv."
-    IDS_ERR_OPEN_ERAM       "Open ERAM failed(%d)."
-    IDS_ERR_ERAM_REMOVE     "Remove ERAM failed(%d)."
-    IDS_ERR_GET_SYSDIR      "Get system directory failed(%d)."
-    IDS_ERR_REMOVE          "Delete %s failed(%d)."
+    IDS_WARN_LIMIT_SIZE     "Limit size to %dKB."
+    IDS_WARN_LIMIT_SIZE_THIS_UNIT "Limit size to %dKB at this allocation unit."
+    IDS_PROMPT_ERAM_REMOVE  "The uninstall of ERAM has started."
+    IDS_ERR_DETECT_OS       "Detection of OS failed."
+    IDS_PROMPT_BEFORE_DEVMGR "Please use Device Manager to remove ERAM."
+    IDS_ERR_NEED_REMOVE_PRIV "Removal failed. Need Administrator privilege."
+    IDS_ERR_OPEN_ERAM       "Opening of ERAM failed(%d)."
+    IDS_ERR_ERAM_REMOVE     "Removal of ERAM failed(%d)."
+    IDS_ERR_GET_SYSDIR      "Cannot obtain system directory(%d)."
+    IDS_ERR_REMOVE          "Deletion of %s failed(%d)."
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_ERR_LOAD_SETUPAPI   "Load SETUPAPI.DLL failed(%d)."
+    IDS_ERR_LOAD_SETUPAPI   "Cannot load SETUPAPI.DLL(%d)."
     IDS_ERR_GETPROC_SETUPAPI "GetProcAddress to SETUPAPI.DLL failed(%d)."
     IDS_ERR_DRIVER_ENUM     "Enum driver failed(%d)."
-    IDS_ERR_DRIVER_REMOVE   "Remove driver failed(%d)."
+    IDS_ERR_DRIVER_REMOVE   "Removal of the driver failed(%d)."
     IDS_INFO_FASTFAT_USAGE  "usage:\n RUNDLL32 ERAMNT.CPL,StartupFastfat 0-4\n   1:System 4:Default"
-    IDS_ERR_NEED_CTRL_PRIV  "Control failed. Need Administrators priv."
-    IDS_ERR_OPEN_SCM        "Open SCM failed(%d)."
-    IDS_ERR_OPEN_FASTFAT    "Open FASTFAT failed(%d)."
-    IDS_INFO_FASTFAT_ALREADY "FASTFAT startup is already %s."
-    IDS_ERR_FASTFAT_MODIFY  "Modify FASTFAT failed(%d)."
+    IDS_ERR_NEED_CTRL_PRIV  "Control failed. Need Administrator privilege."
+    IDS_ERR_OPEN_SCM        "The opening of SCM failed(%d)."
+    IDS_ERR_OPEN_FASTFAT    "The opening of FASTFAT failed(%d)."
+    IDS_INFO_FASTFAT_ALREADY "FASTFAT is already starting %s."
+    IDS_ERR_FASTFAT_MODIFY  "The modification of FASTFAT failed(%d)."
     IDS_INFO_FASTFAT_MODIFY "FASTFAT startup is set to %s."
-    IDS_INFO_DESC           "Setting ERAM."
+    IDS_INFO_DESC           "ERAM Settings."
     IDS_TAB_TITLE           "Settings"
     IDS_START_TYPE_0        "Boot"
     IDS_START_TYPE_1        "System"
@@ -203,8 +203,8 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDS_START_TYPE_3        "Demand"
     IDS_START_TYPE_4        "Disabled"
-    IDS_WARN_LIMIT_MAX_SIZE "Address space overflow, Limit size %dKB."
-    IDS_WARN_LIMIT_ROOTDIR  "Disk size too small, RootDir entry reset to default."
+    IDS_WARN_LIMIT_MAX_SIZE "Address space is being overflowed, Limit size to %dKB."
+    IDS_WARN_LIMIT_ROOTDIR  "Disk size is too small, RootDir entry reset to default."
 END
 
 #endif    // English (U.S.) resources
