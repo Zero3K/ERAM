@@ -1,0 +1,164 @@
+ eramnt
+
+ Timestamp is 40f005b2 (Sun Jul 11 00:05:22 2004)
+
+ Preferred load address is 00010000
+
+ Start         Length     Name                   Class
+ 0001:00000000 000000f0H .idata$5                CODE
+ 0001:000000f0 00000054H .rdata                  CODE
+ 0001:00000150 000000c6H .text                   CODE
+ 0002:00000000 00000080H .data                   DATA
+ 0002:00000080 0000004eH .bss                    DATA
+ 0003:00000000 000014bbH PAGE                    CODE
+ 0004:00000000 000034d0H INIT                    CODE
+ 0004:000034d0 00000028H .idata$2                CODE
+ 0004:000034f8 00000014H .idata$3                CODE
+ 0004:0000350c 000000f0H .idata$4                CODE
+ 0004:000035fc 0000053cH .idata$6                CODE
+ 0005:00000000 00000070H .rsrc$01                DATA
+ 0005:00000070 000006a0H .rsrc$02                DATA
+
+  Address         Publics by Value              Rva+Base     Lib:Object
+
+ 0001:00000000       __imp__HalTranslateBusAddress@24 000102a0     hal:HAL.dll
+ 0001:00000004       __imp_@ExAcquireFastMutex@4 000102a4     hal:HAL.dll
+ 0001:00000008       __imp_@ExReleaseFastMutex@4 000102a8     hal:HAL.dll
+ 0001:0000000c       \177HAL_NULL_THUNK_DATA    000102ac     hal:HAL.dll
+ 0001:00000010       __imp__IoDeleteDevice@4    000102b0     ntoskrnl:ntoskrnl.exe
+ 0001:00000014       __imp__ZwClose@4           000102b4     ntoskrnl:ntoskrnl.exe
+ 0001:00000018       __imp_@ObfDereferenceObject@4 000102b8     ntoskrnl:ntoskrnl.exe
+ 0001:0000001c       __imp__KeWaitForSingleObject@20 000102bc     ntoskrnl:ntoskrnl.exe
+ 0001:00000020       __imp__KeReleaseSemaphore@16 000102c0     ntoskrnl:ntoskrnl.exe
+ 0001:00000024       __imp__IoReportResourceUsage@36 000102c4     ntoskrnl:ntoskrnl.exe
+ 0001:00000028       __imp__memset              000102c8     ntoskrnl:ntoskrnl.exe
+ 0001:0000002c       __imp__RtlFreeUnicodeString@4 000102cc     ntoskrnl:ntoskrnl.exe
+ 0001:00000030       __imp__RtlAnsiStringToUnicodeString@12 000102d0     ntoskrnl:ntoskrnl.exe
+ 0001:00000034       __imp__RtlInitAnsiString@8 000102d4     ntoskrnl:ntoskrnl.exe
+ 0001:00000038       __imp__IoWriteErrorLogEntry@4 000102d8     ntoskrnl:ntoskrnl.exe
+ 0001:0000003c       __imp__memcpy              000102dc     ntoskrnl:ntoskrnl.exe
+ 0001:00000040       __imp__IoAllocateErrorLogEntry@8 000102e0     ntoskrnl:ntoskrnl.exe
+ 0001:00000044       __imp__RtlInitUnicodeString@8 000102e4     ntoskrnl:ntoskrnl.exe
+ 0001:00000048       __imp__MmMapIoSpace@16     000102e8     ntoskrnl:ntoskrnl.exe
+ 0001:0000004c       __imp__MmUnmapIoSpace@8    000102ec     ntoskrnl:ntoskrnl.exe
+ 0001:00000050       __imp_@ExfInterlockedInsertTailList@12 000102f0     ntoskrnl:ntoskrnl.exe
+ 0001:00000054       __imp__PsTerminateSystemThread@4 000102f4     ntoskrnl:ntoskrnl.exe
+ 0001:00000058       __imp_@ExfInterlockedRemoveHeadList@8 000102f8     ntoskrnl:ntoskrnl.exe
+ 0001:0000005c       __imp__KeSetPriorityThread@8 000102fc     ntoskrnl:ntoskrnl.exe
+ 0001:00000060       __imp__KeGetCurrentThread@0 00010300     ntoskrnl:ntoskrnl.exe
+ 0001:00000064       __imp__ZwMapViewOfSection@40 00010304     ntoskrnl:ntoskrnl.exe
+ 0001:00000068       __imp__ZwUnmapViewOfSection@8 00010308     ntoskrnl:ntoskrnl.exe
+ 0001:0000006c       __imp__RtlAppendUnicodeStringToString@8 0001030c     ntoskrnl:ntoskrnl.exe
+ 0001:00000070       __imp__RtlCopyUnicodeString@8 00010310     ntoskrnl:ntoskrnl.exe
+ 0001:00000074       __imp__ExFreePool@4        00010314     ntoskrnl:ntoskrnl.exe
+ 0001:00000078       __imp__IoDeleteSymbolicLink@4 00010318     ntoskrnl:ntoskrnl.exe
+ 0001:0000007c       __imp__KeInitializeEvent@12 0001031c     ntoskrnl:ntoskrnl.exe
+ 0001:00000080       __imp__sprintf             00010320     ntoskrnl:ntoskrnl.exe
+ 0001:00000084       __imp__IoCreateDevice@28   00010324     ntoskrnl:ntoskrnl.exe
+ 0001:00000088       __imp__IoRegisterShutdownNotification@4 00010328     ntoskrnl:ntoskrnl.exe
+ 0001:0000008c       __imp__ObReferenceObjectByHandle@24 0001032c     ntoskrnl:ntoskrnl.exe
+ 0001:00000090       __imp__PsCreateSystemThread@28 00010330     ntoskrnl:ntoskrnl.exe
+ 0001:00000094       __imp__KeInitializeSemaphore@12 00010334     ntoskrnl:ntoskrnl.exe
+ 0001:00000098       __imp__KeInitializeSpinLock@4 00010338     ntoskrnl:ntoskrnl.exe
+ 0001:0000009c       __imp__ZwCreateSection@28  0001033c     ntoskrnl:ntoskrnl.exe
+ 0001:000000a0       __imp__ZwSetInformationFile@20 00010340     ntoskrnl:ntoskrnl.exe
+ 0001:000000a4       __imp__ZwCreateFile@44     00010344     ntoskrnl:ntoskrnl.exe
+ 0001:000000a8       __imp__RtlIntegerToUnicodeString@12 00010348     ntoskrnl:ntoskrnl.exe
+ 0001:000000ac       __imp__MmLockPagableDataSection@4 0001034c     ntoskrnl:ntoskrnl.exe
+ 0001:000000b0       __imp__RtlQueryRegistryValues@20 00010350     ntoskrnl:ntoskrnl.exe
+ 0001:000000b4       __imp__NtBuildNumber       00010354     ntoskrnl:ntoskrnl.exe
+ 0001:000000b4       _NtBuildNumber             00010354     ntoskrnl:ntoskrnl.exe
+ 0001:000000b8       __imp__RtlFreeAnsiString@4 00010358     ntoskrnl:ntoskrnl.exe
+ 0001:000000bc       __imp__RtlUnicodeStringToAnsiString@12 0001035c     ntoskrnl:ntoskrnl.exe
+ 0001:000000c0       __imp__RtlTimeToTimeFields@8 00010360     ntoskrnl:ntoskrnl.exe
+ 0001:000000c4       __imp__ExSystemTimeToLocalTime@8 00010364     ntoskrnl:ntoskrnl.exe
+ 0001:000000c8       __imp__KeQuerySystemTime@4 00010368     ntoskrnl:ntoskrnl.exe
+ 0001:000000cc       __imp__RtlCompareMemory@12 0001036c     ntoskrnl:ntoskrnl.exe
+ 0001:000000d0       __imp__RtlUpcaseUnicodeString@12 00010370     ntoskrnl:ntoskrnl.exe
+ 0001:000000d4       __imp__MmGetPhysicalAddress@4 00010374     ntoskrnl:ntoskrnl.exe
+ 0001:000000d8       __imp__RtlUnicodeStringToInteger@12 00010378     ntoskrnl:ntoskrnl.exe
+ 0001:000000dc       __imp__MmMapLockedPages@8  0001037c     ntoskrnl:ntoskrnl.exe
+ 0001:000000e0       __imp_@IofCompleteRequest@8 00010380     ntoskrnl:ntoskrnl.exe
+ 0001:000000e4       __imp__ExAllocatePoolWithTag@12 00010384     ntoskrnl:ntoskrnl.exe
+ 0001:000000e8       __imp__IoCreateSymbolicLink@8 00010388     ntoskrnl:ntoskrnl.exe
+ 0001:000000ec       \177ntoskrnl_NULL_THUNK_DATA 0001038c     ntoskrnl:ntoskrnl.exe
+ 0001:00000150       __allmul                   000103f0 f   int64:llmul.obj
+ 0001:00000190       __aulldiv                  00010430 f   int64:ulldiv.obj
+ 0001:000001f8       _memset                    00010498 f   ntoskrnl:ntoskrnl.exe
+ 0001:000001fe       _memcpy                    0001049e f   ntoskrnl:ntoskrnl.exe
+ 0001:00000204       _KeGetCurrentThread@0      000104a4 f   ntoskrnl:ntoskrnl.exe
+ 0001:0000020a       _sprintf                   000104aa f   ntoskrnl:ntoskrnl.exe
+ 0001:00000210       _ZwCreateSection@28        000104b0 f   ntoskrnl:ntoskrnl.exe
+ 0003:00000000       _EramCreateClose@8         000105a0 f   eramnt.obj
+ 0003:00000030       _EramDeviceControl@8       000105d0 f   eramnt.obj
+ 0003:00000170       _EramDeviceControlGeometry@12 00010710 f   eramnt.obj
+ 0003:000001f0       _EramDeviceControlGetPartInfo@12 00010790 f   eramnt.obj
+ 0003:000002a0       _EramDeviceControlSetPartInfo@12 00010840 f   eramnt.obj
+ 0003:000002e0       _EramDeviceControlVerify@12 00010880 f   eramnt.obj
+ 0003:00000400       _EramDeviceControlDiskCheckVerify@12 000109a0 f   eramnt.obj
+ 0003:00000450       _EramDeviceControlGetLengthInfo@12 000109f0 f   eramnt.obj
+ 0003:000004b0       _EramReadWrite@8           00010a50 f   eramnt.obj
+ 0003:00000660       _EramUnloadDriver@4        00010c00 f   eramnt.obj
+ 0003:000006b0       _EramUnloadDevice@12       00010c50 f   eramnt.obj
+ 0003:000007d0       _ResourceRelease@8         00010d70 f   eramnt.obj
+ 0003:00000820       _ReleaseMemResource@8      00010dc0 f   eramnt.obj
+ 0003:00000890       _EramReportEvent@12        00010e30 f   eramnt.obj
+ 0003:00000900       _EramReportEventW@12       00010ea0 f   eramnt.obj
+ 0003:000009c0       _ReadPool@16               00010f60 f   eramnt.obj
+ 0003:00000a00       _WritePool@16              00010fa0 f   eramnt.obj
+ 0003:00000a49       _ExtRead1@16               00010fe9 f   eramnt.obj
+ 0003:00000b59       _ExtWrite1@16              000110f9 f   eramnt.obj
+ 0003:00000c67       _ExtNext1@12               00011207 f   eramnt.obj
+ 0003:00000cf0       _ExtMap@8                  00011290 f   eramnt.obj
+ 0003:00000da0       _ExtUnmap@4                00011340 f   eramnt.obj
+ 0003:00000de0       _ExtFilePendingRw@16       00011380 f   eramnt.obj
+ 0003:00000e80       _EramRwThread@4            00011420 f   eramnt.obj
+ 0003:00000fb0       _EramRwThreadIrp@8         00011550 f   eramnt.obj
+ 0003:000010dd       _ExtFileRead1@16           0001167d f   eramnt.obj
+ 0003:0000119d       _ExtFileWrite1@16          0001173d f   eramnt.obj
+ 0003:0000125b       _ExtFileNext1@12           000117fb f   eramnt.obj
+ 0003:000012e0       _ExtFileMap@8              00011880 f   eramnt.obj
+ 0003:00001390       _ExtFileUnmap@4            00011930 f   eramnt.obj
+ 0003:000013d0       _EramShutdown@8            00011970 f   eramnt.obj
+ 0004:00000018       _DriverEntry@8             00011a78 f   eramnt.obj
+ 0004:00000150       _InitFatId@4               00011bb0 f   eramnt.obj
+ 0004:00000262       _EramInitDisk@12           00011cc2 f   eramnt.obj
+ 0004:00000684       _MemSetup@16               000120e4 f   eramnt.obj
+ 0004:00000930       _OsAlloc@12                00012390 f   eramnt.obj
+ 0004:000009a0       _CalcAvailSize@12          00012400 f   eramnt.obj
+ 0004:00000a5e       _CheckSwapable@4           000124be f   eramnt.obj
+ 0004:00000b26       _CheckDeviceName@8         00012586 f   eramnt.obj
+ 0004:00000c5a       _CheckSwitch@16            000126ba f   eramnt.obj
+ 0004:000010e6       _GetMaxAddress@8           00012b46 f   eramnt.obj
+ 0004:000011b0       _PrepareVolumeLabel@12     00012c10 f   eramnt.obj
+ 0004:000012b0       _CheckVolumeLabel@12       00012d10 f   eramnt.obj
+ 0004:000013f8       _PrepareExtFileName@12     00012e58 f   eramnt.obj
+ 0004:000014cb       _EramFormatFat@8           00012f2b f   eramnt.obj
+ 0004:00001520       _EramSetup@8               00012f80 f   eramnt.obj
+ 0004:000018c0       _EramLocate@4              00013320 f   eramnt.obj
+ 0004:00001989       _EramFormat@8              000133e9 f   eramnt.obj
+ 0004:00001a39       _EramClearInfo@8           00013499 f   eramnt.obj
+ 0004:00001b07       _ExtClear@8                00013567 f   eramnt.obj
+ 0004:00001bcb       _ExtFileClear@8            0001362b f   eramnt.obj
+ 0004:00001c70       _CalcEramInfoPage@8        000136d0 f   eramnt.obj
+ 0004:00001dbb       _EramMakeFAT@8             0001381b f   eramnt.obj
+ 0004:000022e9       _EramSetLabel@8            00013d49 f   eramnt.obj
+ 0004:000026c0       _GetExternalStart@8        00014120 f   eramnt.obj
+ 0004:000029d0       _GetMaxMem@16              00014430 f   eramnt.obj
+ 0004:00002a50       _CheckMaxMem@12            000144b0 f   eramnt.obj
+ 0004:00002b39       _CheckExternalSize@8       00014599 f   eramnt.obj
+ 0004:00002d50       _ResourceInitTiny@16       000147b0 f   eramnt.obj
+ 0004:00002de2       _CheckExternalMemoryExist@20 00014842 f   eramnt.obj
+ 0004:00002f60       _ResourceSetupTiny@12      000149c0 f   eramnt.obj
+ 0004:00002ff2       _ExtReport@8               00014a52 f   eramnt.obj
+ 0004:00003152       _GetAcpiReservedMemory@4   00014bb2 f   eramnt.obj
+ 0004:00003262       _CheckAcpiRsdt@12          00014cc2 f   eramnt.obj
+ 0004:00003392       _CheckRsdtElements@12      00014df2 f   eramnt.obj
+ 0004:000034d0       __IMPORT_DESCRIPTOR_ntoskrnl 00014f30     ntoskrnl:ntoskrnl.exe
+ 0004:000034e4       __IMPORT_DESCRIPTOR_HAL    00014f44     hal:HAL.dll
+ 0004:000034f8       __NULL_IMPORT_DESCRIPTOR   00014f58     ntoskrnl:ntoskrnl.exe
+
+ entry point at        0004:00000018
+
+ Static symbols
+
