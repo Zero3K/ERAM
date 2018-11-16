@@ -19,9 +19,10 @@ x64
 After installing, the RAM Disk will be available as the R: drive with a size of 996 MB.
 You can use the included eramnt.cpl (in the x86 directory) / eram64.cpl (in the x64 directory) to change the size, etc. of the RAM Disk.
 
-## Benchmark
+## Benchmarks
 
 ![ERAM Benchmark done on Windows 7 64-bit](benchmark.png)
+![ERAM Benchmark done on a Windows 7 64-bit Virtual Machine](benchmark_2.png)
 
 ## Original Developer's Website
 
