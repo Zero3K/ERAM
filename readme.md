@@ -21,9 +21,16 @@ You can use the included eramnt.cpl (in the x86 directory) / eram64.cpl (in the 
 
 ## Benchmarks
 
-![ERAM Benchmark done on Windows 7 64-bit](benchmark.png)
-![ERAM Benchmark done on a Windows 7 64-bit Virtual Machine](benchmark_2.png)
+![ERAM Benchmark done on Windows 7 64-bit](images\benchmark.png)
+![ERAM Benchmark done on a Windows 7 64-bit Virtual Machine](images\benchmark_2.png)
+
+## Screenshots
+
+![ERAM's RAM Disk Contents in a Windows 7 64-bit Virtual Machine](images\Empty_ERAM_Drive.png)
+![ERAM's RAM Disk Properties in a Windows 7 64-bit Virtual Machine](images\ERAM_Drive_Properties.png)
+
+![ERAM's Control Panel Applet in a Windows 7 64-bit Virtual Machine](images\ERAM_options.png)
 
 ## Original Developer's Website
 
-http://www.vector.co.jp/authors/VA000363/
+http://www.vector..jp/authors/VA000363
