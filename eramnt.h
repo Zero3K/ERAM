@@ -139,16 +139,16 @@ typedef struct {
 	ERAM_WRITE			EramWrite;
 	ERAM_NEXT			EramNext;
 	ERAM_UNMAP			EramUnmap;
-	ULONG				uNowMapAdr;		// OS management outside/file, the currently mapping address
-	LPBYTE				pExtPage;		// OS management outside/file, the memory mapping address
-	LPBYTE				pPageBase;		// OS management memory
+	ULONG				uNowMapAdr;		// OS-Unmanaged/file, the currently mapping address
+	LPBYTE				pExtPage;		// OS-Unmanaged/file, the memory mapping address
+	LPBYTE				pPageBase;		// OS-Managed Memory
 	ULONG				uSizeTotal;		// Total size (4KB unit)
 	UNICODE_STRING		Win32Name;
 	ULONG				uAllSector;		// The number of all sectors
 	ULONG				uExternalStart;	// External memory starting position
 	ULONG				uExternalEnd;	// External memory ending position (of detected)
 	FAST_MUTEX			FastMutex;		// Fast mutex
-	PHYSICAL_ADDRESS	MapAdr;			// OS management outside memory map position top
+	PHYSICAL_ADDRESS	MapAdr;			// OS-Unmanaged Memory map position top
 	ULONG				bsHiddenSecs;	// The number of hidden sectors (=0)
 	HANDLE				hFile;			// External file handle (in system process)
 	HANDLE				hSection;		// External file mapping handle (in system process)
