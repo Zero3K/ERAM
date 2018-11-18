@@ -1,4 +1,4 @@
-/* ERAMNT.RC    RAM Disk ERAM for WindowsNT/2000/XP
+/* ERAM.RC    RAM Disk ERAM for WindowsNT/2000/XP
       Copyright (c) 1999-2004 by *Error15
 */
 
@@ -32,9 +32,9 @@ BEGIN
 			VALUE "CompanyName",		"*Error15"
 			VALUE "FileDescription",	"ERAM for Windows NT/2000/XP"
 			VALUE "FileVersion",		"2.23"
-			VALUE "InternalName",		"Eram.sys"
+			VALUE "InternalName",		"eram.sys"
 			VALUE "LegalCopyright",		"Copyright (C) 1999-2004 *Error15"
-			VALUE "OriginalFilename",	"EramNt.sys"
+			VALUE "OriginalFilename",	"eram.sys"
 			VALUE "ProductName",		"ERAM for Windows NT/2000/XP"
 			VALUE "ProductVersion",		"2.23"
 		END
@@ -75,9 +75,9 @@ BEGIN
 			VALUE "CompanyName",		"*Error15"
 			VALUE "FileDescription",	"ERAM for Windows NT/2000/XP"
 			VALUE "FileVersion",		"2.23"
-			VALUE "InternalName",		"Eram.sys"
+			VALUE "InternalName",		"eram.sys"
 			VALUE "LegalCopyright",		"Copyright (C) 1999-2004 *Error15"
-			VALUE "OriginalFilename",	"EramNt.sys"
+			VALUE "OriginalFilename",	"eram.sys"
 			VALUE "ProductName",		"ERAM for Windows NT/2000/XP"
 			VALUE "ProductVersion",		"2.23"
 		END

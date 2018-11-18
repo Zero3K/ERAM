@@ -1,4 +1,4 @@
-/* ERAMNT.H    RAM disk ERAM for WindowsNT/2000/XP
+/* ERAM.H    RAM disk ERAM for WindowsNT/2000/XP
       Copyright (c) 1999-2004 by *Error15
    Translated into English by Katayama Hirofumi MZ.
 */
