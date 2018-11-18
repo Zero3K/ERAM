@@ -6,18 +6,18 @@ ERAM v2.23 is an Opensource RAM Disk made by Hideaki Okubo (okubo at msh.biglobe
 
 x86
 ---
-1. Copy eramnt.sys from the x86 directory to \Windows\System32\drivers.
-2. Import eramnt.reg from the x86 directory to the Registry.
+1. Copy eram.sys from the x86 directory to \Windows\System32\drivers.
+2. Import eram.reg from the x86 directory to the Registry.
 3. Restart
 
 x64
 ---
-1. Copy eramnt64.sys from the x64 directory to \Windows\System32\drivers
-2. Import eram64.reg from the x64 directory to the Registry.
+1. Copy eram.sys from the x64 directory to \Windows\System32\drivers
+2. Import eram.reg from the x64 directory to the Registry.
 3. Restart
 
 After installing, the RAM Disk will be available as the R: drive with a size of 996 MB.
-You can use the included eramnt.cpl (in the x86 directory) / eram64.cpl (in the x64 directory) to change the size, etc. of the RAM Disk.
+You can use the included eram.cpl (in the x86 directory) / eram.cpl (in the x64 directory) to change the size, etc. of the RAM Disk.
 
 ## Build Instructions
 
