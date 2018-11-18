@@ -1,8 +1,8 @@
 ;
-; ERAM_X64.INF - ERAM for Windows x64 Install File
+; ERAM.INF - ERAM for Windows NT/2000/XP Install File
 ;	ver 2.20
 ;
-;    For 2000/XP only.
+;    For 2000/XP only
 ;      Please install from Hardware Wizard.
 ;    Don't use in NT4.00/3.51.
 ;
@@ -15,58 +15,56 @@ Provider=%String0%
 DriverVer=5/2/2004,2.20
 LayoutFile=layout.inf
 
-[ClassInstall32.NTamd64]
-CopyFiles=CplFiles.amd64
-Addreg=EramControllerReg.amd64
+[ClassInstall32]
+CopyFiles=CplFiles
+Addreg=EramControllerReg
 
 [DestinationDirs]
 DefaultDestDir = %DIRID_DRIVERS%
-CplFiles.amd64 = %DIRID_SYSTEM%
+CplFiles = %DIRID_SYSTEM%
 
-[EramControllerReg.amd64]
+[EramControllerReg]
 HKR,,,0,"ERAM Controller"
 HKR,,Icon,0,"0"
 HKR,,Installer32,0,%INSTALLER%
 HKR,,EnumPropPages32,0,%PROP%
 
 [Manufacturer]
-%String1%=SECTION_0,NTamd64
+%String1%=SECTION_0
 
-[SECTION_0.NTamd64]
-%String2%=Eram2kInstall.NTamd64,*ERR1501
+[SECTION_0]
+%String2%=Eram2kInstall,*ERR1501
 
-[Eram2kInstall.NTamd64]
-CopyFiles = DriverFiles.amd64,CplFiles.amd64
+[Eram2kInstall.NT]
+CopyFiles = DriverFiles,CplFiles
 AddReg = AddRegistry
 Reboot
 
-[Eram2kInstall.NTamd64.Services]
-AddService = Eram, 0x00000002, Eram_Service.NTamd64
+[Eram2kInstall.NT.Services]
+AddService = Eram, 0x00000002, Eram_Service
 
-[Eram_Service.NTamd64]
+[Eram_Service]
 DisplayName   = "ERAM RAM Disk Driver"
 ServiceType   = %Type%
 StartType     = %Start%
 ErrorControl  = %ErrorControl%
-ServiceBinary = %12%\eram64.sys
+ServiceBinary = %12%\eram.sys
 LoadOrderGroup= %Group%
 
 ; diskid = description,tagfile,unused,subdir
-[SourceDisksNames.amd64]
-1 = %DisketteLabel%,%TagFile%,,%SubDirectory% 
+[SourceDisksNames]
+1 = %DisketteLabel%,%TagFile%,,%SubDirectory%
 
-[SourceDisksFiles.amd64]
-eram64.sys = 1
-eram64.cpl = 1
+[SourceDisksFiles]
+%DriverFileName% = 1
+%CplFileName% = 1
 
 ; target,source,notused,copyflg
-[DriverFiles.amd64]
-eram64.sys,eram64.sys,,%COPYFLG_NOVERSIONCHECK%
+[DriverFiles]
+eram.sys,%DriverFileName%,,%COPYFLG_NOVERSIONCHECK%
 
-[CplFiles.amd64]
-eram64.cpl,eram64.cpl,,%COPYFLG_NOVERSIONCHECK%
-
-
+[CplFiles]
+eram.cpl,%CplFileName%,,%COPYFLG_NOVERSIONCHECK%
 
 
 [AddRegistry]
@@ -81,7 +79,6 @@ HKLM,%PARAMPATH%,ExtStart,%FLG_ADDREG_TYPE_DWORD%,%ExtStart%
 HKLM,%PARAMPATH%,MaxAddress,%FLG_ADDREG_TYPE_DWORD%,%MaxAddress%
 HKLM,%PARAMPATH%,VolumeLabel,%FLG_ADDREG_TYPE_SZ%,%VolumeLabel%
 HKLM,%PARAMPATH%,ExtFileName,%FLG_ADDREG_TYPE_SZ%,%ExtFileName%
-HKLM,%PARAMPATH%,BackupFileName,%FLG_ADDREG_TYPE_SZ%,%BackupFileName%
 ; for CPL update
 HKLM,SYSTEM\CurrentControlSet\Control\Class\%GUID%,Installer32,0,%INSTALLER%
 HKLM,SYSTEM\CurrentControlSet\Control\Class\%GUID%,EnumPropPages32,0,%PROP%
@@ -89,18 +86,19 @@ HKLM,SYSTEM\CurrentControlSet\Control\Class\%GUID%,EnumPropPages32,0,%PROP%
 HKLM,%UNINSTALLPATH%,DisplayName,%FLG_ADDREG_TYPE_SZ_UPDATE%,%UNINSTALLDISP%
 HKLM,%UNINSTALLPATH%,UninstallString,%FLG_ADDREG_TYPE_SZ_UPDATE%,%UNINSTALLCMD%
 ;--- EventLog
-HKLM,%EVENTPATH%,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%SystemRoot%\System32\Eram64.cpl"
+HKLM,%EVENTPATH%,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%SystemRoot%\System32\eram.cpl"
 HKLM,%EVENTPATH%,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
-
 
 
 ; String section for customization
 
 [Strings]
-DisketteLabel = "ERAM for Windows x64"
+DisketteLabel = "ERAM for Windows NT/2000/XP"
 TagFile = 
 ;SubDirectory = \obj\i386
 SubDirectory = "..\"
+DriverFileName = eram.sys
+CplFileName = eram.cpl
 ;--- Driver configuration
 Type = 1				;Kernel mode driver
 ;Start = 1				;System
@@ -125,17 +123,15 @@ Page = 16
 ExtStart = 0
 MaxAddress = 0xffffffff
 VolumeLabel = ""
-ExtFileName = "C:\ERAMSWAP.$$$"
-BackupFileName = "C:\ERAM_BACKUP.ebk"
+ExtFileName = "C:\eramswap.$$$"
 String0="*Error15"
 String1="*Error15"
-String2="ERAM for Windows x64"
+String2="ERAM for Windows NT/2000/XP"
 GUID={FB6B01E0-3191-11D4-9910-00004C672063}
-
-INSTALLER="eram64.cpl,EramClassInstall"
-PROP="eram64.cpl,EnumPropPages32"
+INSTALLER="eram.cpl,EramClassInstall"
+PROP="eram.cpl,EnumPropPages32"
 PARAMPATH="SYSTEM\CurrentControlSet\Services\Eram\Parameters"
 UNINSTALLPATH ="SoftWare\Microsoft\Windows\CurrentVersion\Uninstall\Eram"
-UNINSTALLDISP = "ERAM for Windows x64"
-UNINSTALLCMD = "Rundll32 eram64.cpl,EramUninstall"
+UNINSTALLDISP = "ERAM for Windows NT/2000/XP"
+UNINSTALLCMD = "Rundll32 eram.cpl,EramUninstall"
 EVENTPATH ="System\CurrentControlSet\Services\EventLog\System\Eram"
