@@ -23,7 +23,7 @@ You can use the included eramnt.cpl (in the x86 directory) / eram64.cpl (in the 
 
 1. Download WDK (Windows Driver Kit) 7.1.0 from https://www.microsoft.com/en-us/download/details.aspx?id=11800.
 2. Extract the ISO using 7-Zip, etc. to a directory of your choosing.
-3. Run the KitSetup.exe in the directory it was extracted to.
+3. Run the KitSetup.exe located in the directory it was extracted to.
 4. Click Full Development Environment.
 5. Click OK.
 6. After the install has completed, you can find the Build Environments in the Start Menu in Windows Driver Kits\WDK 7600.16385.1\Build Environments.
