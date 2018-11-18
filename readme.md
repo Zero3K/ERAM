@@ -33,4 +33,4 @@ You can use the included eramnt.cpl (in the x86 directory) / eram64.cpl (in the 
 
 ## Original Developer's Website
 
-http://www.vector..jp/authors/VA000363
+http://www.vector.co.jp/authors/VA000363

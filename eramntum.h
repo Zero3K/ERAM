@@ -53,7 +53,7 @@
 //
 // MessageText:
 //
-//  OS Outside Management Memory is already released.%0
+//  OS-Unmanaged Memory is already released.%0
 //
 #define ERAMNT_ERROR_MAXMEM_ALREADY_FREE ((NTSTATUS)0xE0FF0002L)
 
@@ -62,7 +62,7 @@
 //
 // MessageText:
 //
-//  Failed to map OS Outside Management Memory.%0
+//  Failed to map OS-Unmanaged Memory.%0
 //
 #define ERAMNT_ERROR_MAXMEM_MAP_FAILED   ((NTSTATUS)0xE0FF0003L)
 
@@ -71,7 +71,7 @@
 //
 // MessageText:
 //
-//  Failed to notify usage of OS Outside Management Memory.%0
+//  Failed to notify usage of OS-Unmanaged Memory.%0
 //
 #define ERAMNT_ERROR_MAXMEM_REPORT_USAGE_FAILED ((NTSTATUS)0xE0FF0004L)
 
@@ -80,7 +80,7 @@
 //
 // MessageText:
 //
-//  OS Outside Management Memory is being partially used by another device. Please shrink the disk size.%0
+//  OS-Unmanaged Memory is being partially used by another device. Please shrink the disk size.%0
 //
 #define ERAMNT_ERROR_MAXMEM_REPORT_USAGE_CONFLICT ((NTSTATUS)0xE0FF0005L)
 
@@ -98,7 +98,7 @@
 //
 // MessageText:
 //
-//  OS Outside Management Memory was not detected.%0
+//  OS-Unmanaged Memory was not detected.%0
 //
 #define ERAMNT_ERROR_MAXMEM_NO_MEMORY    ((NTSTATUS)0xE0FF0007L)
 
@@ -107,7 +107,7 @@
 //
 // MessageText:
 //
-//  OS Outside Management Memory was not found.%0
+//  OS-Unmanaged Memory was not found.%0
 //
 #define ERAMNT_ERROR_MAXMEM_NOT_DETECTED ((NTSTATUS)0xE0FF0008L)
 
@@ -269,7 +269,7 @@
 //
 // MessageText:
 //
-//  Failed to convert to OS Management Address.%0
+//  Failed to convert to OS-Managed Address.%0
 //
 #define ERAMNT_ERROR_TRANSLATE_ADDRESS_FAILED ((NTSTATUS)0xE0FF001AL)
 
@@ -332,7 +332,7 @@
 //
 // MessageText:
 //
-// The RAM disk was shrinked because OS Outside Management Memory was small .%0
+// The RAM disk was shrinked because OS-Unmanaged Memory was small.%0
 //
 #define ERAMNT_WARN_MAXMEM_DISK_SIZE_FIXED ((NTSTATUS)0xA0FF0006L)
 
