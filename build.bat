@@ -5,7 +5,7 @@ if defined BUILD_ALT_DIR goto NT5
 set DIRS=.\obj\i386\%DDKBUILDENV%
 :NT5
 set NTDEBUGTYPE=coff
-build -cefw
+build.exe -cefw
 if errorlevel 1 goto end
 rebase -b 0x10000 -x %DIRS% %DIRS%\%TARGETNAME%.sys
 copy %DIRS%\%TARGETNAME%.dbg %SYSTEMROOT%\symbols\*.*
