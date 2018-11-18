@@ -16,7 +16,7 @@
 		Non-page, page pool size modification feature added.
 	v2.00
 		Non-page, page pool size modification feature obsoleted.
-		OS Management Outside Memory setting feature added.
+		OS-Unmanaged Memory setting feature added.
 		Uninstaller feature added.
 	v2.01
 		Increased Allocation Unit 32 and enabled 1GB allocation.
@@ -541,7 +541,7 @@ VOID WINAPI WmCommand(HWND hDlg, INT wId, HWND hWndCtl, UINT wNotifyCode)
 
 
 /* EnableExtGroup
-		Enable/Disable OS Management Outside Memory.
+		Enable/Disable OS-Unmanaged Memory.
 	Parameters
 		hDlg		The window handle of dialog.
 		bEnable		To be enabled or not to be.

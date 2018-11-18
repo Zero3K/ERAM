@@ -21,7 +21,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_ALREADY_FREE
 Language=English
-OS Outside Management Memory is already released.%0
+OS-Unmanaged Memory is already released.%0
 .
 
 MessageId=0x3
@@ -29,7 +29,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_MAP_FAILED
 Language=English
-Failed to map OS Outside Management Memory.%0
+Failed to map OS-Unmanaged Memory.%0
 .
 
 MessageId=0x4
@@ -37,7 +37,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_REPORT_USAGE_FAILED
 Language=English
-Failed to notify usage of OS Outside Management Memory.%0
+Failed to notify usage of OS-Unmanaged Memory.%0
 .
 
 MessageId=0x5
@@ -45,7 +45,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_REPORT_USAGE_CONFLICT
 Language=English
-OS Outside Management Memory is being partially used by another device. Please shrink the disk size.%0
+OS-Unmanaged Memory is being partially used by another device. Please shrink the disk size.%0
 .
 
 MessageId=0x6
@@ -61,7 +61,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_NO_MEMORY
 Language=English
-OS Outside Management Memory was not detected.%0
+OS-Unmanaged Memory was not detected.%0
 .
 
 MessageId=0x8
@@ -69,7 +69,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_MAXMEM_NOT_DETECTED
 Language=English
-OS Outside Management Memory was not found.%0
+OS-Unmanaged Memory was not found.%0
 .
 
 MessageId=0x9
@@ -213,7 +213,7 @@ Severity=Error
 Facility=System
 SymbolicName=ERAMNT_ERROR_TRANSLATE_ADDRESS_FAILED
 Language=English
-Failed to convert to OS Management Address.%0
+Failed to convert to OS-Managed Address.%0
 .
 
 MessageId=0x1b
@@ -270,7 +270,7 @@ Severity=Warning
 Facility=System
 SymbolicName=ERAMNT_WARN_MAXMEM_DISK_SIZE_FIXED
 Language=English
-The RAM disk was shrinked because OS Outside Management Memory was smaller than expected.%0
+The RAM disk was shrinked because OS-Unmanaged Memory was smaller than expected.%0
 .
 
 

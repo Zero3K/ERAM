@@ -365,8 +365,8 @@ VOID EramDeviceControlVerify(
 		pIrp->IoStatus.Status = STATUS_INVALID_PARAMETER;
 		return;
 	}
-	if ((pEramExt->uOptflag.Bits.External != 0)&&	/* OS outside memory usage */
-		(pEramExt->uExternalStart != 0)&&			/* OS outside memory setting */
+	if ((pEramExt->uOptflag.Bits.External != 0)&&	/* OS-Unmanaged Memory usage */
+		(pEramExt->uExternalStart != 0)&&			/* OS-Unmanaged Memory setting */
 		((pEramExt->uExternalStart + (ULONGLONG)(pVerify->StartingOffset.QuadPart) + (ULONGLONG)(pVerify->Length)) >= 
 pEramExt->uExternalEnd))
 	{
@@ -650,7 +650,7 @@ VOID ResourceRelease(
  )
 {
 	KdPrint(("ResourceRelease start\n"));
-	if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory usage */
+	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory usage */
 	{
 		/* Resource release */
 		ReleaseMemResource(pDrvObj, pEramExt);
@@ -666,7 +666,7 @@ VOID ResourceRelease(
 
 
 /* ReleaseMemResource
-		OS Outside Management Memory Map Deletion.
+		OS-Unmanaged Memory Map Deletion.
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
@@ -791,7 +791,7 @@ BOOLEAN EramReportEventW(
 
 
 /* ReadPool
-		OS Management Memory Reading.
+		OS-Managed Memory Reading.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		pIrp		The pointer to IRP packet.
@@ -817,7 +817,7 @@ NTSTATUS ReadPool(
 
 
 /* WritePool
-		OS Management Memory Writing.
+		OS-Managed Memory Writing.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		pIrp		The pointer to IRP packet.
@@ -843,7 +843,7 @@ NTSTATUS WritePool(
 
 
 /* ExtRead1
-		OS Outside Management Memory Reading (without check).
+		OS-Unmanaged Memory Reading (without check).
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		pIrp		The pointer to IRP packet.
@@ -906,7 +906,7 @@ NTSTATUS ExtRead1(
 
 
 /* ExtWrite1
-		OS Outside Memory Writing (without check).
+		OS-Unmanaged Memory Writing (without check).
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		pIrp		The pointer to IRP packet.
@@ -969,7 +969,7 @@ NTSTATUS ExtWrite1(
 
 
 /* ExtNext1
-		OS Outside Management: The corresponding sector allocation (without check)
+		OS-Unmanaged: The corresponding sector allocation (without check)
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		lpeax		The pointer to the area to return the inner page offset.
@@ -1007,7 +1007,7 @@ BOOLEAN ExtNext1(
 
 
 /* ExtMap
-		OS Outside Memory Mapping.
+		OS-Unmanaged Memory Mapping.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		uMapAdr		The relative byte offset to be mapped (64KB unit).
@@ -1051,7 +1051,7 @@ BOOLEAN ExtMap(
 
 
 /* ExtUnmap
-		OS Outside Memory Unmapping.
+		OS-Unmanaged Memory Unmapping.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 	Return Value
@@ -1694,9 +1694,9 @@ NTSTATUS EramInitDisk(
 	pDevObj->Flags |= DO_DIRECT_IO;
 	pDevObj->AlignmentRequirement = FILE_WORD_ALIGNMENT;
 	pEramExt->pDevObj = pDevObj;
-	if (pEramExt->uOptflag.Bits.External != 0)				/* OS outside memory usage */
+	if (pEramExt->uOptflag.Bits.External != 0)				/* OS-Unmanaged Memory usage */
 	{
-		if (GetExternalStart(pDrvObj, pEramExt) == FALSE)	/* without OS outside memory */
+		if (GetExternalStart(pDrvObj, pEramExt) == FALSE)	/* without OS-Unmanaged Memory */
 		{
 			EramReportEvent(pEramExt->pDevObj, ERAMNT_ERROR_MAXMEM_NOT_DETECTED, NULL);
 			return STATUS_INSUFFICIENT_RESOURCES;
@@ -1769,7 +1769,7 @@ NTSTATUS EramInitDisk(
 EramInitDiskExit:	/* entry on error */
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory usage */
+		if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory usage */
 		{
 			/* Free the memory resource */
 			ReleaseMemResource(pDrvObj, pEramExt);
@@ -1811,7 +1811,7 @@ NTSTATUS MemSetup(
 	UNICODE_STRING					uniStr;
 	HANDLE							hThread;
 	KdPrint(("MemSetup start\n"));
-	if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory */
+	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory */
 	{
 		/* Notify resource usage */
 		if (ExtReport(pDrvObj, pEramExt) == FALSE)
@@ -1890,7 +1890,7 @@ NTSTATUS MemSetup(
 		IoRegisterShutdownNotification(pEramExt->pDevObj);
 		return STATUS_SUCCESS;
 	}
-	/* Use OS management memory */
+	/* Use OS-Managed Memory */
 	if (OsAlloc(pDrvObj, pEramExt, uMemSize) == FALSE)
 	{
 		EramReportEvent(pEramExt->pDevObj, ERAMNT_ERROR_FUNCTIONERROR, "OsAlloc");
@@ -1902,7 +1902,7 @@ NTSTATUS MemSetup(
 
 
 /* OsAlloc
-		OS Management Memory Reservation.
+		OS-Managed Memory Reservation.
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
@@ -2215,11 +2215,11 @@ VOID CheckSwitch(
 		pEramExt->uOptflag.Bits.NonPaged = 0;
 		pEramExt->uOptflag.Bits.External = 0;
 	}
-	else if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory usage */
+	else if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory usage */
 	{
 		pEramExt->uOptflag.Bits.NonPaged = 0;
 		pEramExt->uExternalStart = ExtStart;
-		/* prepare for OS outside memory max address */
+		/* prepare for OS-Unmanaged Memory max address */
 		GetMaxAddress(pEramExt, pRegParam);
 	}
 	if ((WORD)NtBuildNumber >= BUILD_NUMBER_NT50)	/* Windows2000+ */
@@ -2685,7 +2685,7 @@ VOID EramLocate(
  )
 {
 	KdPrint(("EramLocate start\n"));
-	if (pEramExt->uOptflag.Bits.External != 0)	/* Use OS outside memory */
+	if (pEramExt->uOptflag.Bits.External != 0)	/* Use OS-Unmanaged Memory */
 	{
 		pEramExt->EramRead = (ERAM_READ)ExtRead1;
 		pEramExt->EramWrite = (ERAM_WRITE)ExtWrite1;
@@ -2764,9 +2764,9 @@ BOOLEAN EramClearInfo(
 	ULONG uSize;
 	/* management area size calculation */
 	uSize = CalcEramInfoPage(pEramExt, pFatId);
-	if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory */
+	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory */
 	{
-		/* OS outside memory initialization */
+		/* OS-Unmanaged Memory initialization */
 		if (ExtClear(pEramExt, uSize) == FALSE)
 		{
 			EramReportEvent(pEramExt->pDevObj, ERAMNT_ERROR_FUNCTIONERROR, "ExtClear");
@@ -2784,14 +2784,14 @@ BOOLEAN EramClearInfo(
 		}
 		return TRUE;
 	}
-	/* OS management memory initialization */
+	/* OS-Managed Memory initialization */
 	RtlZeroBytes(pEramExt->pPageBase, uSize);
 	return TRUE;
 }
 
 
 /* ExtClear
-		OS Outside Memory Initialization.
+		OS-Unmanaged Memory Initialization.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		uSize		The byte number of management info area.
@@ -2961,7 +2961,7 @@ BOOLEAN EramMakeFAT(
 	pFatId->BPB_ext2.bsVolumeID |= ((pFatId->TimeInfo.Day / 10) << 4);
 	pFatId->BPB_ext2.bsVolumeID |= (pFatId->TimeInfo.Day % 10);
 	pDisk = pEramExt->pPageBase;
-	if ((pEramExt->uOptflag.Bits.External != 0)||		/* OS outside memory usage */
+	if ((pEramExt->uOptflag.Bits.External != 0)||		/* OS-Unmanaged Memory usage */
 		(pEramExt->uOptflag.Bits.UseExtFile != 0))		/* External File Usage */
 	{
 		/* boot sector allocation */
@@ -3044,7 +3044,7 @@ BOOLEAN EramMakeFAT(
 		/* Make cluster 2 in use (total 48bits) */
 		pdwFatSector[1] = 0xffff;
 	}
-	if (pEramExt->uOptflag.Bits.External != 0)	/* OS outside memory usage */
+	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory usage */
 	{
 		/* Unmap */
 		ExtUnmap(pEramExt);
@@ -3138,7 +3138,7 @@ BOOLEAN EramSetLabel(
 		/* The first sector number setting */
 		DirInit.own.wCluster = VOL_L.temp.wCluster;
 	}
-	if ((pEramExt->uOptflag.Bits.External != 0)||		/* OS outside memory usage */
+	if ((pEramExt->uOptflag.Bits.External != 0)||		/* OS-Unmanaged Memory usage */
 		(pEramExt->uOptflag.Bits.UseExtFile != 0))		/* External File Usage */
 	{
 		/* allocate directory sector */
@@ -3181,12 +3181,12 @@ BOOLEAN EramSetLabel(
 
 
 /* GetExternalStart
-		OS Outside Memory Starting Position Detection.
+		OS-Unmanaged Memory Starting Position Detection.
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 	Return Value
-		Results.	TRUE: With OS outside memory.
+		Results.	TRUE: With OS-Unmanaged Memory.
 */
 
 BOOLEAN GetExternalStart(
@@ -3369,7 +3369,7 @@ BOOLEAN GetMaxMem(
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 		uSize		n of MAXMEM=n.
 	Return Value
-		Results.	TRUE: With OS outside memory.
+		Results.	TRUE: With OS-Unmanaged Memory.
 */
 
 BOOLEAN CheckMaxMem(
@@ -3414,12 +3414,12 @@ BOOLEAN CheckMaxMem(
 
 
 /* CheckExternalSize
-		OS Outside Memory Starting Position Detection.
+		OS-Unmanaged Memory Starting Position Detection.
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
 	Return Value
-		Results.		TRUE: With OS outside memory.
+		Results.		TRUE: With OS-Unmanaged Memory.
 */
 
 BOOLEAN CheckExternalSize(
@@ -3523,7 +3523,7 @@ BOOLEAN CheckExternalSize(
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pResList	The pointer to the resource structure.
-		uStart		OS outside memory starting position.
+		uStart		OS-Unmanaged Memory starting position.
 		uSize		The size to handed over to the disk.
 	Return Value
 		No return value.
@@ -3563,7 +3563,7 @@ VOID ResourceInitTiny(
 		Memory Test Main Body.
 	Parameters
 		pDrvObj		The pointer to device representative object.
-		uStart		OS outside memory starting position.
+		uStart		OS-Unmanaged Memory starting position.
 		uDiskSize	The size to handed over to the disk.
 		puSize		The memory capacity.
 		dwMaxAddr	The lowest address of ACPI usage memory.
@@ -3646,7 +3646,7 @@ BOOLEAN CheckExternalMemoryExist(
 		I/O Resource Initial Setting
 	Parameters
 		pDrvObj		The pointer to device representative object.
-		uStart		OS outside memory starting position.
+		uStart		OS-Unmanaged Memory starting position.
 		pMapAdr		The pointer to the conversion address.
 	Return Value
 		Results.
@@ -3685,7 +3685,7 @@ BOOLEAN ResourceSetupTiny(
 
 
 /* ExtReport
-		OS Outside Memory Starting Position Detection.
+		OS-Unmanaged Memory Starting Position Detection.
 	Parameters
 		pDrvObj		The pointer to device representative object.
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
