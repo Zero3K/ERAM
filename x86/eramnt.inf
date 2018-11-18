@@ -1,10 +1,10 @@
 ;
-; ERAM2000.INF - ERAM for Windows NT/2000/XP インストールファイル
+; ERAM2000.INF - ERAM for Windows NT/2000/XP Install File
 ;	ver 2.20
 ;
-;　　2000/XP用です
-;　　　ハードウェアウィザードからインストールしてください
-;　　NT4.00/3.51には使えません
+;    For 2000/XP only
+;      Please install from Hardware Wizard.
+;    Don't use in NT4.00/3.51.
 ;
 
 [Version]
@@ -24,7 +24,7 @@ DefaultDestDir = %DIRID_DRIVERS%
 CplFiles = %DIRID_SYSTEM%
 
 [EramControllerReg]
-HKR,,,0,"ERAM ｺﾝﾄﾛｰﾗ"
+HKR,,,0,"ERAM Controller"
 HKR,,Icon,0,"0"
 HKR,,Installer32,0,%INSTALLER%
 HKR,,EnumPropPages32,0,%PROP%
@@ -44,7 +44,7 @@ Reboot
 AddService = Eram, 0x00000002, Eram_Service
 
 [Eram_Service]
-DisplayName   = "ERAM RAMﾃﾞｨｽｸﾄﾞﾗｲﾊﾞ"
+DisplayName   = "ERAM RAM Disk Driver"
 ServiceType   = %Type%
 StartType     = %Start%
 ErrorControl  = %ErrorControl%
@@ -108,9 +108,9 @@ Group = "Primary disk"
 ;--- Parameters
 DIRID_SYSTEM = 11
 DIRID_DRIVERS = 12
-FLG_ADDREG_TYPE_SZ_UPDATE = 0		;上書きのFLG_ADDREG_TYPE_SZ
-FLG_ADDREG_TYPE_SZ = 0x2			;上書き禁止のFLG_ADDREG_TYPE_SZ
-FLG_ADDREG_TYPE_DWORD = 0x10003		;上書き禁止のFLG_ADDREG_TYPE_DWORD
+FLG_ADDREG_TYPE_SZ_UPDATE = 0		;Overwriting FLG_ADDREG_TYPE_SZ
+FLG_ADDREG_TYPE_SZ = 0x2			;Non-overwriting FLG_ADDREG_TYPE_SZ
+FLG_ADDREG_TYPE_DWORD = 0x10003		;Non-overwriting FLG_ADDREG_TYPE_DWORD
 FLG_ADDREG_TYPE_MULTI_SZ = 0x10000
 FLG_ADDREG_TYPE_EXPAND_SZ = 0x20000
 COPYFLG_NOVERSIONCHECK = 4
