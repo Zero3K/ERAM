@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "ERAMNT"=.\ERAMNT.DSP - Package Owner=<4>
+Project: "ERAM"=.\eram.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

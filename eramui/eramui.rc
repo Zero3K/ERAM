@@ -1,6 +1,6 @@
 //Microsoft Developer Studio generated resource script.
 //
-#include "ERAMNTUI.H"
+#include "eramui.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON                ICON    DISCARDABLE     "ERAMNTUI.ICO"
+IDI_ICON                ICON    DISCARDABLE     "eramui.ico"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -139,9 +139,9 @@ BEGIN
             VALUE "CompanyName", "*Error15\0"
             VALUE "FileDescription", "ERAM for Windows NT/2000/XP Applet\0"
             VALUE "FileVersion", "2.20\0"
-            VALUE "InternalName", "ERAMNT.CPL\0"
+            VALUE "InternalName", "eram.cpl\0"
             VALUE "LegalCopyright", "Copyright (C) 1999-2004 *Error15\0"
-            VALUE "OriginalFilename", "ERAMNT.CPL\0"
+            VALUE "OriginalFilename", "eram.cpl\0"
             VALUE "ProductName", "ERAM for Windows NT/2000/XP\0"
             VALUE "ProductVersion", "2.20\0"
         END
@@ -217,7 +217,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "ERAMNTUM.RC"
+#include "eramum.rc"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

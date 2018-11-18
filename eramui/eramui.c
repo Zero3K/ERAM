@@ -1,4 +1,4 @@
-/* ERAMNTUI.C    RAM Disk ERAM for WindowsNT/2000/XP
+/* ERAMUI.C    RAM Disk ERAM for WindowsNT/2000/XP
 	Control Panel Applet / Class Installer
       Copyright (c) 1999-2004 by *Error15
     Translated into English by Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>.
@@ -62,10 +62,10 @@
 #include <regstr.h>
 #include <setupapi.h>
 #include <dbt.h>
-#include "eramntui.h"
+#include "eramui.h"
 
-#define RAMDISK_MEDIA_TYPE		0xf8	/* ERAMNT.H */
-#define	SECTOR	(512)					/* ERAMNT.H */
+#define RAMDISK_MEDIA_TYPE		0xf8	/* ERAM.H */
+#define	SECTOR	(512)					/* ERAM.H */
 #define PAGE_SIZE_4K	(1024 * 4)		/* the size of one page */
 #define	DISKMAXCLUSTER_16 (65525)		/* The max cluster(s) of FAT16 */
 #define	DISKMAXCLUSTER_32 (268435455)	/* The max cluster(s) of FAT32 */
@@ -1390,7 +1390,7 @@ LPCSTR WINAPI GetEramClass(GUID* pGuid)
 
 /* The followings are for WindowsNT4.0 and later only */
 /* StartupFastfat
-		FASTFAT driver StartUp change RUNDLL32 ERAMNT.CPL,StartupFastfat 0-to-4
+		FASTFAT driver StartUp change RUNDLL32 ERAM.CPL,StartupFastfat 0-to-4
 	Parameters
 		hWnd		The parent window handle.
 		hInstance	The instance handle.
