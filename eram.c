@@ -810,7 +810,7 @@ NTSTATUS ReadPool(
 {
 	/* local variables */
 	PUCHAR lpSrc;
-	lpSrc = (PUCHAR)((ULONG)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Read.ByteOffset.LowPart);
+	lpSrc = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Read.ByteOffset.LowPart);
 	RtlCopyBytes(lpDest, lpSrc, pIrpSp->Parameters.Read.Length);
 	return STATUS_SUCCESS;
 }
@@ -836,7 +836,7 @@ NTSTATUS WritePool(
 {
 	/* local variables */
 	PUCHAR lpDest;
-	lpDest = (PUCHAR)((ULONG)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Write.ByteOffset.LowPart);
+	lpDest = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Write.ByteOffset.LowPart);
 	RtlCopyBytes(lpDest, lpSrc, pIrpSp->Parameters.Write.Length);
 	return STATUS_SUCCESS;
 }
@@ -2995,7 +2995,7 @@ BOOLEAN EramMakeFAT(
 		RtlCopyBytes(&(pBootFat32->BPB_fat32), &(pFatId->BPB_fat32), sizeof(pBootFat32->BPB_fat32));
 		RtlCopyBytes(&(pBootFat32->BPB_ext2), &(pFatId->BPB_ext2), sizeof(pBootFat32->BPB_ext2));
 		/* Write the FSINFO sector */
-		pFsInfoSector = (PFSINFO_SECTOR)((ULONG)pBootFat32 + pBootFat32->BPB_fat32.wFsInfoSector * SECTOR);
+		pFsInfoSector = (PFSINFO_SECTOR)((PBYTE)pBootFat32 + pBootFat32->BPB_fat32.wFsInfoSector * SECTOR);
 		pFsInfoSector->FSInfo_Sig = 0x41615252;				/* RRaA */
 		pFsInfoSector->FsInfo.bfFSInf_Sig = 0x61417272;		/* rrAa */
 		pFsInfoSector->FsInfo.bfFSInf_free_clus_cnt = 0xffffffff;
@@ -3013,7 +3013,7 @@ BOOLEAN EramMakeFAT(
 		}
 	}
 	/* Write the FAT sector */
-	pdwFatSector = (PDWORD)((ULONG)pBootFat16 + pBootFat16->BPB.wNumResvSector * SECTOR);
+	pdwFatSector = (PDWORD)((PBYTE)pBootFat16 + pBootFat16->BPB.wNumResvSector * SECTOR);
 	pdwFatSector[0] = 0xffffff00 + pFatId->BPB.byMediaId;
 	if (pEramExt->FAT_size == PARTITION_FAT_12)	/* FAT12 */
 	{
@@ -3168,11 +3168,11 @@ BOOLEAN EramSetLabel(
 	else
 	{
 		/* Write the volume label to the directory sector */
-		RtlCopyBytes((LPBYTE)((ULONG)(pEramExt->pPageBase) + (dwDirSector << SECTOR_LOG2)), &VOL_L, sizeof(VOL_L));
+		RtlCopyBytes((LPBYTE)((PBYTE)(pEramExt->pPageBase) + (dwDirSector << SECTOR_LOG2)), &VOL_L, sizeof(VOL_L));
 		if (pEramExt->uOptflag.Bits.MakeTempDir != 0)		/* TEMP directory creation */
 		{
 			/* Write the directory to TEMP directory sector */
-			RtlCopyBytes((LPBYTE)((ULONG)(pEramExt->pPageBase) + (dwTempSector << SECTOR_LOG2)), &DirInit, sizeof(DirInit));
+			RtlCopyBytes((LPBYTE)((PBYTE)(pEramExt->pPageBase) + (dwTempSector << SECTOR_LOG2)), &DirInit, sizeof(DirInit));
 		}
 	}
 	KdPrint(("EramSetLabel end\n"));
