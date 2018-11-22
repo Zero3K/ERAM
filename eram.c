@@ -487,7 +487,7 @@ NTSTATUS EramReadWrite(
 	if (pIrp->MdlAddress != NULL)		/* with address */
 	{
 		/* address translation */
-		pTransAddr = MmGetSystemAddressForMdl(pIrp->MdlAddress);
+		pTransAddr = MmGetSystemAddressForMdlSafe(pIrp->MdlAddress,NormalPagePriority);
 	}
 	/* Set success */
 	ntStat = STATUS_SUCCESS;
@@ -500,7 +500,7 @@ NTSTATUS EramReadWrite(
 		/* Validate the address */
 		if (pTransAddr == NULL)
 		{
-			KdPrint(("MmGetSystemAddressForMdl failed\n"));
+			KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
 			ntStat = STATUS_INVALID_PARAMETER;
 			break;
 		}
@@ -515,7 +515,7 @@ NTSTATUS EramReadWrite(
 		/* Validate the address */
 		if (pTransAddr == NULL)
 		{
-			KdPrint(("MmGetSystemAddressForMdl failed\n"));
+			KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
 			ntStat = STATUS_INVALID_PARAMETER;
 			break;
 		}
@@ -1221,11 +1221,11 @@ NTSTATUS EramRwThreadIrp(
 	if (pIrp->MdlAddress != NULL)	/* with address */
 	{
 		/* address translation */
-		pTransAddr = MmGetSystemAddressForMdl(pIrp->MdlAddress);
+		pTransAddr = MmGetSystemAddressForMdlSafe(pIrp->MdlAddress,NormalPagePriority);
 	}
 	if (pTransAddr == NULL)		/* conversion failure */
 	{
-		KdPrint(("MmGetSystemAddressForMdl failed\n"));
+		KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
 		/* Set status */
 		pIrp->IoStatus.Status = STATUS_INVALID_PARAMETER;
 		/* I/O complete */
