@@ -2227,11 +2227,7 @@ VOID CheckSwitch(
 		/* FAT32 enabled */
 		pEramExt->uOptflag.Bits.EnableFat32 = 1;
 	}
-	if (Page > LIMIT_4GBPAGES)
-	{
-		Page = LIMIT_4GBPAGES;
-		KdPrint(("4GB limit over, adjust %d pages\n", Page));
-	}
+	
 	/* Page setting */
 	if (pEramExt->uOptflag.Bits.EnableFat32 == 0)		/* Without using FAT32 */
 	{
@@ -3240,11 +3236,7 @@ BOOLEAN GetExternalStart(
 	/* / PAE judgment from physical address */
 	uNoLowMem = 0;
 	phys = MmGetPhysicalAddress(pBuf);
-	if (phys.HighPart != 0)		/* over4GB */
-	{
-		/* At least /PAE does exist, so do search /NOLOWMEM */
-		uNoLowMem = sizeof(szwNoLowMem) - sizeof(WCHAR);
-	}
+	
 	uMaxMem = sizeof(szwMaxMem) - sizeof(WCHAR);
 	if (max(uMaxMem, uNoLowMem) >= uniOption.Length)	/* MAXMEM / NOLOWMEM not included in option */
 	{
@@ -3305,14 +3297,7 @@ BOOLEAN GetExternalStart(
 		/* Try around 17MB */
 		uStart = 17;
 	}
-	if (uStart != 0)	/* with MAXMEM=n or NOLOWMEM */
-	{
-		bStat = CheckMaxMem(pDrvObj, pEramExt, uStart);
-		if (bStat == FALSE)
-		{
-			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "CheckMaxMem");
-		}
-	}
+
 	/* memory release */
 	RtlFreeUnicodeString(&uniOptionUp);
 	if (bStat == FALSE)
@@ -3383,18 +3368,10 @@ BOOLEAN CheckMaxMem(
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_TOO_SMALL, NULL);
 		return FALSE;
 	}
-	if (uSize >= 4095)		/* too large */
-	{
-		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_TOO_BIG, NULL);
-		return FALSE;
-	}
+	
 	/* Fix into MB units */
 	pEramExt->uExternalStart /= SIZE_MEGABYTE;
-	if (pEramExt->uExternalStart >= 4095)
-	{
-		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_EXTSTART_TOO_BIG, NULL);
-		return FALSE;
-	}
+	
 	if (pEramExt->uExternalStart >= uSize)	/* backward fix required */
 	{
 		/* backward fix */
@@ -3404,12 +3381,6 @@ BOOLEAN CheckMaxMem(
 	pEramExt->uExternalStart = uSize * SIZE_MEGABYTE;
 	KdPrint(("System %dMB, External start 0x%x\n", uSize, pEramExt->uExternalStart));
 	uSize = pEramExt->uExternalStart / PAGE_SIZE_4K;
-	if ((uSize + pEramExt->uSizeTotal) > (4096 * (SIZE_MEGABYTE / PAGE_SIZE_4K)))	/* over4GB */
-	{
-		/* Fit in 4GB (the tail 1MB will be excluded) */
-		pEramExt->uSizeTotal = (4096 * (SIZE_MEGABYTE / PAGE_SIZE_4K)) - uSize;
-	}
-	return TRUE;
 }
 
 
@@ -3444,12 +3415,7 @@ BOOLEAN CheckExternalSize(
 		return FALSE;
 	}
 	ulMix.QuadPart = (ULONGLONG)(pEramExt->uExternalStart) + (ULONGLONG)uSize;
-	if (ulMix.HighPart != 0)	/* over4GB */
-	{
-		uSize = (DWORD)(0 - (pEramExt->uExternalStart));
-		pEramExt->uSizeTotal = uSize / PAGE_SIZE_4K;
-		KdPrint(("Wrap 4GB, limit size 0x%x (%dpages)\n", uSize, pEramExt->uSizeTotal));
-	}
+	
 	/* ACPI reserved memory guessing */
 	dwMaxAddr = GetAcpiReservedMemory(pDrvObj);
 	KdPrint(("ACPI max 0x%x\n", dwMaxAddr));
