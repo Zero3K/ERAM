@@ -68,10 +68,6 @@
       <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>copy        Release\eram.cpl        ..\</Command>
-      <Message>File 'Release\eram.cpl' was copyed.</Message>
-    </PostBuildEvent>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -115,10 +111,6 @@
       <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>copy        Debug\eram.cpl        ..\</Command>
-      <Message>File 'Debug\eram.cpl' was copyed.</Message>
-    </PostBuildEvent>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
