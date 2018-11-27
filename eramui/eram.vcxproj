@@ -68,10 +68,6 @@
       <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>copy        Release\eram.cpl        ..\</Command>
-      <Message>ƒtƒ%40ƒCƒ‹‚ÌƒRƒs[</Message>
-    </PostBuildEvent>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -115,10 +111,6 @@
       <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>copy        Debug\eram.cpl        ..\</Command>
-      <Message>ƒtƒ%40ƒCƒ‹‚ÌƒRƒs[</Message>
-    </PostBuildEvent>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -154,10 +146,10 @@
     <CustomBuild Include="eramui.def" />
     <CustomBuild Include="eramum.mc">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mc -cs -h eramum.mc</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Ò¯¾°¼Þ‚ðºÝÊß²Ù’†</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling messages...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">eramum.bin;eramum.rc;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">mc -cs -h eramum.mc</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Ò¯¾°¼Þ‚ðºÝÊß²Ù’†</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling messages...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">eramum.bin;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
