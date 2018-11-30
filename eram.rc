@@ -16,8 +16,8 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 #endif //_WIN32
 
 VS_VERSION_INFO	VERSIONINFO
-	FILEVERSION		2,23
-	PRODUCTVERSION	2,23
+	FILEVERSION		2,24
+	PRODUCTVERSION	2,24
 	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 	FILEFLAGS		0x0L
 	FILEOS			VOS_NT_WINDOWS32
@@ -28,15 +28,15 @@ BEGIN
 	BEGIN
 		BLOCK	"041104b0"		//Japanese
 		BEGIN
-			VALUE "Comments",			"ERAM for Windows NT/2000/XP"
-			VALUE "CompanyName",		"*Error15"
-			VALUE "FileDescription",	"ERAM for Windows NT/2000/XP"
-			VALUE "FileVersion",		"2.23"
+			VALUE "Comments",			"ERAM"
+			VALUE "CompanyName",		"*Error15 & Zero3K"
+			VALUE "FileDescription",	"ERAM"
+			VALUE "FileVersion",		"2.24"
 			VALUE "InternalName",		"eram.sys"
-			VALUE "LegalCopyright",		"Copyright (C) 1999-2004 *Error15"
+			VALUE "LegalCopyright",		"Copyright (C) 1999-2018 *Error15 & Zero3K"
 			VALUE "OriginalFilename",	"eram.sys"
-			VALUE "ProductName",		"ERAM for Windows NT/2000/XP"
-			VALUE "ProductVersion",		"2.23"
+			VALUE "ProductName",		"ERAM"
+			VALUE "ProductVersion",		"2.24"
 		END
 	END
 	BLOCK	"VarFileInfo"
@@ -59,8 +59,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #endif //_WIN32
 
 VS_VERSION_INFO	VERSIONINFO
-	FILEVERSION		2,23
-	PRODUCTVERSION	2,23
+	FILEVERSION		2,24
+	PRODUCTVERSION	2,24
 	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 	FILEFLAGS		0x0L
 	FILEOS			VOS_NT_WINDOWS32
@@ -71,15 +71,15 @@ BEGIN
 	BEGIN
 		BLOCK	"040904b0"		//English
 		BEGIN
-			VALUE "Comments",			"ERAM for Windows NT/2000/XP"
-			VALUE "CompanyName",		"*Error15"
-			VALUE "FileDescription",	"ERAM for Windows NT/2000/XP"
-			VALUE "FileVersion",		"2.23"
+			VALUE "Comments",			"ERAM"
+			VALUE "CompanyName",		"*Error15 & Zero3K"
+			VALUE "FileDescription",	"ERAM"
+			VALUE "FileVersion",		"2.24"
 			VALUE "InternalName",		"eram.sys"
-			VALUE "LegalCopyright",		"Copyright (C) 1999-2004 *Error15"
+			VALUE "LegalCopyright",		"Copyright (C) 1999-2018 *Error15 & Zero3K"
 			VALUE "OriginalFilename",	"eram.sys"
-			VALUE "ProductName",		"ERAM for Windows NT/2000/XP"
-			VALUE "ProductVersion",		"2.23"
+			VALUE "ProductName",		"ERAM"
+			VALUE "ProductVersion",		"2.24"
 		END
 	END
 	BLOCK	"VarFileInfo"
