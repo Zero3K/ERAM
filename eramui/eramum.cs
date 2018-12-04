@@ -161,7 +161,7 @@
 //
 // MessageText:
 //
-// Please specify 17 or more for MAXMEM.%0
+// Please specify 17 MB or more for MAXMEM.%0
 //
 #define ERAM_ERROR_MAXMEM_TOO_SMALL      ((NTSTATUS)0xC0FF000EL)
 
@@ -170,7 +170,7 @@
 //
 // MessageText:
 //
-// Please specify the smaller value for MAXMEM than 4095.%0
+// Please specify a value smaller than 4095 MB for MAXMEM.%0
 //
 #define ERAM_ERROR_MAXMEM_TOO_BIG        ((NTSTATUS)0xC0FF000FL)
 
@@ -179,7 +179,7 @@
 //
 // MessageText:
 //
-// The startup option(s) has no MAXMEM=n or invalid MAXMEM value.%0
+// The startup option(s) has no MAXMEM=n or has an invalid MAXMEM value.%0
 //
 #define ERAM_ERROR_MAXMEM_INVALID        ((NTSTATUS)0xC0FF0010L)
 
@@ -188,7 +188,7 @@
 //
 // MessageText:
 //
-// Please specify the smaller value than 4095MB for ExtStart.%0
+// Please specify a value smaller than 4095 MB for ExtStart.%0
 //
 #define ERAM_ERROR_EXTSTART_TOO_BIG      ((NTSTATUS)0xC0FF0011L)
 
