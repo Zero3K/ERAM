@@ -1,5 +1,5 @@
-ERAM for Windows XP / NT / 2000 / 7 / 10 (32 and 64-bit) v2.23 Preliminary
-2004.7.11 error 15
+ERAM for Windows XP / NT / 2000 / 7 / 10 (32 and 64-bit) v2.24
+2004.7.11 error 15 with changes done 2018.11.26 by Zero3K
 
 Part from v2.20,21 is modified version. v2.22 is a modified version of.
 

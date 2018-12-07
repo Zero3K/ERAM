@@ -49,44 +49,33 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDD_SETUP DIALOG DISCARDABLE  0, 0, 189, 226
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "ERAM for Windows NT/2000/XP"
-FONT 9, "Lucida Console"
+CAPTION "ERAM Configuration"
+FONT 8, "Microsoft Sans Serif"
 BEGIN
     LTEXT           "Drive(&D)",IDC_STATIC,5,10,58,8
-    COMBOBOX        IDC_COMBO_DRIVE,65,10,23,175,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Rootdir ent(&L)",IDC_STATIC,95,10,58,8
+    COMBOBOX        IDC_COMBO_DRIVE,65,10,23,175,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Root Dir Entries(&L)",IDC_STATIC,95,10,58,8
     EDITTEXT        IDC_EDIT_ROOTDIR,155,10,25,12,ES_AUTOHSCROLL
     LTEXT           "Allocation Units(&A)",IDC_STATIC,5,30,58,8
-    COMBOBOX        IDC_COMBO_ALLOCUNIT,65,30,23,75,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_ALLOCUNIT,65,30,23,75,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Media ID(&I)",IDC_STATIC,95,30,58,8
-    EDITTEXT        IDC_EDIT_MEDIAID,155,30,25,12,ES_UPPERCASE | 
-                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_MEDIAID,155,30,25,12,ES_UPPERCASE | ES_AUTOHSCROLL
     LTEXT           "Disk Size(&S)",IDC_STATIC,5,50,55,10
     EDITTEXT        IDC_EDIT_PAGE,65,50,40,12,ES_AUTOHSCROLL
     LTEXT           "KB",IDC_STATIC,110,50,15,10
-    GROUPBOX        "Memory Source ",IDC_STATIC,5,70,175,65
-    CONTROL         "OS:NonPaged Pool(&N)",IDC_RADIO_NONPAGED,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,15,85,160,15
-    CONTROL         "OS:Paged Pool(&P)",IDC_RADIO_PAGED,"Button",
-                    BS_AUTORADIOBUTTON,15,100,160,15
-    CONTROL         "External(&E) need to edit BOOT.INI",IDC_RADIO_EXTERNAL,
+    GROUPBOX        " Memory Source ",IDC_STATIC,5,70,175,65
+    CONTROL         "Nonpaged Pool(&N)",IDC_RADIO_NONPAGED,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,85,160,15
+    CONTROL         "Paged Pool(&P)",IDC_RADIO_PAGED,"Button",BS_AUTORADIOBUTTON,15,100,160,15
+    CONTROL         "External(&E)  (need to edit the boot.ini)",IDC_RADIO_EXTERNAL,
                     "Button",BS_AUTORADIOBUTTON,15,115,160,15
-    GROUPBOX        "External ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
-    CONTROL         "Start address",IDC_CHECK_EXTSTART,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,155,70,10
-    EDITTEXT        IDC_EDIT_EXTSTART_MB,95,155,35,12,ES_RIGHT | 
-                    ES_UPPERCASE | ES_AUTOHSCROLL | ES_NUMBER
+    GROUPBOX        " External ",IDC_STATIC_EXT,5,140,175,45,WS_GROUP
+    CONTROL         "Start Address",IDC_CHECK_EXTSTART,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,155,70,10
+    EDITTEXT        IDC_EDIT_EXTSTART_MB,95,155,35,12,ES_RIGHT | ES_UPPERCASE | ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "MB-",IDC_STATIC_EXTSTART_MB,135,157,35,10
-    CONTROL         "Detect limit",IDC_CHECK_NOTSEARCHSKIP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,170,75,10
-    CONTROL         "Report to OS",IDC_CHECK_REPORTUSAGE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,95,170,75,10
-    CONTROL         "Local Device",IDC_CHECK_LOCAL_DISK,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,190,70,10
-    CONTROL         "Make TEMP Dir",IDC_CHECK_MAKE_TEMP,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,95,190,85,10
+    CONTROL         "Detect limit",IDC_CHECK_NOTSEARCHSKIP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,170,75,10
+    CONTROL         "Report to OS",IDC_CHECK_REPORTUSAGE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,95,170,75,10
+    CONTROL         "Local device",IDC_CHECK_LOCAL_DISK,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,190,70,10
+    CONTROL         "Make TEMP Directory",IDC_CHECK_MAKE_TEMP,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,95,190,86,10
     DEFPUSHBUTTON   "Ok",IDOK,75,205,30,15,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,110,205,30,15
     PUSHBUTTON      "Modify",IDC_UPDATE,145,205,30,15
@@ -135,15 +124,15 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "ERAM for Windows NT/2000/XP\0"
-            VALUE "CompanyName", "*Error15\0"
-            VALUE "FileDescription", "ERAM for Windows NT/2000/XP Applet\0"
-            VALUE "FileVersion", "2.20\0"
+            VALUE "Comments", "ERAM\0"
+            VALUE "CompanyName", "*Error15 & Zero3K\0"
+            VALUE "FileDescription", "ERAM Applet\0"
+            VALUE "FileVersion", "2.24\0"
             VALUE "InternalName", "eram.cpl\0"
-            VALUE "LegalCopyright", "Copyright (C) 1999-2004 *Error15\0"
+            VALUE "LegalCopyright", "Copyright (C) 1999-20018 *Error15 & Zero3K\0"
             VALUE "OriginalFilename", "eram.cpl\0"
-            VALUE "ProductName", "ERAM for Windows NT/2000/XP\0"
-            VALUE "ProductVersion", "2.20\0"
+            VALUE "ProductName", "ERAM\0"
+            VALUE "ProductVersion", "2.24\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -165,10 +154,11 @@ BEGIN
     IDS_ERR_OPEN_REG        "Cannot open registry key."
     IDS_PROMPT_REBOOT       "Reboot now?"
     IDS_ERR_REBOOT          "Reboot failed."
-    IDS_ERR_REG_MODIFY      "An error occurred when modifying the registry."
-    IDS_WARN_DRV_USING      "%c drive is already used."
-    IDS_WARN_LIMIT_SIZE     "Limit size to %dKB."
-    IDS_WARN_LIMIT_SIZE_THIS_UNIT "Limit size to %dKB at this allocation unit."
+    IDS_ERR_REG_MODIFY      "An error occurred while modifying the registry."
+    IDS_WARN_DRV_USING      "The %c drive is already in use."
+    IDS_WARN_LIMIT_SIZE     "Please limit the disk size to %dKB."
+    IDS_WARN_LIMIT_SIZE_THIS_UNIT 
+                            "Please limit the disk size to %dKB at the chosen allocation units."
     IDS_PROMPT_ERAM_REMOVE  "The uninstall of ERAM has started."
     IDS_ERR_DETECT_OS       "Detection of OS failed."
     IDS_PROMPT_BEFORE_DEVMGR "Please use Device Manager to remove ERAM."
@@ -203,8 +193,8 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDS_START_TYPE_3        "Demand"
     IDS_START_TYPE_4        "Disabled"
-    IDS_WARN_LIMIT_MAX_SIZE "Address space is being overflowed, Limit size to %dKB."
-    IDS_WARN_LIMIT_ROOTDIR  "Disk size is too small, RootDir entry reset to default."
+    IDS_WARN_LIMIT_MAX_SIZE "The address space is being overflowed, please limit the disk size to %dKB."
+    IDS_WARN_LIMIT_ROOTDIR  "The configured disk size is too small. The Root Dir Entries option has been reset to its default setting."
 END
 
 #endif    // English (U.S.) resources

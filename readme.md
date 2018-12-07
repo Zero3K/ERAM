@@ -1,23 +1,20 @@
 # ERAM
 
-ERAM v2.23 is an Opensource RAM Disk made by Hideaki Okubo (okubo at msh.biglobe.ne.jp) with the source code comments translated by Katayama Hirofumi MZ (katayama.hirofumi.mz at gmail.com). It has a size limit of 4 GB that uses page/non-paged/external RAM. You can use it for storing temp files, browser cache, etc. in order to speed up the programs that use those files.
+ERAM v2.24 is an Opensource RAM Disk made by Hideaki Okubo (okubo at msh.biglobe.ne.jp) with the source code comments translated by Katayama Hirofumi MZ (katayama.hirofumi.mz at gmail.com) and some modifications made by me thanks to help from a member of community.osr.com. It has a size limit of 4 GB that uses page/non-paged/external RAM. You can use it for storing temp files, browser cache, etc. in order to speed up the programs that use those files.
 
 ## Install Instructions
 
-x86
----
-1. Copy eram.sys from the x86 directory to \Windows\System32\drivers.
-2. Import eram.reg from the x86 directory to the Registry.
-3. Restart
+x86 (32-bit)
+------------
+1. Run the ERAM_x86.exe available for download in the Releases section.
+2. Follow the instructions.
 
-x64
----
-1. Copy eram.sys from the x64 directory to \Windows\System32\drivers
-2. Import eram.reg from the x64 directory to the Registry.
-3. Restart
+x64 (64-bit)
+------------
+1. Run the ERAM_x64.exe available for download in the Releases section (you might have to run the Installer with Driver Signature Enforcement Disabled for it to install without any errors).
+2. Follow the instructions.
 
-After installing, the RAM Disk will be available as the R: drive with a size of 996 MB.
-You can use the included eram.cpl (in the x86 directory) / eram.cpl (in the x64 directory) to change the size, etc. of the RAM Disk.
+After installing, the RAM Disk will be available as the R: or Z: drive with a size of 1 GB (for 32-bit OSes) and 4 GB (for 64-bit OSes) which can be changed as you see fit by running eram.cpl by pressing Win + R.
 
 ## Build Instructions
 
@@ -27,10 +24,9 @@ You can use the included eram.cpl (in the x86 directory) / eram.cpl (in the x64 
 4. Click Full Development Environment.
 5. Click OK.
 6. After the install has completed, you can find the Build Environments in the Start Menu in Windows Driver Kits\WDK 7600.16385.1\Build Environments.
-7. Open the proper Environment depending on what OS and CPU architecture you are building for (Checked makes a debug build while Free makes a release build).
+7. Open the proper Environment depending on what OS and CPU architecture you are building for (Only the Checked Build Environment works for now).
 8. Change the directory to the location of the source code (for example, cd C:\ERAM).
 9. Type build and press Enter.
-10. The resulting driver is unsigned so Driver Signature Enforcement has to be disabled for it to load in x64 architecture OSes.
 
 ## Benchmarks
 

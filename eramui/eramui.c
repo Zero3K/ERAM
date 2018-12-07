@@ -962,12 +962,12 @@ DWORD WINAPI WmNotify(HWND hDlg, INT idFrom, NMHDR FAR* pnmhdr)
 		/* Update */
 		if (SettingUpdate(hDlg) == FALSE)
 		{
-			SetWindowLong(hDlg, DWL_MSGRESULT, PSNRET_INVALID_NOCHANGEPAGE);
+			SetWindowLong(hDlg, DWLP_MSGRESULT, PSNRET_INVALID_NOCHANGEPAGE);
 			return TRUE;
 		}
 		/* Reboot if necessary */
 		Reboot(hDlg);
-		SetWindowLong(hDlg, DWL_MSGRESULT, PSNRET_NOERROR);
+		SetWindowLong(hDlg, DWLP_MSGRESULT, PSNRET_NOERROR);
 		return TRUE;
 	}
 	return FORWARD_WM_NOTIFY(hDlg, idFrom, pnmhdr, DefWindowProc);

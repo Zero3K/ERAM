@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by ERAMUI.RC
+// Used by eramui.rc
 //
 #define IDS_ERR_OPEN_REG                1
 #define IDS_PROMPT_REBOOT               2
