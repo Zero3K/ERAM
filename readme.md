@@ -4,17 +4,20 @@ ERAM v2.24 is an Opensource RAM Disk made by Hideaki Okubo (okubo at msh.biglobe
 
 ## Install Instructions
 
+0. Download from the Releases section (available at https://github.com/Zero3K/ERAM/releases)
+
 x86 (32-bit)
 ------------
-1. Run the ERAM_x86.exe available for download in the Releases section (available at https://github.com/Zero3K/ERAM/releases).
+1. Run the `ERAM_x86.exe`.
 2. Follow the instructions.
 
 x64 (64-bit)
 ------------
-1. Run the ERAM_x64.exe available for download in the Releases section (available at https://github.com/Zero3K/ERAM/releases) (you might have to run the Installer with Driver Signature Enforcement Disabled for it to install without any errors).
+1. Run the `ERAM_x64.exe`
+(you might have to run the Installer with Driver Signature Enforcement Disabled for it to install without any errors).
 2. Follow the instructions.
 
-After installing, the RAM Disk will be available as the R: or Z: drive with a size of 1 GB (for 32-bit OSes) and 4 GB (for 64-bit OSes) which can be changed as you see fit by running eram.cpl by pressing Win + R.
+After installing, the RAM Disk will be available as the R: or Z: drive with a size of 1 GB (for 32-bit OSes) and 4 GB (for 64-bit OSes) which can be changed as you see fit by running `eram.cpl` by pressing <kbd>Win</kbd> + <kbd>R</kbd>.
 
 ## Build Instructions
 
