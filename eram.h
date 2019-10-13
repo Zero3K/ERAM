@@ -729,6 +729,61 @@ DWORD CheckRsdtElements(
 #pragma	alloc_text(INIT, CheckAcpiRsdt)
 #pragma	alloc_text(INIT, CheckRsdtElements)
 
+//undefining all preprocessors
+
+#undef	NumberOf(x)		
+#undef LOBYTE(w)		
+#undef HIBYTE(w)		
+
+
+#undef max(a,b)	
+
+#undef	PARTITION_FAT32	
+#undef	MAXDWORD
+#undef	IOCTL_DISK_GET_LENGTH_INFO
+#undef FATID_MSG	
+#undef SUBKEY_WSTRING	
+#undef NT_DEVNAME		
+#undef WIN32_PATH		
+#undef DEFAULT_DRV		
+#undef	DISKMAXCLUSTER_12 (4086)			
+#undef	DISKMAXCLUSTER_16 (65525)			
+#undef	DISKMAXCLUSTER_32 (268435455)		
+#undef RAMDISK_MEDIA_TYPE		
+#undef VOLUME_LABEL_RAMDISK	
+#undef VOLUME_LABEL_LOCALDISK
+#undef TEMPDIR_NAME			
+#undef OWNDIR_NAME			
+#undef PARENTDIR_NAME			
+#undef	ERAMEXTFILEPATH		
+
+#undef	DISKMINPAGE	
+
+#undef	SECTOR	
+#undef	SECTOR_LOG2	
+#undef	RESV_SECTOR_FAT32	
+
+#undef SIZE_KILOBYTE	
+#undef SIZE_MEGABYTE	
+#undef PAGE_SIZE_4K	
+#undef	PAGE_SIZE_LOG2
+#undef	PAGE_SECTOR		
+#undef	PAGE_SEC_LOG2	
+#undef EXT_PAGE_SIZE	
+#undef	EXT_PAGE_SIZE_LOG2	
+#undef	EXT_PAGE_SECTOR
+#undef	EXT_PAGE_SEC_LOG2	
+#undef	LIMIT_2GBPAGES	
+#undef	LIMIT_4GBPAGES
+#undef	BIOS_ADDRESS_START	
+#undef	BIOS_ADDRESS_END	
+#undef	BIOS_SIZE			
+#undef	BUILD_NUMBER_NT40	
+#undef	BUILD_NUMBER_NT50	
+#undef	BUILD_NUMBER_NT51	
+#undef	SEC_COMMIT
+
+
 #endif	// ALLOC_PRAGMA
 
 #pragma pack()
