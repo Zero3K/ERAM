@@ -1,0 +1,6 @@
+*.log
+*.wrn
+*.err
+*.map
+i386/
+amd64
