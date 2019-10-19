@@ -829,7 +829,7 @@ BOOL WINAPI SetRegOption(LPERAMREGOPT lpEramOpt)
 		The results.
 */
 
-LONG __declspec(dllexport) CALLBACK CPlApplet(HWND hwndCPL, UINT uMsg, LPARAM lParam1, LPARAM lParam2)
+LONG CALLBACK CPlApplet(HWND hwndCPL, UINT uMsg, LPARAM lParam1, LPARAM lParam2)
 {
 	switch (uMsg)
 	{
@@ -844,7 +844,7 @@ LONG __declspec(dllexport) CALLBACK CPlApplet(HWND hwndCPL, UINT uMsg, LPARAM lP
 		break;
 	case CPL_DBLCLK:	/* Double-clicked */
 		/* Display the dialog */
-		DialogBox(hgInstance, MAKEINTRESOURCE(IDD_SETUP), hwndCPL, StatusDlgProc);
+		DialogBox(hgInstance, MAKEINTRESOURCE(IDD_SETUP), hwndCPL, (DLGPROC)StatusDlgProc);
 		break;
 	case CPL_STOP:
 		break;
@@ -971,7 +971,7 @@ DWORD WINAPI WmNotify(HWND hDlg, INT idFrom, NMHDR FAR* pnmhdr)
 		SetWindowLong(hDlg, DWLP_MSGRESULT, PSNRET_NOERROR);
 		return TRUE;
 	}
-	return FORWARD_WM_NOTIFY(hDlg, idFrom, pnmhdr, DefWindowProc);
+	return (DWORD)FORWARD_WM_NOTIFY(hDlg, idFrom, pnmhdr, DefWindowProc);
 }
 
 
@@ -1004,7 +1004,7 @@ VOID WINAPI WmDestroy(HWND hDlg)
 		The results.
 */
 
-DWORD EXPORT WINAPI EramClassInstall(DI_FUNCTION diFctn, HDEVINFO hDevInfoSet, PSP_DEVINFO_DATA pDevInfoData)
+DWORD WINAPI EramClassInstall(DI_FUNCTION diFctn, HDEVINFO hDevInfoSet, PSP_DEVINFO_DATA pDevInfoData)
 {
 	/* Do default */
 	return ERROR_DI_DO_DEFAULT;
@@ -1021,7 +1021,7 @@ DWORD EXPORT WINAPI EramClassInstall(DI_FUNCTION diFctn, HDEVINFO hDevInfoSet, P
 		The results.
 */
 
-BOOL EXPORT WINAPI EnumPropPages32(PSP_PROPSHEETPAGE_REQUEST pInfo, LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam)
+BOOL WINAPI EnumPropPages32(PSP_PROPSHEETPAGE_REQUEST pInfo, LPFNADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam)
 {
 	/* Local variable(s) */
 	PROPSHEETPAGE Setting;
@@ -1066,7 +1066,7 @@ BOOL EXPORT WINAPI EnumPropPages32(PSP_PROPSHEETPAGE_REQUEST pInfo, LPFNADDPROPS
 		None.
 */
 
-VOID EXPORT CALLBACK EramUninstall(HWND hWnd, HINSTANCE hInstance, LPSTR lpszCmdLine, INT nCmdShow)
+VOID CALLBACK EramUninstall(HWND hWnd, HINSTANCE hInstance, LPSTR lpszCmdLine, INT nCmdShow)
 {
 	/* Local variable(s) */
 	SC_HANDLE hScm, hEram;
@@ -1401,7 +1401,7 @@ LPCSTR WINAPI GetEramClass(GUID* pGuid)
 		None.
 */
 
-VOID EXPORT CALLBACK StartupFastfat(HWND hWnd, HINSTANCE hInstance, LPSTR lpszCmdLine, INT nCmdShow)
+VOID CALLBACK StartupFastfat(HWND hWnd, HINSTANCE hInstance, LPSTR lpszCmdLine, INT nCmdShow)
 {
 	/* Local variable(s) */
 	static WORD wTypes[] = {
