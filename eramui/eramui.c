@@ -62,6 +62,7 @@
 #include <regstr.h>
 #include <setupapi.h>
 #include <dbt.h>
+#include <stdlib.h>
 #include "eramui.h"
 
 #define RAMDISK_MEDIA_TYPE		0xf8	/* ERAM.H */
