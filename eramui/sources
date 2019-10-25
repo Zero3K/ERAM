@@ -1,0 +1,16 @@
+#  ERAM for Windows NT/2000/XP  sources file
+TARGETNAME=eramui
+TARGETPATH=.
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+INCLUDES=$(BASEDIR)\inc;$(BASEDIR)\src\storagej\inc
+386_WARNING_LEVEL=-W4
+USE_LIBCMT=1
+TARGETLIBS= \
+$(DDK_LIB_PATH)\comctl32.lib \
+$(DDK_LIB_PATH)\kernel32.lib \
+$(DDK_LIB_PATH)\user32.lib \
+$(DDK_LIB_PATH)\advapi32.lib
+SOURCES = eramui.c	\
+          eramui.rc
+LINKER_FLAGS=-MAP:eram.map
