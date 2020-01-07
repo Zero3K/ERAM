@@ -117,6 +117,10 @@
 		YET:over4GB: allocate RAM in LME status (?)
 		YET:SMBIOS:get maximum amount of memory
 		YET:SUM check
+	v2.30
+		Fixes BSODs that were occurring when using it in a 64-bit version of Windows.
+		Fixes BSODs that were occurring when using more than 4 GB of RAM as the Ramdisk size.
+		Improved the Control Panel Applet.
 */
 
 
