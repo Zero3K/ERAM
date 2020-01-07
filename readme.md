@@ -11,7 +11,7 @@ x86 (32-bit)
 1. Run the `ERAM_x86.exe`.
 2. Follow the instructions.
 
-x64 (64-bit)
+x64 ( 64-bit ) -
 ------------
 1. Run the `ERAM_x64.exe`
 (you might have to run the Installer with Driver Signature Enforcement Disabled for it to install without any errors).
@@ -19,7 +19,7 @@ x64 (64-bit)
 
 After installing, the RAM Disk will be available as the R: or Z: drive with a size of 1 GB (for 32-bit OSes) and 4 GB (for 64-bit OSes) which can be changed as you see fit by running `eram.cpl` by pressing <kbd>Win</kbd> + <kbd>R</kbd>.
 
-## Build Instructions
+## Build Instructions -
 
 1. Download WDK (Windows Driver Kit) 7.1.0 from https://www.microsoft.com/en-us/download/details.aspx?id=11800.
 2. Extract the ISO using 7-Zip, etc. to a directory of your choosing.
@@ -31,18 +31,18 @@ After installing, the RAM Disk will be available as the R: or Z: drive with a si
 8. Change the directory to the location of the source code (for example, cd C:\ERAM).
 9. Type build and press Enter.
 
-## Benchmarks
+## Benchmarks -
 
 ![ERAM Benchmark done on Windows 7 64-bit](images/benchmark.png)
 ![ERAM Benchmark done on a Windows 7 64-bit Virtual Machine](images/benchmark_2.png)
 
-## Screenshots
+## Screenshots -
 
 ![ERAM's RAM Disk Contents in a Windows 7 64-bit Virtual Machine](images/Empty_ERAM_Drive.png)
 ![ERAM's RAM Disk Properties in a Windows 7 64-bit Virtual Machine](images/ERAM_Drive_Properties.png)
 
 ![ERAM's Control Panel Applet in a Windows 7 64-bit Virtual Machine](images/ERAM_Options.png)
 
-## Original Developer's Website
+## Original Developer's Site -
 
 http://www.vector.co.jp/authors/VA000363
