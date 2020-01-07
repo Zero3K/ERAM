@@ -1,6 +1,6 @@
-/* ERAMUI.C    RAM Disk ERAM for WindowsNT/2000/XP
+/* ERAMUI.C    RAM Disk ERAM for WindowsNT/2000/2003/XP/7
 	Control Panel Applet / Class Installer
-      Copyright (c) 1999-2004 by *Error15
+      Copyright (c) 1999-2020 by *Error15 & Zero3K
     Translated into English by Katayama Hirofumi MZ <katayama.hirofumi.mz@gmail.com>.
 */
 
