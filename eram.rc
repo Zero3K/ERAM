@@ -16,8 +16,8 @@ LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 #endif //_WIN32
 
 VS_VERSION_INFO	VERSIONINFO
-	FILEVERSION		2,24
-	PRODUCTVERSION	2,24
+	FILEVERSION		2,30
+	PRODUCTVERSION	2,30
 	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 	FILEFLAGS		0x0L
 	FILEOS			VOS_NT_WINDOWS32
@@ -31,12 +31,12 @@ BEGIN
 			VALUE "Comments",			"ERAM"
 			VALUE "CompanyName",		"*Error15 & Zero3K"
 			VALUE "FileDescription",	"ERAM"
-			VALUE "FileVersion",		"2.24"
+			VALUE "FileVersion",		"2.30"
 			VALUE "InternalName",		"eram.sys"
-			VALUE "LegalCopyright",		"Copyright (C) 1999-2018 *Error15 & Zero3K"
+			VALUE "LegalCopyright",		"Copyright (C) 1999-2020 *Error15 & Zero3K"
 			VALUE "OriginalFilename",	"eram.sys"
 			VALUE "ProductName",		"ERAM"
-			VALUE "ProductVersion",		"2.24"
+			VALUE "ProductVersion",		"2.30"
 		END
 	END
 	BLOCK	"VarFileInfo"
@@ -59,8 +59,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #endif //_WIN32
 
 VS_VERSION_INFO	VERSIONINFO
-	FILEVERSION		2,24
-	PRODUCTVERSION	2,24
+	FILEVERSION		2,30
+	PRODUCTVERSION	2,30
 	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 	FILEFLAGS		0x0L
 	FILEOS			VOS_NT_WINDOWS32
@@ -74,12 +74,12 @@ BEGIN
 			VALUE "Comments",			"ERAM"
 			VALUE "CompanyName",		"*Error15 & Zero3K"
 			VALUE "FileDescription",	"ERAM"
-			VALUE "FileVersion",		"2.24"
+			VALUE "FileVersion",		"2.30"
 			VALUE "InternalName",		"eram.sys"
-			VALUE "LegalCopyright",		"Copyright (C) 1999-2018 *Error15 & Zero3K"
+			VALUE "LegalCopyright",		"Copyright (C) 1999-2020 *Error15 & Zero3K"
 			VALUE "OriginalFilename",	"eram.sys"
 			VALUE "ProductName",		"ERAM"
-			VALUE "ProductVersion",		"2.24"
+			VALUE "ProductVersion",		"2.30"
 		END
 	END
 	BLOCK	"VarFileInfo"
