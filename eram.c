@@ -1,5 +1,5 @@
-﻿/* ERAM.C    RAM disk ERAM for WindowsNT/2000/XP
-      Copyright (c) 1999-2004 by *Error15
+﻿/* ERAM.C    RAM disk ERAM for WindowsNT/2000/2003/XP/7
+      Copyright (c) 1999-2020 by *Error15 & Zero3K
    Translated into English by Katayama Hirofumi MZ.
 */
 
