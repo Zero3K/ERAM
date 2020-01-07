@@ -7,6 +7,9 @@
 
 int sprintf(char *s, const char *format, ...);
 
+typedef SIZE_T ULONGPTR, *PULONGPTR;
+
+
 typedef unsigned int	UINT;
 typedef UCHAR			BYTE, *PBYTE, *LPBYTE;
 typedef USHORT			WORD, *PWORD, *LPWORD;
@@ -139,14 +142,14 @@ typedef struct {
 	ERAM_WRITE			EramWrite;
 	ERAM_NEXT			EramNext;
 	ERAM_UNMAP			EramUnmap;
-	ULONG				uNowMapAdr;		// OS-Unmanaged/file, the currently mapping address
+	ULONGPTR			uNowMapAdr;		// OS-Unmanaged/file, the currently mapping address
 	LPBYTE				pExtPage;		// OS-Unmanaged/file, the memory mapping address
 	LPBYTE				pPageBase;		// OS-Managed Memory
-	ULONG				uSizeTotal;		// Total size (4KB unit)
+	ULONGPTR			uSizeTotal;		// Total size (4KB unit)
 	UNICODE_STRING		Win32Name;
 	ULONG				uAllSector;		// The number of all sectors
-	ULONG				uExternalStart;	// External memory starting position
-	ULONG				uExternalEnd;	// External memory ending position (of detected)
+	ULONGPTR			uExternalStart;	// External memory starting position
+	ULONGPTR			uExternalEnd;	// External memory ending position (of detected)
 	FAST_MUTEX			FastMutex;		// Fast mutex
 	PHYSICAL_ADDRESS	MapAdr;			// OS-Unmanaged Memory map position top
 	ULONG				bsHiddenSecs;	// The number of hidden sectors (=0)
@@ -409,7 +412,7 @@ BOOLEAN ExtNext1(
 
 BOOLEAN ExtMap(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMapAdr
+	IN ULONGPTR			uMapAdr
  );
 
 VOID ExtUnmap(
@@ -454,7 +457,7 @@ BOOLEAN ExtFileNext1(
 
 BOOLEAN ExtFileMap(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMapAdr
+	IN ULONGPTR			uMapAdr
  );
 
 VOID ExtFileUnmap(
@@ -524,19 +527,19 @@ NTSTATUS MemSetup(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
 	IN PFAT_ID			pFatId,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  );
 
 BOOLEAN OsAlloc(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  );
 
 VOID CalcAvailSize(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN POOL_TYPE		fPool,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  );
 
 DEVICE_TYPE CheckSwapable(
@@ -604,15 +607,15 @@ BOOLEAN EramClearInfo(
 
 BOOLEAN ExtClear(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR			uSize
  );
 
 BOOLEAN ExtFileClear(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR			uSize
  );
 
-DWORD CalcEramInfoPage(
+ULONGPTR CalcEramInfoPage(
 	IN PERAM_EXTENSION	pEramExt,
 	IN PFAT_ID			pFatId
  );
@@ -636,13 +639,13 @@ BOOLEAN GetMaxMem(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
 	IN PWSTR			pwStr,
-	OUT PULONG			puSize
+	OUT PULONG  		puSize    //TODO: 64bit would be required here?
  );
 
 BOOLEAN CheckMaxMem(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR    		uSize
  );
 
 BOOLEAN CheckExternalSize(
@@ -653,21 +656,23 @@ BOOLEAN CheckExternalSize(
 VOID ResourceInitTiny(
 	IN PDRIVER_OBJECT		pDrvObj,
 	IN PCM_RESOURCE_LIST	pResList,
-	IN ULONG				uStart,
-	IN ULONG				uSize
+	IN ULONGPTR				uStart,
+	IN ULONGPTR				uSize
  );
+
+//TODO: what about those not sure if tiny should remain 32bit??
 
 BOOLEAN CheckExternalMemoryExist(
 	IN PDRIVER_OBJECT	pDrvObj,
-	IN ULONG			uStart,
-	IN ULONG			uDiskSize,
-	OUT PULONG			puSize,
-	IN ULONG			dwMaxAdr
+	IN ULONGPTR			uStart,
+	IN ULONGPTR			uDiskSize,
+	OUT PULONGPTR		puSize,
+	IN ULONGPTR			dwMaxAdr
  );
 
 BOOLEAN ResourceSetupTiny(
 	IN PDRIVER_OBJECT		pDrvObj,
-	IN ULONG				uStart,
+	IN ULONGPTR				uStart,
 	IN PPHYSICAL_ADDRESS	pMapAdr
  );
 

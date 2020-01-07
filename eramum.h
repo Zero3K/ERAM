@@ -166,15 +166,6 @@
 #define ERAM_ERROR_MAXMEM_TOO_SMALL    ((NTSTATUS)0xE0FF000EL)
 
 //
-// MessageId: ERAM_ERROR_MAXMEM_TOO_BIG
-//
-// MessageText:
-//
-//  Please specify the smaller value for MAXMEM than 4095.%0
-//
-#define ERAM_ERROR_MAXMEM_TOO_BIG      ((NTSTATUS)0xE0FF000FL)
-
-//
 // MessageId: ERAM_ERROR_MAXMEM_INVALID
 //
 // MessageText:
@@ -182,15 +173,6 @@
 //  The startup option(s) has no MAXMEM=n or invalid MAXMEM value.%0
 //
 #define ERAM_ERROR_MAXMEM_INVALID      ((NTSTATUS)0xE0FF0010L)
-
-//
-// MessageId: ERAM_ERROR_EXTSTART_TOO_BIG
-//
-// MessageText:
-//
-//  Please specify the smaller value than 4095MB for ExtStart.%0
-//
-#define ERAM_ERROR_EXTSTART_TOO_BIG    ((NTSTATUS)0xE0FF0011L)
 
 //
 // MessageId: ERAM_ERROR_WORK_ALLOC_FAILED

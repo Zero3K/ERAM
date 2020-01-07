@@ -211,7 +211,7 @@ NTSTATUS EramDeviceControl(
 		break;
 	default:								/* misc. */
 		/* Ignore */
-		KdPrint(("IOCTL 0x%x\n", (UINT)(pIrpSp->Parameters.DeviceIoControl.IoControlCode)));
+		KdPrint(("Eram IOCTL 0x%x\n", (UINT)(pIrpSp->Parameters.DeviceIoControl.IoControlCode)));
 		break;
 	}
 	/* Set status */
@@ -235,7 +235,7 @@ NTSTATUS EramDeviceControl(
 VOID EramDeviceControlGeometry(
 	PERAM_EXTENSION	pEramExt,
 	IN PIRP			pIrp,
-	IN ULONG		uLen
+	IN ULONG 		uLen
  )
 {
 	/* local variables */
@@ -353,15 +353,15 @@ VOID EramDeviceControlVerify(
 		KdPrint(("EramDeviceControlVerify:size too small\n"));
 		return;
 	}
-	/* Verify Info Settings */
+	/* Verify Info Settings TODO: i think its already using 64bit math to calculate stuff here */
 	pVerify = pIrp->AssociatedIrp.SystemBuffer;
-	//KdPrint(("offset 0x%x%08x, len 0x%x\n", pVerify->StartingOffset.HighPart, pVerify->StartingOffset.LowPart, pVerify->Length));
+	//KdPrint(("Eram offset 0x%x%08x, len 0x%x\n", pVerify->StartingOffset.HighPart, pVerify->StartingOffset.LowPart, pVerify->Length));
 	if ((((ULONGLONG)(pVerify->StartingOffset.QuadPart) + (ULONGLONG)(pVerify->Length)) > UInt32x32To64(pEramExt->uAllSector, SECTOR))||
 		((pVerify->StartingOffset.LowPart & (SECTOR-1)) != 0)||
 		((pVerify->Length & (SECTOR-1)) != 0))	/* Disk capacity exceeded or the starting position or the length is not a multiple of the sector size */
 	{
 		/* Return error */
-		KdPrint(("Invalid I/O parameter\n"));
+		KdPrint(("Eram Invalid I/O parameter\n"));
 		pIrp->IoStatus.Status = STATUS_INVALID_PARAMETER;
 		return;
 	}
@@ -370,7 +370,7 @@ VOID EramDeviceControlVerify(
 		((pEramExt->uExternalStart + (ULONGLONG)(pVerify->StartingOffset.QuadPart) + (ULONGLONG)(pVerify->Length)) >= 
 pEramExt->uExternalEnd))
 	{
-		//KdPrint(("Invalid I/O address space\n"));
+		//KdPrint(("Eram Invalid I/O address space\n"));
 		pIrp->IoStatus.Status = STATUS_DISK_CORRUPT_ERROR;
 		return;
 	}
@@ -395,6 +395,8 @@ VOID EramDeviceControlDiskCheckVerify(
 	IN ULONG		uLen
  )
 {
+
+
 	/* local variables */
 	PULONG puOpt;
 	pIrp->IoStatus.Status = STATUS_SUCCESS;
@@ -473,7 +475,7 @@ NTSTATUS EramReadWrite(
 	/* Get the pointer to the stack */
 	pIrpSp = IoGetCurrentIrpStackLocation(pIrp);
 	if ((((ULONGLONG)(pIrpSp->Parameters.Read.ByteOffset.QuadPart) + (ULONGLONG)(pIrpSp->Parameters.Read.Length)) > UInt32x32To64(pEramExt->uAllSector, SECTOR))||
-		((pIrpSp->Parameters.Read.ByteOffset.LowPart & (SECTOR-1)) != 0)||
+		((pIrpSp->Parameters.Read.ByteOffset.QuadPart & (SECTOR-1)) != 0)||
 		((pIrpSp->Parameters.Read.Length & (SECTOR-1)) != 0))	/* Disk capacity exceeded or the starting position / the length is not a multiple of the sector size */
 	{
 		KdPrint(("Invalid I/O parameter, offset 0x%x, length 0x%x, OP=0x%x(R=0x%x, W=0x%x), limit=0x%x\n", pIrpSp->Parameters.Read.ByteOffset.LowPart, pIrpSp->Parameters.Read.Length, pIrpSp->MajorFunction, IRP_MJ_READ, IRP_MJ_WRITE, (pEramExt->uAllSector * SECTOR)));
@@ -496,11 +498,11 @@ NTSTATUS EramReadWrite(
 	switch (pIrpSp->MajorFunction)	/* Branch by functions */
 	{
 	case IRP_MJ_READ:				/* reading */
-		//KdPrint(("Read start\n"));
+		//KdPrint(("ERam Read start\n"));
 		/* Validate the address */
 		if (pTransAddr == NULL)
 		{
-			KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
+			KdPrint(("Eram MmGetSystemAddressForMdlSafe failed\n"));
 			ntStat = STATUS_INVALID_PARAMETER;
 			break;
 		}
@@ -508,14 +510,14 @@ NTSTATUS EramReadWrite(
 		pIrp->IoStatus.Information = pIrpSp->Parameters.Read.Length;
 		/* reading */
 		ntStat = (*(pEramExt->EramRead))(pEramExt, pIrp, pIrpSp, pTransAddr);
-		//KdPrint(("Read end\n"));
+		//KdPrint(("Eram Read end\n"));
 		break;
 	case IRP_MJ_WRITE:				/* writing */
 		//KdPrint(("Write start\n"));
 		/* Validate the address */
 		if (pTransAddr == NULL)
 		{
-			KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
+			KdPrint(("Eram MmGetSystemAddressForMdlSafe failed\n"));
 			ntStat = STATUS_INVALID_PARAMETER;
 			break;
 		}
@@ -526,7 +528,7 @@ NTSTATUS EramReadWrite(
 		//KdPrint(("Write end\n"));
 		break;
 	default:
-		KdPrint(("RW default\n"));
+		KdPrint(("Eram RW default\n"));
 		pIrp->IoStatus.Information = 0;
 		break;
 	}
@@ -587,7 +589,7 @@ VOID EramUnloadDevice(
 	KdPrint(("EramUnloadDevice start\n"));
 	if (pEramExt != NULL)			/* Device has already created */
 	{
-		KdPrint(("Device exist\n"));
+		KdPrint(("Eram Device exist\n"));
 		/* Notify thread termination */
 		pEramExt->bThreadStop = TRUE;
 		if (pEramExt->pThreadObject != NULL)		/* Thread exists */
@@ -605,7 +607,7 @@ VOID EramUnloadDevice(
 		/* external file closing */
 		if (pEramExt->hSection != NULL)
 		{
-			KdPrint(("File section close\n"));
+			KdPrint(("Eram File section close\n"));
 			ExtFileUnmap(pEramExt);
 			ZwClose(pEramExt->hSection);
 			pEramExt->hSection = NULL;
@@ -649,7 +651,7 @@ VOID ResourceRelease(
 	IN PERAM_EXTENSION	pEramExt
  )
 {
-	KdPrint(("ResourceRelease start\n"));
+	KdPrint(("ERam ResourceRelease start\n"));
 	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory usage */
 	{
 		/* Resource release */
@@ -661,7 +663,7 @@ VOID ResourceRelease(
 		ExFreePool(pEramExt->pPageBase);
 		pEramExt->pPageBase = NULL;
 	}
-	KdPrint(("ResourceRelease end\n"));
+	KdPrint(("Eram ResourceRelease end\n"));
 }
 
 
@@ -761,14 +763,14 @@ BOOLEAN EramReportEventW(
 	}
 	if (uSize > ERROR_LOG_MAXIMUM_SIZE)		/* string too long */
 	{
-		KdPrint(("String too long\n"));
+		KdPrint(("Eram String too long\n"));
 		return FALSE;
 	}
 	/* packet allocation */
 	pPacket = IoAllocateErrorLogEntry(pIoObject, (UCHAR)uSize);
 	if (pPacket == NULL)	/* allocation failed */
 	{
-		KdPrint(("IoAllocateErrorLogEntry failed\n"));
+		KdPrint(("Eram IoAllocateErrorLogEntry failed\n"));
 		return FALSE;
 	}
 	/* standard data part initialization */
@@ -810,7 +812,7 @@ NTSTATUS ReadPool(
 {
 	/* local variables */
 	PUCHAR lpSrc;
-	lpSrc = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Read.ByteOffset.LowPart);
+	lpSrc = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Read.ByteOffset.QuadPart);
 	RtlCopyBytes(lpDest, lpSrc, pIrpSp->Parameters.Read.Length);
 	return STATUS_SUCCESS;
 }
@@ -836,7 +838,7 @@ NTSTATUS WritePool(
 {
 	/* local variables */
 	PUCHAR lpDest;
-	lpDest = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Write.ByteOffset.LowPart);
+	lpDest = (PUCHAR)((PBYTE)pEramExt->pPageBase + (ULONG)pIrpSp->Parameters.Write.ByteOffset.QuadPart);
 	RtlCopyBytes(lpDest, lpSrc, pIrpSp->Parameters.Write.Length);
 	return STATUS_SUCCESS;
 }
@@ -865,7 +867,7 @@ NTSTATUS ExtRead1(
 	UINT	uLen;
 	DWORD	eax, ebx;
 	NTSTATUS ntStat;
-	ULONG	uMemAdr;
+	SIZE_T	uMemAdr;
 	ASSERT(pEramExt->uExternalStart != 0);
 	ASSERT(pEramExt->uExternalEnd != 0);
 	/* Mutex wait */
@@ -874,7 +876,7 @@ NTSTATUS ExtRead1(
 	/* Calculate the sector number */
 	ebx = pIrpSp->Parameters.Read.ByteOffset.LowPart >> SECTOR_LOG2;
 	/* Calculate the memory position */
-	uMemAdr = pEramExt->uExternalStart + pIrpSp->Parameters.Read.ByteOffset.LowPart;
+	uMemAdr = pEramExt->uExternalStart + pIrpSp->Parameters.Read.ByteOffset.QuadPart;
 	ntStat = STATUS_SUCCESS;
 	while (uLen != 0)
 	{
@@ -890,7 +892,7 @@ NTSTATUS ExtRead1(
 			ntStat = STATUS_DISK_CORRUPT_ERROR;
 			break;
 		}
-		lpSrc = (PUCHAR)((ULONG)(pEramExt->pExtPage + eax));
+		lpSrc = (PUCHAR)((pEramExt->pExtPage + eax)); //(ULONG)
 		/* data transfer */
 		RtlCopyBytes(lpDest, lpSrc, SECTOR);
 		lpDest += SECTOR;
@@ -928,7 +930,7 @@ NTSTATUS ExtWrite1(
 	UINT	uLen;
 	DWORD	eax, ebx;
 	NTSTATUS ntStat;
-	ULONG	uMemAdr;
+	ULONGPTR uMemAdr;
 	ASSERT(pEramExt->uExternalStart != 0);
 	ASSERT(pEramExt->uExternalEnd != 0);
 	/* Mutex wait */
@@ -953,7 +955,7 @@ NTSTATUS ExtWrite1(
 			ntStat = STATUS_DISK_CORRUPT_ERROR;
 			break;
 		}
-		lpDest = (PUCHAR)((ULONG)(pEramExt->pExtPage + eax));
+		lpDest = (PUCHAR)((pEramExt->pExtPage + eax)); //(ULONG)
 		/* data transfer */
 		RtlCopyBytes(lpDest, lpSrc, SECTOR);
 		lpSrc += SECTOR;
@@ -1017,7 +1019,7 @@ BOOLEAN ExtNext1(
 
 BOOLEAN ExtMap(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMapAdr
+	IN SIZE_T			uMapAdr
  )
 {
 	/* local variables */
@@ -1029,18 +1031,18 @@ BOOLEAN ExtMap(
 		ExtUnmap(pEramExt);
 		/* fix the mapping position */
 		MapAdr = pEramExt->MapAdr;
-		if (MapAdr.LowPart == 0)		/* Already released */
+		if (MapAdr.QuadPart == 0)		/* Already released */
 		{
-			KdPrint(("Already resource released\n"));
+			KdPrint(("Eram Already resource released\n"));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_ALREADY_FREE, NULL);
 			return FALSE;
 		}
-		MapAdr.LowPart += uMapAdr;
+		MapAdr.QuadPart += uMapAdr;
 		/* map (allow cache) */
 		pEramExt->pExtPage = (PBYTE)MmMapIoSpace(MapAdr, EXT_PAGE_SIZE, TRUE);
 		if (pEramExt->pExtPage == NULL)		/* failed */
 		{
-			KdPrint(("MmMapIoSpace failed\n"));
+			KdPrint(("Eram MmMapIoSpace failed\n"));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_MAP_FAILED, NULL);
 			return FALSE;
 		}
@@ -1093,13 +1095,13 @@ NTSTATUS ExtFilePendingRw(
 	//KdPrint(("ExtFilePendingRw start\n"));
 	if (pEramExt->bThreadStop != 0)		/* Instructed termination */
 	{
-		KdPrint(("stop sequence\n"));
+		KdPrint(("Eram stop sequence\n"));
 		pIrp->IoStatus.Information = 0;
 		return STATUS_DEVICE_NOT_READY;
 	}
 	if (pEramExt->pThreadObject == NULL)	/* without thread */
 	{
-		KdPrint(("Thread not exist\n"));
+		KdPrint(("Eram Thread not exist\n"));
 		pIrp->IoStatus.Information = 0;
 		return STATUS_DEVICE_NOT_READY;
 	}
@@ -1110,7 +1112,7 @@ NTSTATUS ExtFilePendingRw(
 	ExInterlockedInsertTailList(&(pEramExt->IrpList), &(pIrp->Tail.Overlay.ListEntry), &(pEramExt->IrpSpin));
 	/* Decrement semaphores */
 	KeReleaseSemaphore(&(pEramExt->IrpSem), 0, 1, FALSE);
-	//KdPrint(("ExtFilePendingRw end\n"));
+	//KdPrint(("Eram ExtFilePendingRw end\n"));
 	return STATUS_PENDING;
 }
 
@@ -1140,18 +1142,18 @@ VOID EramRwThread(
 	KeSetPriorityThread(KeGetCurrentThread(), LOW_REALTIME_PRIORITY);		//  Standard is Prior8
 	while (pEramExt->bThreadStop == 0)		/* thread in active */
 	{
-		//KdPrint(("Waiting\n"));
+		//KdPrint(("Eram Waiting\n"));
 		/* Wait the request and resume the counter */
 		KeWaitForSingleObject(&(pEramExt->IrpSem), Executive, KernelMode, FALSE, NULL);
 		if (pEramExt->bThreadStop != 0)		/* thread stop request */
 		{
-			KdPrint(("thread should stop\n"));
+			KdPrint(("Eram thread should stop\n"));
 			break;
 		}
-		//KdPrint(("Wake\n"));
+		//KdPrint(("Eram Wake\n"));
 		/* Get the head of the IRP list */
 		pIrpList = ExInterlockedRemoveHeadList(&(pEramExt->IrpList), &(pEramExt->IrpSpin));
-		//KdPrint(("Get list\n"));
+		//KdPrint(("Eram Get list\n"));
 		if (pIrpList != NULL)		/* The list is valid */
 		{
 			ntStat = EramRwThreadIrp(pEramExt, pIrpList);
@@ -1225,7 +1227,7 @@ NTSTATUS EramRwThreadIrp(
 	}
 	if (pTransAddr == NULL)		/* conversion failure */
 	{
-		KdPrint(("MmGetSystemAddressForMdlSafe failed\n"));
+		KdPrint(("Eram MmGetSystemAddressForMdlSafe failed\n"));
 		/* Set status */
 		pIrp->IoStatus.Status = STATUS_INVALID_PARAMETER;
 		/* I/O complete */
@@ -1247,7 +1249,7 @@ NTSTATUS EramRwThreadIrp(
 		ntStat = ExtFileWrite1(pEramExt, pIrp, pIrpSp, pTransAddr);
 		break;
 	default:
-		//KdPrint(("RW default\n"));
+		//KdPrint(("Eram RW default\n"));
 		ntStat = STATUS_SUCCESS;
 		break;
 	}
@@ -1297,7 +1299,7 @@ NTSTATUS ExtFileRead1(
 			ntStat = STATUS_DISK_CORRUPT_ERROR;
 			break;
 		}
-		lpSrc = (PUCHAR)((ULONG)(pEramExt->pExtPage + eax));
+		lpSrc = (PUCHAR)((pEramExt->pExtPage + eax)); //(ULONG)
 		/* data transfer */
 		RtlCopyBytes(lpDest, lpSrc, SECTOR);
 		lpDest += SECTOR;
@@ -1346,7 +1348,7 @@ NTSTATUS ExtFileWrite1(
 			ntStat = STATUS_DISK_CORRUPT_ERROR;
 			break;
 		}
-		lpDest = (PUCHAR)((ULONG)(pEramExt->pExtPage + eax));
+		lpDest = (PUCHAR)((pEramExt->pExtPage + eax)); //(ULONG)
 		/* data transfer */
 		RtlCopyBytes(lpDest, lpSrc, SECTOR);
 		lpSrc += SECTOR;
@@ -1383,7 +1385,7 @@ BOOLEAN ExtFileNext1(
 	/* map */
 	if (ExtFileMap(pEramExt, uMapAdr) == FALSE)
 	{
-		KdPrint(("ExtFileMap failed, MapAdr=0x%x, sector=0x%x, SizeSec=0x%x, SizeBytes=0x%x\n", uMapAdr, ebx, (pEramExt->uAllSector << SECTOR_LOG2), (pEramExt->uSizeTotal << PAGE_SIZE_LOG2)));
+		KdPrint(("Eram ExtFileMap failed, MapAdr=0x%x, sector=0x%x, SizeSec=0x%x, SizeBytes=0x%x\n", uMapAdr, ebx, (pEramExt->uAllSector << SECTOR_LOG2), (pEramExt->uSizeTotal << PAGE_SIZE_LOG2)));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "ExtFileMap");
 		return FALSE;
 	}
@@ -1409,12 +1411,12 @@ BOOLEAN ExtFileNext1(
 
 BOOLEAN ExtFileMap(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMapAdr
+	IN SIZE_T			uMapAdr
  )
 {
 	/* local variables */
 	LARGE_INTEGER llOfs;
-	ULONG uView;
+	SIZE_T uView;
 	NTSTATUS ntStat;
 	ASSERT(pEramExt != NULL);
 	if ((pEramExt->pExtPage == NULL)||			/* unmapped */
@@ -1433,7 +1435,7 @@ BOOLEAN ExtFileMap(
 		ntStat = ZwMapViewOfSection(pEramExt->hSection, NtCurrentProcess(), &(pEramExt->pExtPage), 0, uView, &llOfs, &uView, ViewShare, 0, PAGE_READWRITE);
 		if (ntStat != STATUS_SUCCESS)		/* failed */
 		{
-			KdPrint(("ZwMapViewOfSection failed, 0x%x, MapAdr=0x%x, size=0x%x\n", ntStat, uMapAdr, uView));
+			KdPrint(("Eram ZwMapViewOfSection failed, 0x%x, MapAdr=0x%x, size=0x%x\n", ntStat, uMapAdr, uView));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAP_EXT_FILE, NULL);
 			return FALSE;
 		}
@@ -1469,7 +1471,7 @@ VOID ExtFileUnmap(
 	pEramExt->uNowMapAdr = 0;
 	if (ntStat != STATUS_SUCCESS)
 	{
-		KdPrint(("ZwMapViewOfSection failed, 0x%x\n", ntStat));
+		KdPrint(("Eram ZwMapViewOfSection failed, 0x%x\n", ntStat));
 	}
 }
 
@@ -1509,7 +1511,7 @@ NTSTATUS EramShutdown(
 	/* External File Closing */
 	if (pEramExt->hSection != NULL)
 	{
-		KdPrint(("File section close\n"));
+		KdPrint(("Eram File section close\n"));
 		ExtFileUnmap(pEramExt);
 		ZwClose(pEramExt->hSection);
 		pEramExt->hSection = NULL;
@@ -1551,14 +1553,14 @@ NTSTATUS DriverEntry(
 	UNICODE_STRING	RegParamAdd;	/* Registry path (using Unicode) */
 	PVOID			pPool;
 	PFAT_ID			pFatId;			/* BPB work area */
-	KdPrint(("DriverEntry start\n"));
+	KdPrint(("Eram DriverEntry start\n"));
 	/* Get the max length of registry path */
 	RegParam.MaximumLength = (WORD)(pRegPath->Length + sizeof(SUBKEY_WSTRING));
 	/* memory allocation for work */
 	pPool = ExAllocatePool(PagedPool, sizeof(*pFatId) + RegParam.MaximumLength);
 	if (pPool == NULL)		/* allocation failed */
 	{
-		KdPrint(("ExAllocatePool failed\n"));
+		KdPrint(("Eram ExAllocatePool failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_WORK_ALLOC_FAILED, NULL);
 		/* Return error */
 		return STATUS_INSUFFICIENT_RESOURCES;
@@ -1572,7 +1574,7 @@ NTSTATUS DriverEntry(
 	RtlInitUnicodeString(&RegParamAdd, (PWSTR)SUBKEY_WSTRING);
 	if (RtlAppendUnicodeStringToString(&RegParam, &RegParamAdd) != STATUS_SUCCESS)	/* 合成失敗 */
 	{
-		KdPrint(("RtlAppendUnicodeStringToString failed\n"));
+		KdPrint(("Eram RtlAppendUnicodeStringToString failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_REG_KEY_APPEND_FAILED, NULL);
 		/* Release the memory for work */
 		ExFreePool(pPool);
@@ -1595,7 +1597,7 @@ NTSTATUS DriverEntry(
 	ASSERT(pPool != NULL);
 	/* Release the memory for work */
 	ExFreePool(pPool);
-	KdPrint(("DriverEntry end\n"));
+	KdPrint(("Eram DriverEntry end\n"));
 	/* 初期化終了 */
 	return ntStat;
 }
@@ -1613,7 +1615,7 @@ VOID InitFatId(
 	IN	PFAT_ID		pFatId
  )
 {
-	KdPrint(("InitFatId start\n"));
+	KdPrint(("Eram InitFatId start\n"));
 	RtlZeroBytes(pFatId, sizeof(*pFatId));
 	pFatId->BPB.wNumSectorByte = SECTOR;				/* The number of sector bytes (BPB, =SECTOR) */
 	pFatId->BPB.byAllocUnit = 1024 / SECTOR;			/* Allocation Unit(alloc, =1024/SECTOR) */
@@ -1626,7 +1628,7 @@ VOID InitFatId(
 	pFatId->BPB_fat32.dwRootCluster = 2;				/* The starting cluster of root directory */
 	pFatId->BPB_fat32.wFsInfoSector = 1;				/* The sector of FSINFO */
 	pFatId->BPB_fat32.wBackupBootSector = 0xffff;		/* backup boot sector */
-	KdPrint(("InitFatId end\n"));
+	KdPrint(("Eram InitFatId end\n"));
 }
 
 
@@ -1654,7 +1656,7 @@ NTSTATUS EramInitDisk(
 	PDEVICE_OBJECT	pDevObj = NULL;
 	PERAM_EXTENSION	pEramExt = NULL;
 	NTSTATUS		ntStat;
-	ULONG			uMemSize;
+	ULONGPTR		uMemSize;
 	DEVICE_TYPE		dType;
 	KdPrint(("EramInitDisk start\n"));
 	/* Check whether it is a swappable device */
@@ -1667,7 +1669,7 @@ NTSTATUS EramInitDisk(
 	ntStat = IoCreateDevice(pDrvObj, sizeof(*pEramExt), &NtDevName, dType, 0, FALSE, &pDevObj);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("IoCreateDevice failed, 0x%x\n", ntStat));
+		KdPrint(("Eram IoCreateDevice failed, 0x%x\n", ntStat));
 {
 	CHAR szBuf[128];
 	sprintf(szBuf, "IoCreateDevice failed, 0x%x", ntStat);
@@ -1714,7 +1716,7 @@ NTSTATUS EramInitDisk(
 	uMemSize = pEramExt->uSizeTotal << PAGE_SIZE_LOG2;
 	if (pEramExt->uSizeTotal < DISKMINPAGE)		/* Without memory */
 	{
-		KdPrint(("Memory size too small, %d\n", pEramExt->uSizeTotal));
+		KdPrint(("Eram Memory size too small, %d\n", pEramExt->uSizeTotal));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_DISK_SIZE_TOO_SMALL, NULL);
 		ntStat = STATUS_INSUFFICIENT_RESOURCES;
 		goto EramInitDiskExit;
@@ -1752,7 +1754,7 @@ NTSTATUS EramInitDisk(
 	DrvStr.Buffer[1] = L':';
 	DrvStr.Buffer[2] = UNICODE_NULL;
 	DrvStr.Length = sizeof(DEFAULT_DRV) - sizeof(WCHAR);	/* two characters of "Z:" */
-	KdPrint(("Drive %ls\n", DrvStr.Buffer));
+	KdPrint(("Eram Drive %ls\n", DrvStr.Buffer));
 	/* Win32 device name integration */
 	RtlInitUnicodeString(&Win32Name, (PWSTR)WIN32_PATH);
 	RtlCopyUnicodeString(&(pEramExt->Win32Name), &Win32Name);
@@ -1800,7 +1802,7 @@ NTSTATUS MemSetup(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
 	IN PFAT_ID			pFatId,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  )
 {
 	/* local variables */
@@ -1810,7 +1812,7 @@ NTSTATUS MemSetup(
 	OBJECT_ATTRIBUTES				ObjAttr;
 	UNICODE_STRING					uniStr;
 	HANDLE							hThread;
-	KdPrint(("MemSetup start\n"));
+	KdPrint(("Eram MemSetup start\n"));
 	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory */
 	{
 		/* Notify resource usage */
@@ -1841,7 +1843,7 @@ NTSTATUS MemSetup(
 						);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("ZwCreateFile failed, 0x%x\n", ntStat));
+			KdPrint(("Eram ZwCreateFile failed, 0x%x\n", ntStat));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_CREATE_EXT_FILE, NULL);
 			return ntStat;
 		}
@@ -1850,7 +1852,7 @@ NTSTATUS MemSetup(
 		ntStat = ZwSetInformationFile(pEramExt->hFile, &IoStat, &EofInfo, sizeof(EofInfo), FileEndOfFileInformation);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("ZwSetInformationFile failed, 0x%x\n", ntStat));
+			KdPrint(("Eram ZwSetInformationFile failed, 0x%x\n", ntStat));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_SET_INFO_EXT_FILE, NULL);
 			return ntStat;
 		}
@@ -1858,7 +1860,7 @@ NTSTATUS MemSetup(
 		ntStat = ZwCreateSection(&(pEramExt->hSection), SECTION_ALL_ACCESS, NULL, NULL, PAGE_READWRITE, SEC_COMMIT, pEramExt->hFile);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("ZwCreateSection failed, 0x%x\n", ntStat));
+			KdPrint(("Eram ZwCreateSection failed, 0x%x\n", ntStat));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_CREATE_EXT_FILE_SECTION, NULL);
 			return ntStat;
 		}
@@ -1872,7 +1874,7 @@ NTSTATUS MemSetup(
 		ntStat = PsCreateSystemThread(&hThread, THREAD_ALL_ACCESS, NULL, NULL, NULL, EramRwThread, pEramExt);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("PsCreateSystemThread failed\n"));
+			KdPrint(("Eram PsCreateSystemThread failed\n"));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_CREATE_THREAD, NULL);
 			return ntStat;
 		}
@@ -1880,7 +1882,7 @@ NTSTATUS MemSetup(
 		ntStat = ObReferenceObjectByHandle(hThread, THREAD_ALL_ACCESS, NULL, KernelMode, &(pEramExt->pThreadObject), NULL);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("ObReferenceObjectByHandle failed\n"));
+			KdPrint(("Eram ObReferenceObjectByHandle failed\n"));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_GET_THREAD_OBJECT, NULL);
 			return ntStat;
 		}
@@ -1896,7 +1898,7 @@ NTSTATUS MemSetup(
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "OsAlloc");
 		return STATUS_INSUFFICIENT_RESOURCES;
 	}
-	KdPrint(("MemSetup end\n"));
+	KdPrint(("Eram MemSetup end\n"));
 	return STATUS_SUCCESS;
 }
 
@@ -1914,16 +1916,19 @@ NTSTATUS MemSetup(
 BOOLEAN OsAlloc(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  )
 {
 	/* local variables */
 	POOL_TYPE	fPool;
 	fPool = (pEramExt->uOptflag.Bits.NonPaged != 0) ? NonPagedPool : PagedPool;
+
+	KdPrint(( "Eram Size=%dmb\n" , uMemSize/(1024*1024) ));
+
 	pEramExt->pPageBase = ExAllocatePool(fPool, uMemSize);
 	if (pEramExt->pPageBase == NULL)	/* allocation failed */
 	{
-		KdPrint(("ExAllocatePool failed, %d bytes, nonpaged=%d\n", uMemSize, (UINT)(pEramExt->uOptflag.Bits.NonPaged)));
+		KdPrint(("Eram ExAllocatePool failed, %ld bytes, nonpaged=%d\n", uMemSize, (UINT)(pEramExt->uOptflag.Bits.NonPaged)));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_DISK_ALLOC_FAILED, NULL);
 		CalcAvailSize(pDrvObj, fPool, uMemSize);
 		return FALSE;
@@ -1945,7 +1950,7 @@ BOOLEAN OsAlloc(
 VOID CalcAvailSize(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN POOL_TYPE		fPool,
-	IN ULONG			uMemSize
+	IN SIZE_T			uMemSize
  )
 {
 	/* local variables */
@@ -1971,7 +1976,7 @@ VOID CalcAvailSize(
 	wcBuf[0] = UNICODE_NULL;
 	RtlInitUnicodeString(&UniStr, wcBuf);
 	UniStr.MaximumLength = sizeof(wcBuf);
-	if (RtlIntegerToUnicodeString(uMemSize >> 10, 10, &UniStr) == STATUS_SUCCESS)
+	if (RtlIntPtrToUnicodeString(uMemSize >> 10, 10, &UniStr) == STATUS_SUCCESS)
 	{
 		EramReportEventW(pDrvObj, ERAM_INF_MEMORY_SIZE, UniStr.Buffer);
 	}
@@ -1997,7 +2002,7 @@ DEVICE_TYPE CheckSwapable(
 	ULONG			Option,		defOption = 0;
 	NTSTATUS		ntStat;
 	ERAM_OPTFLAG	uOptflag;
-	KdPrint(("CheckSwapable start\n"));
+	KdPrint(("Eram CheckSwapable start\n"));
 	/* registry confirmation area initialization */
 	RtlZeroBytes(&(ParamTable[0]), sizeof(ParamTable));
 	/* collective inquiry area initialization (the last one is NULL) */
@@ -2011,14 +2016,14 @@ DEVICE_TYPE CheckSwapable(
 	ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, &(ParamTable[0]), NULL, NULL);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("Warning:RtlQueryRegistryValues failed\n"));
+		KdPrint(("Eram Warning:RtlQueryRegistryValues failed\n"));
 		/* Adapt the default value */
 		Option = defOption;
 	}
 	uOptflag.dwOptflag = Option;
 	if (uOptflag.Bits.Swapable != 0)		/* Swappable settings */
 	{
-		KdPrint(("CheckSwapable end, local disk\n"));
+		KdPrint(("Eram CheckSwapable end, local disk\n"));
 		/* Lock it not to be swapped */
 #pragma warning(disable : 4054)
 		MmLockPagableCodeSection((PVOID)EramCreateClose);
@@ -2027,7 +2032,7 @@ DEVICE_TYPE CheckSwapable(
 		return FILE_DEVICE_DISK;
 	}
 	/* Treat it as a RAM disk */
-	KdPrint(("CheckSwapable end, virtual disk\n"));
+	KdPrint(("Eram CheckSwapable end, virtual disk\n"));
 	return FILE_DEVICE_VIRTUAL_DISK;
 }
 
@@ -2054,7 +2059,7 @@ VOID CheckDeviceName(
 	RTL_QUERY_REGISTRY_TABLE	ParamTable[2];
 	NTSTATUS		ntStat;
 	UNICODE_STRING	UniDev;
-	KdPrint(("CheckDeviceName start\n"));
+	KdPrint(("Eram CheckDeviceName start\n"));
 	/* prepare for the initial valus for inquiry */
 	RtlInitUnicodeString(&UniDev, wszDev);
 	UniDev.MaximumLength = sizeof(wszDev);
@@ -2071,15 +2076,15 @@ VOID CheckDeviceName(
 	ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, &(ParamTable[0]), NULL, NULL);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("Warning:RtlQueryRegistryValues failed, 0x%x\n", ntStat));
+		KdPrint(("WEram arning:RtlQueryRegistryValues failed, 0x%x\n", ntStat));
 		return;
 	}
 	if (UniDev.Length == 0)		/* No body */
 	{
-		KdPrint(("No value set\n"));
+		KdPrint(("Eram No value set\n"));
 		return;
 	}
-	KdPrint(("CheckDeviceName end, device \"%ls\"\n", UniDev.Buffer));
+	KdPrint(("Eram CheckDeviceName end, device \"%ls\"\n", UniDev.Buffer));
 	*pNtDevName = UniDev;
 }
 
@@ -2121,7 +2126,7 @@ VOID CheckSwitch(
 	ULONGLONG		ulPageT;
 	NTSTATUS		ntStat;
 	BOOLEAN			bDefault;
-	KdPrint(("CheckSwitch start\n"));
+	KdPrint(("Eram CheckSwitch start\n"));
 	bDefault = TRUE;
 	#define	REGOPTNUM	(8)
 	#define	REGOPTSIZE	(REGOPTNUM * sizeof(*pParamTable))
@@ -2165,7 +2170,7 @@ VOID CheckSwitch(
 		ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, pParamTable, NULL, NULL);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("Warning:RtlQueryRegistryValues failed\n"));
+			KdPrint(("Eram Warning:RtlQueryRegistryValues failed\n"));
 			bDefault = TRUE;
 		}
 		/* Release the memory for inquiry */
@@ -2227,11 +2232,7 @@ VOID CheckSwitch(
 		/* FAT32 enabled */
 		pEramExt->uOptflag.Bits.EnableFat32 = 1;
 	}
-	if (Page > LIMIT_4GBPAGES)
-	{
-		Page = LIMIT_4GBPAGES;
-		KdPrint(("4GB limit over, adjust %d pages\n", Page));
-	}
+	
 	/* Page setting */
 	if (pEramExt->uOptflag.Bits.EnableFat32 == 0)		/* Without using FAT32 */
 	{
@@ -2240,7 +2241,7 @@ VOID CheckSwitch(
 		if ((ULONGLONG)Page > ulPageT)		/* beyond FAT16 limit (There is some margin) */
 		{
 			Page = (ULONG)ulPageT;
-			KdPrint(("FAT16 limit over, adjust %d pages\n", Page));
+			KdPrint(("Eram FAT16 limit over, adjust %d pages\n", Page));
 		}
 	}
 	else		/* Use FAT32 */
@@ -2249,7 +2250,7 @@ VOID CheckSwitch(
 		if ((ULONGLONG)Page > ulPageT)		/* beyond FAT32 limit */
 		{
 			Page = (ULONG)ulPageT;
-			KdPrint(("FAT32 limit over, adjust %d pages\n", Page));
+			KdPrint(("Eram FAT32 limit over, adjust %d pages\n", Page));
 		}
 	}
 	pEramExt->uSizeTotal = Page;
@@ -2257,7 +2258,7 @@ VOID CheckSwitch(
 	PrepareVolumeLabel(pEramExt, pFatId, pRegParam);
 	/* Prepare for external filename */
 	PrepareExtFileName(pEramExt, pFatId, pRegParam);
-	KdPrint(("CheckSwitch end\n"));
+	KdPrint(("Eram CheckSwitch end\n"));
 }
 
 
@@ -2281,7 +2282,7 @@ VOID GetMaxAddress(
 	RTL_QUERY_REGISTRY_TABLE	ParamTable[2];
 	ULONG			uMaxAdr,	defMaxAdr = 0xffffffff;
 	NTSTATUS		ntStat;
-	KdPrint(("GetMaxAddress start\n"));
+	KdPrint(("Eram GetMaxAddress start\n"));
 	/* registry confirmation area initialization */
 	RtlZeroBytes(&(ParamTable[0]), sizeof(ParamTable));
 	/* collective inquiry area initialization (the last one is NULL) */
@@ -2295,7 +2296,7 @@ VOID GetMaxAddress(
 	ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, &(ParamTable[0]), NULL, NULL);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("Warning:RtlQueryRegistryValues failed\n"));
+		KdPrint(("Eram Warning:RtlQueryRegistryValues failed\n"));
 		/* Adapt default value */
 		uMaxAdr = defMaxAdr;
 	}
@@ -2304,7 +2305,7 @@ VOID GetMaxAddress(
 		uMaxAdr = defMaxAdr;
 	}
 	pEramExt->uExternalEnd = uMaxAdr;
-	KdPrint(("GetMaxAddress end\n"));
+	KdPrint(("Eram GetMaxAddress end\n"));
 }
 
 
@@ -2332,7 +2333,7 @@ VOID PrepareVolumeLabel(
 	NTSTATUS		ntStat;
 	UNICODE_STRING	UniVol;
 	WCHAR			wszVol[12];
-	KdPrint(("PrepareVolumeLabel start\n"));
+	KdPrint(("Eram PrepareVolumeLabel start\n"));
 	/* prepare for the initial valus for inquiry */
 	wszVol[0] = UNICODE_NULL;
 	RtlInitUnicodeString(&UniVol, wszVol);
@@ -2350,7 +2351,7 @@ VOID PrepareVolumeLabel(
 	ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, &(ParamTable[0]), NULL, NULL);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("Warning:RtlQueryRegistryValues failed, 0x%x\n", ntStat));
+		KdPrint(("Eram Warning:RtlQueryRegistryValues failed, 0x%x\n", ntStat));
 	}
 	/* Volume label */
 	RtlFillMemory(pFatId->bsLabel, sizeof(pFatId->bsLabel), ' ');
@@ -2363,7 +2364,7 @@ VOID PrepareVolumeLabel(
 #pragma warning(default : 4127)
 		RtlCopyBytes(pFatId->bsLabel, (PSTR)((pEramExt->uOptflag.Bits.Swapable != 0) ? VOLUME_LABEL_LOCALDISK : VOLUME_LABEL_RAMDISK), sizeof(pFatId->bsLabel));
 	}
-	KdPrint(("PrepareVolumeLabel end, Volume label \"%s\"\n", pFatId->bsLabel));
+	KdPrint(("Eram PrepareVolumeLabel end, Volume label \"%s\"\n", pFatId->bsLabel));
 }
 
 
@@ -2394,14 +2395,14 @@ BOOLEAN CheckVolumeLabel(
 		{
 			if (LOBYTE(pUniVol->Buffer[loopi]) < ' ')
 			{
-				KdPrint(("Bad char 0x%x detected, index %d\n", LOBYTE(pUniVol->Buffer[loopi]), loopi));
+				KdPrint(("Eram Bad char 0x%x detected, index %d\n", LOBYTE(pUniVol->Buffer[loopi]), loopi));
 				return FALSE;
 			}
 			for (loopj=0; loopj<(sizeof(cBadChars)-1); loopj++)
 			{
 				if (LOBYTE(pUniVol->Buffer[loopi]) == cBadChars[loopj])
 				{
-					KdPrint(("Bad char \"%c\" detected, index %d\n", cBadChars[loopj], loopi));
+					KdPrint(("Eram Bad char \"%c\" detected, index %d\n", cBadChars[loopj], loopi));
 					return FALSE;
 				}
 			}
@@ -2410,19 +2411,19 @@ BOOLEAN CheckVolumeLabel(
 	/* ANSI文字列化 */
 	if (RtlUnicodeStringToAnsiString(&AnsiVol, pUniVol, TRUE) != STATUS_SUCCESS)
 	{
-		KdPrint(("RtlUnicodeStringToAnsiString failed\n"));
+		KdPrint(("Eram RtlUnicodeStringToAnsiString failed\n"));
 		return FALSE;
 	}
 	if (AnsiVol.Length == 0)		/* without body */
 	{
-		KdPrint(("Ansi string 0 byte\n"));
+		KdPrint(("Eram Ansi string 0 byte\n"));
 		RtlFreeAnsiString(&AnsiVol);
 		return FALSE;
 	}
 	/* 準備 */
 	RtlCopyBytes(pFatId->bsLabel, AnsiVol.Buffer, (AnsiVol.Length > sizeof(pFatId->bsLabel)) ? sizeof(pFatId->bsLabel) : AnsiVol.Length);
 	RtlFreeAnsiString(&AnsiVol);
-	KdPrint(("CheckVolumeLabel end, Volume label \"%s\"\n", pFatId->bsLabel));
+	KdPrint(("Eram CheckVolumeLabel end, Volume label \"%s\"\n", pFatId->bsLabel));
 	return TRUE;
 }
 
@@ -2452,7 +2453,7 @@ VOID PrepareExtFileName(
 	RTL_QUERY_REGISTRY_TABLE		ParamTable[2];
 	NTSTATUS		ntStat;
 	UNICODE_STRING	UniExtFile;
-	KdPrint(("PrepareExtFileName start\n"));
+	KdPrint(("Eram PrepareExtFileName start\n"));
 	/* prepare for the initial valus for inquiry */
 	pFatId->wszExtFileMain[0] = UNICODE_NULL;
 	RtlInitUnicodeString(&UniExtFile, pFatId->wszExtFileMain);
@@ -2470,7 +2471,7 @@ VOID PrepareExtFileName(
 	ntStat = RtlQueryRegistryValues(RTL_REGISTRY_ABSOLUTE | RTL_REGISTRY_OPTIONAL, pRegParam->Buffer, &(ParamTable[0]), NULL, NULL);
 	if (ntStat != STATUS_SUCCESS)	/* failed */
 	{
-		KdPrint(("Warning:RtlQueryRegistryValues failed\n"));
+		KdPrint(("Eram Warning:RtlQueryRegistryValues failed\n"));
 	}
 	/* External File Name */
 #pragma warning(disable : 4127)
@@ -2481,7 +2482,7 @@ VOID PrepareExtFileName(
 	{
 		RtlCopyBytes(pFatId->wszExtFileMain, wszExtPath, sizeof(wszExtPath));
 	}
-	KdPrint(("PrepareExtFileName end, External file \"%ls\"\n", pFatId->wszExtFile));
+	KdPrint(("Eram PrepareExtFileName end, External file \"%ls\"\n", pFatId->wszExtFile));
 }
 
 
@@ -2557,7 +2558,7 @@ VOID EramSetup(
 	default:
 		AllocLog2 = 0;
 	}
-	edi = pEramExt->uSizeTotal << PAGE_SEC_LOG2;
+	edi = (DWORD)(pEramExt->uSizeTotal << PAGE_SEC_LOG2); //TODO: this must be 32bit?
 	pEramExt->uAllSector = edi;						/* The total number of sectors */
 	pFatId->BPB.wNumAllSector = (WORD)edi;			/* The total number of sectors */
 	if (edi >= 0x10000)								/* over 32MB */
@@ -2761,7 +2762,7 @@ BOOLEAN EramClearInfo(
  )
 {
 	/* local variables */
-	ULONG uSize;
+	ULONGPTR uSize;
 	/* management area size calculation */
 	uSize = CalcEramInfoPage(pEramExt, pFatId);
 	if (pEramExt->uOptflag.Bits.External != 0)	/* OS-Unmanaged Memory */
@@ -2794,26 +2795,26 @@ BOOLEAN EramClearInfo(
 		OS-Unmanaged Memory Initialization.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
-		uSize		The byte number of management info area.
+		uSize		The byte number of management info area. TODO: probabily could be 32bits
 	Return Value
 		Results.
 */
 
 BOOLEAN ExtClear(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR			uSize
  )
 {
 	/* local variables */
-	ULONG loopi;
-	KdPrint(("ExtClear start\n"));
+	ULONGPTR loopi;
+	KdPrint(("Eram ExtClear start\n"));
 	ASSERT(pEramExt->uExternalStart != 0);
 	ASSERT(pEramExt->uExternalEnd != 0);
 	for (loopi=0; loopi<uSize; loopi+=EXT_PAGE_SIZE)
 	{
 		if ((pEramExt->uExternalStart + loopi) >= pEramExt->uExternalEnd)	/* Beyond real memory */
 		{
-			KdPrint(("Warning:Address limited\n"));
+			KdPrint(("Eram Warning:Address limited\n"));
 			break;
 		}
 		/* map */
@@ -2822,13 +2823,13 @@ BOOLEAN ExtClear(
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "ExtMap");
 			return FALSE;
 		}
-		//KdPrint(("loop 0x%x, phys 0x%X\n", loopi, (pEramExt->uExternalStart + loopi)));
+		//KdPrint(("Eram loop 0x%x, phys 0x%X\n", loopi, (pEramExt->uExternalStart + loopi)));
 		/* zero clear */
 		RtlZeroBytes(pEramExt->pExtPage, ((uSize - loopi) > EXT_PAGE_SIZE ? EXT_PAGE_SIZE : (uSize - loopi)));
 	}
 	/* Unmap */
 	ExtUnmap(pEramExt);
-	KdPrint(("ExtClear end\n"));
+	KdPrint(("Eram ExtClear end\n"));
 	return TRUE;
 }
 
@@ -2837,19 +2838,19 @@ BOOLEAN ExtClear(
 		File Initialization.
 	Parameters
 		pEramExt	The pointer to an ERAM_EXTENTION structure.
-		uSize		The byte number of management info area.
+		uSize		The byte number of management info area.  TODO: probabily can be 32bit
 	Return Value
 		Results.
 */
 
 BOOLEAN ExtFileClear(
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR			uSize
  )
 {
 	/* local variables */
-	ULONG loopi;
-	KdPrint(("ExtFileClear start\n"));
+	ULONGPTR loopi;
+	KdPrint(("Eram ExtFileClear start\n"));
 	for (loopi=0; loopi<uSize; loopi+=EXT_PAGE_SIZE)
 	{
 		/* map */
@@ -2858,13 +2859,13 @@ BOOLEAN ExtFileClear(
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "ExtFileMap");
 			return FALSE;
 		}
-		//KdPrint(("loop 0x%x, phys 0x%X\n", loopi, (pEramExt->uExternalStart + loopi)));
+		//KdPrint(("Eram loop 0x%x, phys 0x%X\n", loopi, (pEramExt->uExternalStart + loopi)));
 		/* zero clear */
 		RtlZeroBytes(pEramExt->pExtPage, ((uSize - loopi) > EXT_PAGE_SIZE ? EXT_PAGE_SIZE : (uSize - loopi)));
 	}
 	/* Unmap */
 	ExtFileUnmap(pEramExt);
-	KdPrint(("ExtFileClear end\n"));
+	KdPrint(("Eram ExtFileClear end\n"));
 	return TRUE;
 }
 
@@ -2878,13 +2879,15 @@ BOOLEAN ExtFileClear(
 		Results.
 */
 
-DWORD CalcEramInfoPage(
+ULONGPTR CalcEramInfoPage(
 	IN PERAM_EXTENSION	pEramExt,
 	IN PFAT_ID			pFatId
  )
 {
 	/* local variables */
-	DWORD dwBytes, dwPage, dwTmp;
+	DWORD dwPage, dwTmp;
+	ULONGPTR dwBytes; //TODO: just a counter right?
+
 	KdPrint(("CalcEramInfoPage start\n"));
 	if (pEramExt->FAT_size == PARTITION_FAT32)	/* FAT32 */
 	{
@@ -2910,7 +2913,7 @@ DWORD CalcEramInfoPage(
 	{
 		dwBytes = pEramExt->uSizeTotal * PAGE_SIZE_4K;
 	}
-	KdPrint(("CalcEramInfoPage end, 0x%x bytes\n", dwBytes));
+	KdPrint(("CalcEramInfoPage end, 0x%x kb\n", (DWORD)(dwBytes/1024)));
 	return dwBytes;
 }
 
@@ -2972,7 +2975,7 @@ BOOLEAN EramMakeFAT(
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "EramNext");
 			return FALSE;
 		}
-		pDisk = (PBYTE)((ULONG)(pEramExt->pExtPage + eax));
+		pDisk = (PBYTE)((pEramExt->pExtPage + eax)); //(ULONG)
 	}
 	/* Write the boot sector common part */
 	pBootFat16 = (PBOOTSECTOR_FAT16)pDisk;
@@ -3007,9 +3010,9 @@ BOOLEAN EramMakeFAT(
 			((pBootFat32->BPB_fat32.wBackupBootSector + pBootFat32->BPB_fat32.wFsInfoSector) < (EXT_PAGE_SIZE / SECTOR)))
 		{
 			/* Do backup the boot sector */
-			RtlCopyBytes((PBYTE)((ULONG)pBootFat32 + pBootFat32->BPB_fat32.wBackupBootSector * SECTOR), pBootFat32, sizeof(*pBootFat32));
+			RtlCopyBytes((PBYTE)((PBYTE)pBootFat32 + pBootFat32->BPB_fat32.wBackupBootSector * SECTOR), pBootFat32, sizeof(*pBootFat32)); //(ULONG)
 			/* Do backup the FSINFO sector */
-			RtlCopyBytes((PBYTE)((ULONG)pFsInfoSector + pBootFat32->BPB_fat32.wBackupBootSector * SECTOR), pFsInfoSector, sizeof(*pFsInfoSector));
+			RtlCopyBytes((PBYTE)((PBYTE)pFsInfoSector + pBootFat32->BPB_fat32.wBackupBootSector * SECTOR), pFsInfoSector, sizeof(*pFsInfoSector)); //(ULONG)
 		}
 	}
 	/* Write the FAT sector */
@@ -3083,7 +3086,7 @@ BOOLEAN EramSetLabel(
 	RtlZeroBytes(&DirInit, sizeof(DirInit));
 	/* Prepare for volume label */
 	RtlCopyBytes(VOL_L.vol.sName, pFatId->bsLabel, sizeof(VOL_L.vol.sName));
-	KdPrint(("Volume label \"%s\"\n", VOL_L.vol.sName));
+	KdPrint(("Eram Volume label \"%s\"\n", VOL_L.vol.sName));
 	/* Set attributes */
 	VOL_L.vol.uAttr.Bits.byVol = 1;
 	VOL_L.vol.uAttr.Bits.byA = 1;
@@ -3149,7 +3152,7 @@ BOOLEAN EramSetLabel(
 			return FALSE;
 		}
 		/* Write the volume label */
-		RtlCopyBytes((LPBYTE)((ULONG)(pEramExt->pExtPage) + eax), &VOL_L, sizeof(VOL_L));
+		RtlCopyBytes((LPBYTE)((LPBYTE)(pEramExt->pExtPage) + eax), &VOL_L, sizeof(VOL_L));
 		if (pEramExt->uOptflag.Bits.MakeTempDir != 0)		/* TEMP directory creation */
 		{
 			/* Allocate the TEMP directory sector */
@@ -3159,7 +3162,7 @@ BOOLEAN EramSetLabel(
 				return FALSE;
 			}
 			/* Write directory */
-			RtlCopyBytes((LPBYTE)((ULONG)(pEramExt->pExtPage) + eax), &DirInit, sizeof(DirInit));
+			RtlCopyBytes((LPBYTE)((LPBYTE)(pEramExt->pExtPage) + eax), &DirInit, sizeof(DirInit));
 		}
 		/* Unmap */
 		ASSERT((pEramExt->EramUnmap) != NULL);
@@ -3204,7 +3207,7 @@ BOOLEAN GetExternalStart(
 	PHYSICAL_ADDRESS			phys;
 	static WCHAR		szwMaxMem[] = L"MAXMEM=";
 	static WCHAR		szwNoLowMem[] = L"NOLOWMEM";
-	KdPrint(("GetExternalStart start\n"));
+	KdPrint(("Eram GetExternalStart start\n"));
 	uSize = 512 * sizeof(WCHAR);
 	pBuf = ExAllocatePool(PagedPool, uSize);
 	if (pBuf == NULL)		/* allocation failed */
@@ -3232,7 +3235,7 @@ BOOLEAN GetExternalStart(
 	}
 	if (uniOption.Length == 0)	/* Without option */
 	{
-		KdPrint(("No startup option\n"));
+		KdPrint(("Eram No startup option\n"));
 		/* memory release */
 		ExFreePool(pBuf);
 		return FALSE;
@@ -3240,11 +3243,7 @@ BOOLEAN GetExternalStart(
 	/* / PAE judgment from physical address */
 	uNoLowMem = 0;
 	phys = MmGetPhysicalAddress(pBuf);
-	if (phys.HighPart != 0)		/* over4GB */
-	{
-		/* At least /PAE does exist, so do search /NOLOWMEM */
-		uNoLowMem = sizeof(szwNoLowMem) - sizeof(WCHAR);
-	}
+	
 	uMaxMem = sizeof(szwMaxMem) - sizeof(WCHAR);
 	if (max(uMaxMem, uNoLowMem) >= uniOption.Length)	/* MAXMEM / NOLOWMEM not included in option */
 	{
@@ -3257,7 +3256,7 @@ BOOLEAN GetExternalStart(
 	{
 		uNoLowMem = MAXDWORD;
 	}
-	KdPrint(("Startup option exist\n"));
+	KdPrint(("Eram Startup option exist\n"));
 	/* Capitalize (already done at NT4) */
 	if (RtlUpcaseUnicodeString(&uniOptionUp , &uniOption, TRUE) != STATUS_SUCCESS)
 	{
@@ -3268,7 +3267,7 @@ BOOLEAN GetExternalStart(
 	}
 	/* memory release */
 	ExFreePool(pBuf);
-	KdPrint(("Start Parse\n"));
+	KdPrint(("Eram Start Parse\n"));
 	pwStr = uniOptionUp.Buffer;
 	bStat = FALSE;
 	bNoLowMem = FALSE;
@@ -3279,7 +3278,7 @@ BOOLEAN GetExternalStart(
 		if ((uMaxMem < uRemain)&&
 			(RtlCompareMemory(pwStr, szwMaxMem, uMaxMem) == uMaxMem))	/* matched */
 		{
-			KdPrint(("Match, MAXMEM\n"));
+			KdPrint(("Eram Match, MAXMEM\n"));
 			pwStr += (uMaxMem / sizeof(WCHAR));
 			/* Get n of MAXMEM=n */
 			if (GetMaxMem(pDrvObj, pEramExt, pwStr, &uStart) == FALSE)
@@ -3294,32 +3293,25 @@ BOOLEAN GetExternalStart(
 		if ((uNoLowMem < uRemain)&&
 			(RtlCompareMemory(pwStr, szwNoLowMem, uNoLowMem) == uNoLowMem))	/* matched */
 		{
-			KdPrint(("Match, NOLOWMEM\n"));
+			KdPrint(("Eram Match, NOLOWMEM\n"));
 			bNoLowMem = TRUE;
 			break;
 		}
 	}
-	KdPrint(("loop end\n"));
+	KdPrint(("Eram loop end\n"));
 	if (bNoLowMem != FALSE)		/* /NOLOWMEM */
 	{
 		/* Try around 17MB */
 		uStart = 17;
 	}
-	if (uStart != 0)	/* with MAXMEM=n or NOLOWMEM */
-	{
-		bStat = CheckMaxMem(pDrvObj, pEramExt, uStart);
-		if (bStat == FALSE)
-		{
-			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "CheckMaxMem");
-		}
-	}
+
 	/* memory release */
 	RtlFreeUnicodeString(&uniOptionUp);
 	if (bStat == FALSE)
 	{
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_INVALID, NULL);
 	}
-	KdPrint(("GetExternalStart end\n"));
+	KdPrint(("Eram GetExternalStart end\n"));
 	return bStat;
 }
 
@@ -3375,7 +3367,7 @@ BOOLEAN GetMaxMem(
 BOOLEAN CheckMaxMem(
 	IN PDRIVER_OBJECT	pDrvObj,
 	IN PERAM_EXTENSION	pEramExt,
-	IN ULONG			uSize
+	IN ULONGPTR			uSize
  )
 {
 	if (uSize <= 16)		/* too small */
@@ -3383,33 +3375,19 @@ BOOLEAN CheckMaxMem(
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_TOO_SMALL, NULL);
 		return FALSE;
 	}
-	if (uSize >= 4095)		/* too large */
-	{
-		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_TOO_BIG, NULL);
-		return FALSE;
-	}
+	
 	/* Fix into MB units */
 	pEramExt->uExternalStart /= SIZE_MEGABYTE;
-	if (pEramExt->uExternalStart >= 4095)
-	{
-		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_EXTSTART_TOO_BIG, NULL);
-		return FALSE;
-	}
+	
 	if (pEramExt->uExternalStart >= uSize)	/* backward fix required */
 	{
 		/* backward fix */
-		KdPrint(("System %dMB\n", uSize));
+		KdPrint(("Eram System %dMB\n", uSize));
 		uSize = pEramExt->uExternalStart;
 	}
 	pEramExt->uExternalStart = uSize * SIZE_MEGABYTE;
-	KdPrint(("System %dMB, External start 0x%x\n", uSize, pEramExt->uExternalStart));
+	KdPrint(("Eram System %dMB, External start 0x%x\n", uSize, pEramExt->uExternalStart));
 	uSize = pEramExt->uExternalStart / PAGE_SIZE_4K;
-	if ((uSize + pEramExt->uSizeTotal) > (4096 * (SIZE_MEGABYTE / PAGE_SIZE_4K)))	/* over4GB */
-	{
-		/* Fit in 4GB (the tail 1MB will be excluded) */
-		pEramExt->uSizeTotal = (4096 * (SIZE_MEGABYTE / PAGE_SIZE_4K)) - uSize;
-	}
-	return TRUE;
 }
 
 
@@ -3427,47 +3405,47 @@ BOOLEAN CheckExternalSize(
 	IN PERAM_EXTENSION	pEramExt
  )
 {
+	//TODO: understand this!
 	/* local variables */
 	CM_RESOURCE_LIST	ResList;	/* Resource list */
-	ULONG				uSize, uRealSize;
+	ULONGPTR			uSize, uRealSize;
 	BOOLEAN				bResConf, bStat;
 	NTSTATUS			ntStat;
 	DWORD				dwMaxAddr;
 	ULARGE_INTEGER		ulMix;
-	KdPrint(("CheckExternalSize start\n"));
+	KdPrint(("Eram CheckExternalSize start\n"));
 	/* Calculate the byte number to be reserved */
 	uSize = pEramExt->uSizeTotal * PAGE_SIZE_4K;
 	if (uSize == 0)		/* invalid */
 	{
-		KdPrint(("Total is 0\n"));
+		KdPrint(("Eram Total is 0\n"));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_DISK_SIZE_IS_0, NULL);
 		return FALSE;
 	}
 	ulMix.QuadPart = (ULONGLONG)(pEramExt->uExternalStart) + (ULONGLONG)uSize;
-	if (ulMix.HighPart != 0)	/* over4GB */
-	{
-		uSize = (DWORD)(0 - (pEramExt->uExternalStart));
-		pEramExt->uSizeTotal = uSize / PAGE_SIZE_4K;
-		KdPrint(("Wrap 4GB, limit size 0x%x (%dpages)\n", uSize, pEramExt->uSizeTotal));
-	}
+	
 	/* ACPI reserved memory guessing */
 	dwMaxAddr = GetAcpiReservedMemory(pDrvObj);
-	KdPrint(("ACPI max 0x%x\n", dwMaxAddr));
+	KdPrint(("Eram ACPI max 0x%x\n", dwMaxAddr));
 	if (pEramExt->uExternalStart >= dwMaxAddr)	/* The starting position is after ACPI memory */
 	{
-		KdPrint(("Invalid start address\n"));
+		KdPrint(("Eram Invalid start address\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_MAXMEM_NO_MEMORY, NULL);
 		return FALSE;
 	}
+
+	//TODO: already 64bit??
 	if (ulMix.LowPart > dwMaxAddr)	/* It overlaps ACPI */
 	{
 		/* Restricted upto ACPI */
 		uSize -= (ulMix.LowPart - dwMaxAddr);
 		pEramExt->uSizeTotal = uSize / PAGE_SIZE_4K;
 		ulMix.LowPart = dwMaxAddr;
-		KdPrint(("Wrap ACPI, limit size 0x%x (%dpages)\n", uSize, pEramExt->uSizeTotal));
+		KdPrint(("Eram Wrap ACPI, limit size 0x%x (%dpages)\n", uSize, pEramExt->uSizeTotal));
 	}
 	/* Resource Request Settings */
+	if (uSize >= (1ull << 32) )	{ KdPrint(("Eram too big size for ResourceInitTiny?\n")); }
+	if (pEramExt->uExternalStart >= (1ull << 32)) { KdPrint(("Eram too big size for ResourceInitTiny?\n")); }
 	ResourceInitTiny(pDrvObj, &ResList, pEramExt->uExternalStart, uSize);
 	bResConf = FALSE;
 	/* Check if resources are available */
@@ -3476,7 +3454,7 @@ BOOLEAN CheckExternalSize(
 		ntStat = IoReportResourceUsage(NULL, pDrvObj, &ResList, sizeof(ResList), NULL, NULL, 0, TRUE, &bResConf);
 		if (ntStat != STATUS_SUCCESS)	/* failed */
 		{
-			KdPrint(("IoReportResourceUsage failed, %x\n", ntStat));
+			KdPrint(("Eram IoReportResourceUsage failed, %x\n", ntStat));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_REPORT_USAGE_FAILED, NULL);
 			return FALSE;
 		}
@@ -3484,24 +3462,24 @@ BOOLEAN CheckExternalSize(
 	bStat = FALSE;
 	if (bResConf != FALSE)	/* conflicted */
 	{
-		KdPrint(("Conflict\n"));
+		KdPrint(("Eram Conflict\n"));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_REPORT_USAGE_CONFLICT, NULL);
 	}
 	else
 	{
-		KdPrint(("No conflict\n"));
+		KdPrint(("Eram No conflict\n"));
 		if (CheckExternalMemoryExist(pDrvObj, pEramExt->uExternalStart, uSize, &uRealSize, dwMaxAddr) == FALSE)
 		{
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "CheckExternalMemoryExist");
 		}
 		else
 		{
-			KdPrint(("extend memory 0x%08X - 0x%08X (0x%X bytes)\n", pEramExt->uExternalStart, (pEramExt->uExternalStart)+uRealSize-1, uRealSize));
+			KdPrint(("Eram extend memory 0x%08X - 0x%08X (0x%X bytes)\n", pEramExt->uExternalStart, (pEramExt->uExternalStart)+uRealSize-1, uRealSize));
 			if (uSize > uRealSize)		/* out of memory */
 			{
 				/* Stay within the range of real memory */
 				pEramExt->uSizeTotal = uRealSize / PAGE_SIZE_4K;
-				KdPrint(("size compress\n"));
+				KdPrint(("Eram size compress\n"));
 				EramReportEvent(pEramExt->pDevObj, ERAM_WARN_MAXMEM_DISK_SIZE_FIXED, NULL);
 			}
 			bStat = TRUE;
@@ -3513,7 +3491,7 @@ BOOLEAN CheckExternalSize(
 		RtlZeroBytes(&ResList, sizeof(ResList));
 		IoReportResourceUsage(NULL, pDrvObj, &ResList, sizeof(ResList), NULL, NULL, 0, FALSE, &bResConf);
 	}
-	KdPrint(("CheckExternalSize end\n"));
+	KdPrint(("Eram CheckExternalSize end\n"));
 	return bStat;
 }
 
@@ -3532,15 +3510,15 @@ BOOLEAN CheckExternalSize(
 VOID ResourceInitTiny(
 	IN PDRIVER_OBJECT		pDrvObj,
 	IN PCM_RESOURCE_LIST	pResList,
-	IN ULONG				uStart,
-	IN ULONG				uSize
+	IN ULONGPTR				uStart,
+	IN ULONGPTR				uSize
  )
 {
 	/* local variables */
 	PCM_PARTIAL_RESOURCE_DESCRIPTOR	pDesc;
 	PHYSICAL_ADDRESS				PortAdr;
-	KdPrint(("ResourceInitTiny start\n"));
-	PortAdr.HighPart = 0;
+	KdPrint(("Eram ResourceInitTiny start\n"));
+	//PortAdr.HighPart = 0;
 	/* header settings */
 	pResList->Count = 1;	/* Internal Only */
 	pResList->List[0].InterfaceType = Internal;
@@ -3552,10 +3530,14 @@ VOID ResourceInitTiny(
 	pDesc->Type = CmResourceTypeMemory;
 	pDesc->ShareDisposition = CmResourceShareDriverExclusive;
 	pDesc->Flags = CM_RESOURCE_MEMORY_READ_WRITE;
-	PortAdr.LowPart  = uStart;
+	
+	//TODO: what is tiny? its forcing 32bit here hum...
+	PortAdr.QuadPart  = uStart;
 	pDesc->u.Memory.Start = PortAdr;
-	pDesc->u.Memory.Length = uSize;
-	KdPrint(("ResourceInitTiny end\n"));
+	
+	if (uSize >= (1ull << 32)) { KdPrint(("Eram too big size for ResourceInitTiny? (internal)\n")); }
+	pDesc->u.Memory.Length = (DWORD)uSize; //TODO: this is always 32?
+	KdPrint(("Eram ResourceInitTiny end\n"));
 }
 
 
@@ -3573,27 +3555,27 @@ VOID ResourceInitTiny(
 
 BOOLEAN CheckExternalMemoryExist(
 	IN PDRIVER_OBJECT	pDrvObj,
-	IN ULONG			uStart,
-	IN ULONG			uDiskSize,
-	OUT PULONG			puSize,
-	IN ULONG			dwMaxAddr
+	IN ULONGPTR			uStart,
+	IN ULONGPTR			uDiskSize, //TODO: all those as 64bit are correct?
+	OUT PULONGPTR		puSize,
+	IN ULONGPTR			dwMaxAddr
  )
 {
 	/* local variables */
-	ULONG				loopi, loopj;
+	ULONGPTR			loopi, loopj;
 	BOOLEAN				bExist;
 	PHYSICAL_ADDRESS	MapAdr;
 	volatile PBYTE		pBase;
 	static BYTE			byTests[] = { 0, 0x55, 0xaa, 0 };
-	KdPrint(("CheckExternalMemoryExist start\n"));
+	KdPrint(("Eram CheckExternalMemoryExist start\n"));
 	/* resource usage settings */
 	if (ResourceSetupTiny(pDrvObj, uStart, &MapAdr) == FALSE)
 	{
-		KdPrint(("ResourceSetupTiny failed\n"));
+		KdPrint(("Eram ResourceSetupTiny failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_FUNCTIONERROR, "ResourceSetupTiny");
 		return FALSE;
 	}
-	KdPrint(("Memory check start\n"));
+	KdPrint(("Eram Memory check start\n"));
 	*puSize = 0;
 	for (loopi=0; loopi<uDiskSize; loopi+=SIZE_MEGABYTE)
 	{
@@ -3623,21 +3605,21 @@ BOOLEAN CheckExternalMemoryExist(
 		}
 		if ((uStart + loopi + SIZE_MEGABYTE) >= dwMaxAddr)	/* No 1MB space */
 		{
-			KdPrint(("ACPI memory detected, adjusted\n"));
+			KdPrint(("Eram ACPI memory detected, adjusted\n"));
 			*puSize += (dwMaxAddr - (uStart + loopi));
 			break;
 		}
 		/* Next 1MB */
 		*puSize += SIZE_MEGABYTE;
-		MapAdr.LowPart += SIZE_MEGABYTE;
+		MapAdr.QuadPart += SIZE_MEGABYTE;
 	}
 	if (*puSize == 0)		/* Not detected */
 	{
-		KdPrint(("extend memory 0 bytes\n"));
+		KdPrint(("Eram extend memory 0 bytes\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_MAXMEM_NO_MEMORY, NULL);
 		return FALSE;
 	}
-	KdPrint(("CheckExternalMemoryExist end, %dKB(=%dMB) detected\n", (*puSize) / SIZE_KILOBYTE, (*puSize) / SIZE_MEGABYTE));
+	KdPrint(("Eram CheckExternalMemoryExist end, %dKB(=%dMB) detected\n", (*puSize) / SIZE_KILOBYTE, (*puSize) / SIZE_MEGABYTE));
 	return TRUE;
 }
 
@@ -3654,32 +3636,34 @@ BOOLEAN CheckExternalMemoryExist(
 
 BOOLEAN ResourceSetupTiny(
 	IN PDRIVER_OBJECT		pDrvObj,
-	IN ULONG				uStart,
+	IN ULONGPTR				uStart,
 	OUT PPHYSICAL_ADDRESS	pMapAdr
  )
 {
 	/* local variables */
 	PHYSICAL_ADDRESS	PortAdr;
-	ULONG				MemType;
-	KdPrint(("ResourceSetupTiny start\n"));
-	PortAdr.HighPart = 0;
+	UINT				MemType;
+	KdPrint(("Eram ResourceSetupTiny start\n"));	
+	//PortAdr.HighPart = 0;
 	/* Internal memory settings */
 	MemType = 0;			/* Memory space */
-	PortAdr.LowPart  = uStart;
+	
+	// TODO: more tiny this wont ever reach >32bit?
+	PortAdr.QuadPart  = uStart;
 	/* It has translated at least, but, the results were likely same */
 	if (HalTranslateBusAddress(Internal, 0, PortAdr, &MemType, pMapAdr) == FALSE)
 	{
-		KdPrint(("Memory 0x%x, HalTranslateBusAddress failed\n", PortAdr.LowPart));
+		KdPrint(("Eram Memory 0x%x, HalTranslateBusAddress failed\n", PortAdr.LowPart));
 		EramReportEvent(pDrvObj, ERAM_ERROR_TRANSLATE_ADDRESS_FAILED, NULL);
 		return FALSE;
 	}
 	if (MemType != 0)		/* map */
 	{
-		KdPrint(("!Map type\n"));
+		KdPrint(("!Eram Map type\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_PORT_MAPPED, NULL);
 		return FALSE;
 	}
-	KdPrint(("ResourceSetupTiny end\n"));
+	KdPrint(("Eram ResourceSetupTiny end\n"));
 	return TRUE;
 }
 
@@ -3700,15 +3684,15 @@ BOOLEAN ExtReport(
 {
 	/* local variables */
 	CM_RESOURCE_LIST	ResList;	/* Resource list */
-	ULONG				uSize;
+	ULONGPTR			uSize;
 	BOOLEAN				bResConf;
 	NTSTATUS			ntStat;
-	KdPrint(("ExtReport start\n"));
+	KdPrint(("Eram ExtReport start\n"));
 	/* Calculate the byte number to be reserved */
 	uSize = pEramExt->uSizeTotal * PAGE_SIZE_4K;
 	if (uSize == 0)		/* invalid */
 	{
-		KdPrint(("Total is 0\n"));
+		KdPrint(("Eram Total is 0\n"));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_DISK_SIZE_IS_0, NULL);
 		return FALSE;
 	}
@@ -3721,13 +3705,13 @@ BOOLEAN ExtReport(
 		if ((ntStat == STATUS_SUCCESS)&&
 			(bResConf != FALSE))	/* conflict happens */
 		{
-			KdPrint(("Conflict\n"));
+			KdPrint(("Eram Conflict\n"));
 			/* Set error */
 			ntStat = STATUS_DEVICE_CONFIGURATION_ERROR;
 		}
 		if (ntStat != STATUS_SUCCESS)	/* unusable */
 		{
-			KdPrint(("IoReportResourceUsage failed, %x\n", ntStat));
+			KdPrint(("Eram IoReportResourceUsage failed, %x\n", ntStat));
 			EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_MAXMEM_REPORT_USAGE_FAILED, NULL);
 			return FALSE;
 		}
@@ -3735,7 +3719,7 @@ BOOLEAN ExtReport(
 	/* resource usage settings */
 	if (ResourceSetupTiny(pDrvObj, pEramExt->uExternalStart, &(pEramExt->MapAdr)) == FALSE)
 	{
-		KdPrint(("ResourceSetupTiny failed\n"));
+		KdPrint(("Eram ResourceSetupTiny failed\n"));
 		EramReportEvent(pEramExt->pDevObj, ERAM_ERROR_FUNCTIONERROR, "ResourceSetupTiny");
 		/* driver resource release */
 		if (pEramExt->uOptflag.Bits.SkipReportUsage == 0)
@@ -3745,7 +3729,7 @@ BOOLEAN ExtReport(
 		}
 		return FALSE;
 	}
-	KdPrint(("ExtReport end\n"));
+	KdPrint(("Eram ExtReport end\n"));
 	return TRUE;
 }
 
@@ -3768,12 +3752,12 @@ DWORD GetAcpiReservedMemory(
 	PBYTE				pBase;
 	PDWORD				pdwBios;
 	DWORD				dwMaxAdr;
-	KdPrint(("GetAcpiReservedMemory start\n"));
+	KdPrint(("Eram GetAcpiReservedMemory start\n"));
 	dwMaxAdr = 0xffff0000;
 	/* resource usage settings */
 	if (ResourceSetupTiny(pDrvObj, BIOS_ADDRESS_START, &MapAdr) == FALSE)
 	{
-		KdPrint(("ResourceSetupTiny failed\n"));
+		KdPrint(("Eram 3ResourceSetupTiny failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_FUNCTIONERROR, "ResourceSetupTiny");
 		return dwMaxAdr;
 	}
@@ -3790,7 +3774,7 @@ DWORD GetAcpiReservedMemory(
 		if ((pdwBios[0] == 0x20445352)&&	/* 'RSD PTR ' */
 			(pdwBios[1] == 0x20525450))
 		{
-			KdPrint(("RSDT found, 0x%X\n", pdwBios[4]));
+			KdPrint(("Eram RSDT found, 0x%X\n", pdwBios[4]));
 			if (pdwBios[4] != 0)	/* 32bit address valid */
 			{
 				/* Check ahead of RSDT */
@@ -3829,14 +3813,14 @@ DWORD CheckAcpiRsdt(
 	PBYTE				pBase;
 	PDWORD				pdwRsdt;
 	DWORD				dwRsdtBase, dwRsdtOfs;
-	KdPrint(("CheckAcpiRsdt start\n"));
+	KdPrint(("Eram CheckAcpiRsdt start\n"));
 	dwRsdtBase = dwRsdt & ~(PAGE_SIZE_4K - 1);
 	dwRsdtOfs = dwRsdt - dwRsdtBase;
 	dwMinValue = dwRsdt;
 	/* resource usage settings */
 	if (ResourceSetupTiny(pDrvObj, dwRsdtBase, &MapAdr) == FALSE)
 	{
-		KdPrint(("ResourceSetupTiny failed\n"));
+		KdPrint(("Eram ResourceSetupTiny failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_FUNCTIONERROR, "ResourceSetupTiny");
 		return dwMinValue;
 	}
@@ -3847,14 +3831,14 @@ DWORD CheckAcpiRsdt(
 		EramReportEvent(pDrvObj, ERAM_ERROR_MAXMEM_MAP_FAILED, NULL);
 		return dwMinValue;
 	}
-	pdwRsdt = (PDWORD)((DWORD)pBase + dwRsdtOfs);
+	pdwRsdt = (PDWORD)((PBYTE)pBase + dwRsdtOfs);
 	if ((pdwRsdt[0] != 0x54445352)||	/* 'RSDT' */
 		(pdwRsdt[1] < 0x24))
 	{
-		KdPrint(("!RSDT\n"));
+		KdPrint(("!Eram RSDT\n"));
 		return dwMinValue;
 	}
-	KdPrint(("RSDT found, 0x%X\n", dwRsdt));
+	KdPrint(("Eram RSDT found, 0x%X\n", dwRsdt));
 	uCnt = ((pdwRsdt[1] - 0x24) / sizeof(DWORD));
 	pdwRsdt = &(pdwRsdt[0x24 / sizeof(DWORD)]);
 	/* repeat for array */
@@ -3864,7 +3848,7 @@ DWORD CheckAcpiRsdt(
 	}
 	/* Unmap */
 	MmUnmapIoSpace(pBase, uRsdtSize);
-	KdPrint(("CheckAcpiRsdt end, 0x%X\n", dwMinValue));
+	KdPrint(("Eram CheckAcpiRsdt end, 0x%X\n", dwMinValue));
 	return dwMinValue;
 }
 
@@ -3891,7 +3875,7 @@ DWORD CheckRsdtElements(
 	PBYTE				pBase;
 	PDWORD				pdwRsdt;
 	DWORD				dwRsdtBase, dwRsdtOfs;
-	KdPrint(("CheckRsdtElements start, min=0x%X, elem=0x%X\n", dwMinValue, dwRsdtElement));
+	KdPrint(("Eram CheckRsdtElements start, min=0x%X, elem=0x%X\n", dwMinValue, dwRsdtElement));
 	if (dwRsdtElement == 0)
 	{
 		return dwMinValue;
@@ -3902,7 +3886,7 @@ DWORD CheckRsdtElements(
 	/* resource usage settings */
 	if (ResourceSetupTiny(pDrvObj, dwRsdtBase, &MapAdr) == FALSE)
 	{
-		KdPrint(("ResourceSetupTiny failed\n"));
+		KdPrint(("Eram ResourceSetupTiny failed\n"));
 		EramReportEvent(pDrvObj, ERAM_ERROR_FUNCTIONERROR, "ResourceSetupTiny");
 		return dwMinValue;
 	}
@@ -3913,8 +3897,8 @@ DWORD CheckRsdtElements(
 		EramReportEvent(pDrvObj, ERAM_ERROR_MAXMEM_MAP_FAILED, NULL);
 		return dwMinValue;
 	}
-	pdwRsdt = (PDWORD)((DWORD)pBase + dwRsdtOfs);
-	KdPrint(("Element 0x%X\n", *pdwRsdt));
+	pdwRsdt = (PDWORD)((PBYTE)pBase + dwRsdtOfs); //(DWORD)
+	KdPrint(("Eram Element 0x%X\n", *pdwRsdt));
 	if ((pdwRsdt[0] == 0x50434146)&&	/* 'FACP' */
 		(pdwRsdt[1] >= 0x74))
 	{
@@ -3927,10 +3911,10 @@ DWORD CheckRsdtElements(
 		{
 			dwMinValue = (dwMinValue > pdwRsdt[10]) ? pdwRsdt[10] : dwMinValue;
 		}
-		KdPrint(("FADT found, FACS=0x%X, DSDT=0x%X\n", pdwRsdt[9], pdwRsdt[10]));
+		KdPrint(("Eram FADT found, FACS=0x%X, DSDT=0x%X\n", pdwRsdt[9], pdwRsdt[10]));
 	}
 	/* Unmap */
 	MmUnmapIoSpace(pBase, uRsdtSize);
-	KdPrint(("CheckRsdtElements end, min 0x%X\n", dwMinValue));
+	KdPrint(("Eram CheckRsdtElements end, min 0x%X\n", dwMinValue));
 	return dwMinValue;
 }
