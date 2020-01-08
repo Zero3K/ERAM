@@ -11,7 +11,7 @@ x86 (32-bit)
 1. Run the `ERAM_x86.exe`.
 2. Follow the instructions.
 
-x64 ( 64-bit ) -
+x64 (64-bit)
 ------------
 1. Run the `ERAM_x64.exe`
 (you might have to run the Installer with Driver Signature Enforcement Disabled for it to install without any errors).
