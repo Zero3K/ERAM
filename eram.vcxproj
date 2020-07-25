@@ -130,7 +130,7 @@
       </BufferSecurityCheck>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
       <TreatWarningAsError>false</TreatWarningAsError>
       <EnablePREfast>false</EnablePREfast>
@@ -148,8 +148,9 @@
       <SubSystem>Native</SubSystem>
       <Driver>Driver</Driver>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
-      <BaseAddress>0x10000</BaseAddress>
-      <RandomizedBaseAddress />
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
@@ -184,8 +185,9 @@
       <SubSystem>Native</SubSystem>
       <Driver>Driver</Driver>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
-      <BaseAddress>0x10000</BaseAddress>
-      <RandomizedBaseAddress />
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX64</TargetMachine>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
@@ -219,8 +221,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
-      <BaseAddress>0x10000</BaseAddress>
-      <RandomizedBaseAddress />
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
@@ -253,8 +256,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
-      <BaseAddress>0x10000</BaseAddress>
-      <RandomizedBaseAddress />
+      <BaseAddress>
+      </BaseAddress>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX64</TargetMachine>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
