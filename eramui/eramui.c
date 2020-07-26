@@ -735,15 +735,6 @@ BOOL WINAPI GetPageOption(HWND hDlg, LPERAMREGOPT lpEramOpt)
 		SetDlgItemInt(hDlg, IDC_EDIT_PAGE, ((DWORD)ulPageT << 2), FALSE);
 		return FALSE;
 	}
-	/* 4GB check */
-	if (lpEramOpt->dwSizePage > LIMIT_4GBPAGES)
-	{
-		lpEramOpt->dwSizePage = LIMIT_4GBPAGES;
-		wsprintf(szMsg, GetResStr(IDS_WARN_LIMIT_MAX_SIZE, szText, sizeof(szText)), (LIMIT_4GBPAGES << 2));
-		MessageBox(hDlg, szMsg, szWinName, MB_OK | MB_ICONEXCLAMATION | MB_SETFOREGROUND);
-		SetDlgItemInt(hDlg, IDC_EDIT_PAGE, (LIMIT_4GBPAGES << 2), FALSE);
-		return FALSE;
-	}
 	/* Test the entry number of root directories */
 	if (lpEramOpt->dwSizePage <= (DWORD)(((lpEramOpt->wRootDir * 32) + (PAGE_SIZE_4K - 1)) / PAGE_SIZE_4K))
 	{
